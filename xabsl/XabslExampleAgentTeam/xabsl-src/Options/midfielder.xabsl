@@ -1,0 +1,56 @@
+/** Handles the ball. */
+option midfielder {
+
+  initial state get_to_ball {
+    decision {
+      /** far from ball */
+      if (ball.distance() > 3) {
+        stay;
+      }
+      else {
+        /** no teammate to the west */
+        if (most_westerly_teammate.x() > ball.x() + 2) {
+          goto dribble;
+        }
+        else {
+          goto pass;
+        }
+      }
+    }
+    action {
+      go_to(x = ball.x(), y = ball.y());
+    }
+  }
+
+  state pass {
+    decision {
+      /** far from ball */
+      if (ball.distance() > 3) {
+        goto get_to_ball;
+      }
+      else {
+        stay;
+      }
+    }
+    action {
+      pass();
+    }
+  }
+
+  state dribble {
+    decision {
+      /** far from ball */
+      if (ball.distance() > 3) {
+        goto get_to_ball;
+      }
+      else {
+        stay;
+      }
+    }
+    action {
+      dribble();
+    }
+  }
+
+}
+

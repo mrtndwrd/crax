@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE symbol-and-basic-behavior-files SYSTEM "../symbol-and-basic-behavior-files.dtd">
+<option xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="pass" initial-state="get_behind_ball">
+  &my_symbols;
+  &my_basic_behaviors;
+  &options;
+  <state name="get_behind_ball">
+    <subsequent-basic-behavior ref="get_behind_ball"/>
+    <decision-tree>
+      <if>
+        <condition description="at ball">
+          <or>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.NW"/>
+            </enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.W"/>
+            </enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.SW"/>
+            </enumerated-input-symbol-comparison>
+          </or>
+        </condition>
+        <transition-to-state ref="kick"/>
+      </if>
+      <else>
+        <transition-to-state ref="get_behind_ball"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="kick">
+    <set-enumerated-output-symbol ref="next_action">
+      <enum-element-ref ref="next_action.kick"/>
+    </set-enumerated-output-symbol>
+    <decision-tree>
+      <if>
+        <condition description="still behind ball">
+          <or>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.N"/>
+            </enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.NW"/>
+            </enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.W"/>
+            </enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.SW"/>
+            </enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="ball.local.direction"/>
+              <enum-element-ref ref="next_action.S"/>
+            </enumerated-input-symbol-comparison>
+          </or>
+        </condition>
+        <transition-to-state ref="kick"/>
+      </if>
+      <else>
+        <transition-to-state ref="get_behind_ball"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>

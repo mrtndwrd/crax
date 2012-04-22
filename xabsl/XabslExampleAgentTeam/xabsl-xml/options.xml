@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<option-definitions xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <option-definition name="defender" description="Waits behind the ball"/>
+  <option-definition name="dribble" description="Dribbles the ball without kicking"/>
+  <option-definition name="midfielder" description="Handles the ball."/>
+  <option-definition name="pass" description="Passes the ball to a teammate."/>
+  <option-definition name="play_soccer" description="The soccer root behavior"/>
+  <option-definition name="striker" description="Waits infront of the other players for a pass"/>
+</option-definitions>
