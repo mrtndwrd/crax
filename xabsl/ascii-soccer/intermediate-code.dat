@@ -1,0 +1,317 @@
+// Intermediate code for the agents of XABSL Example Agent Team
+
+0
+0
+
+6
+defender 0
+dribble 0
+midfielder 0
+pass 0
+play_soccer 0
+striker 0
+
+2
+own_team_has_ball n
+opponent_team_has_ball n
+
+own_team_has_ball
+0
+1
+a go_to
+2
+d go_to.x
++
+i ball.x
+0
+v 12
+d go_to.y
+i ball.y
+0
+i
+<
+i most_westerly_teammate.x
+0
+i ball.x
+0
+t opponent_team_has_ball
+t own_team_has_ball
+0
+1
+a go_to
+2
+d go_to.x
++
+i ball.x
+0
+v 10
+d go_to.y
+i ball.y
+0
+i
+g
+i most_westerly_teammate.x
+0
+i ball.x
+0
+t own_team_has_ball
+t opponent_team_has_ball
+
+
+
+3
+behind_ball n
+behind_ball_near_opponent_goal n
+not_behind_ball n
+
+behind_ball
+0
+1
+e next_action
+v next_action.W 
+i
+!
+c
+i ball.local.direction
+0
+v next_action.W 
+t not_behind_ball
+i
+<
+i x
+0
+v 13
+t behind_ball_near_opponent_goal
+t behind_ball
+0
+1
+e next_action
+v next_action.kick 
+t behind_ball
+0
+1
+a get_behind_ball
+0
+i
+!
+c
+i ball.local.direction
+0
+v next_action.W 
+t not_behind_ball
+t behind_ball
+
+
+
+3
+get_to_ball n
+pass n
+dribble n
+
+get_to_ball
+0
+1
+a go_to
+2
+d go_to.x
+i ball.x
+0
+d go_to.y
+i ball.y
+0
+i
+>
+i ball.distance
+0
+v 3
+t get_to_ball
+i
+>
+i most_westerly_teammate.x
+0
++
+i ball.x
+0
+v 2
+t dribble
+t pass
+0
+1
+o pass
+0
+i
+>
+i ball.distance
+0
+v 3
+t get_to_ball
+t pass
+0
+1
+o dribble
+0
+i
+>
+i ball.distance
+0
+v 3
+t get_to_ball
+t dribble
+
+
+
+2
+get_behind_ball n
+kick n
+
+get_behind_ball
+0
+1
+a get_behind_ball
+0
+i
+| 3
+c
+i ball.local.direction
+0
+v next_action.NW 
+c
+i ball.local.direction
+0
+v next_action.W 
+c
+i ball.local.direction
+0
+v next_action.SW 
+t kick
+t get_behind_ball
+0
+1
+e next_action
+v next_action.kick 
+i
+| 5
+c
+i ball.local.direction
+0
+v next_action.N 
+c
+i ball.local.direction
+0
+v next_action.NW 
+c
+i ball.local.direction
+0
+v next_action.W 
+c
+i ball.local.direction
+0
+v next_action.SW 
+c
+i ball.local.direction
+0
+v next_action.S 
+t kick
+t get_behind_ball
+
+
+
+3
+striker n
+midfielder n
+defender n
+
+midfielder
+0
+1
+o striker
+0
+i
+c
+i role
+0
+v role.striker 
+t striker
+i
+c
+i role
+0
+v role.defender 
+t defender
+i
+c
+i role
+0
+v role.midfielder 
+t midfielder
+t striker
+0
+1
+o midfielder
+0
+i
+c
+i role
+0
+v role.striker 
+t striker
+i
+c
+i role
+0
+v role.defender 
+t defender
+i
+c
+i role
+0
+v role.midfielder 
+t midfielder
+t midfielder
+0
+1
+o defender
+0
+i
+c
+i role
+0
+v role.striker 
+t striker
+i
+c
+i role
+0
+v role.defender 
+t defender
+i
+c
+i role
+0
+v role.midfielder 
+t midfielder
+t defender
+
+
+
+1
+__initial n
+
+__initial
+0
+1
+a go_to
+2
+d go_to.x
+-
+i ball.x
+0
+v 8
+d go_to.y
+v 11
+t __initial
+
+
+
+1
+soccer play_soccer

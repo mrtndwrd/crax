@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<symbols xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="my_symbols" title="My Symbols" description="My most used symbols">
+  <enumeration name="role" description="The possible roles of a player">
+    <enum-element name="role.defender"/>
+    <enum-element name="role.midfielder"/>
+    <enum-element name="role.striker"/>
+  </enumeration>
+  <enumeration name="next_action" description="The possible direction and actions">
+    <enum-element name="next_action.undefined"/>
+    <enum-element name="next_action.NW"/>
+    <enum-element name="next_action.N"/>
+    <enum-element name="next_action.NE"/>
+    <enum-element name="next_action.E"/>
+    <enum-element name="next_action.SE"/>
+    <enum-element name="next_action.S"/>
+    <enum-element name="next_action.SW"/>
+    <enum-element name="next_action.W"/>
+    <enum-element name="next_action.kick"/>
+    <enum-element name="next_action.do_nothing"/>
+  </enumeration>
+  <enumerated-output-symbol name="next_action" enumeration="next_action" description="The next action to be performed"/>
+  <enumerated-input-symbol name="role" enumeration="role" description="The dynamically assigned role of the player"/>
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-input-symbol name="ball.x" description="The x position of the ball" measure="" range=""/>
+  <decimal-input-symbol name="ball.y" description="The y position of the ball" measure="" range=""/>
+  <decimal-input-symbol name="ball.distance" description="The distance to the ball" measure="" range=""/>
+  <enumerated-input-symbol name="ball.local.direction" enumeration="next_action" description="The direction of the ball if in the local area of the player. If the ball is not in the local area, undefined is returned"/>
+  <decimal-input-symbol name="most_westerly_teammate.x" description="The x position of the most westerly teammate" measure="" range=""/>
+</symbols>
