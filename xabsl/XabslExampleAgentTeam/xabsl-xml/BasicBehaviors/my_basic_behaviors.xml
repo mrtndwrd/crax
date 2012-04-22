@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<basic-behaviors xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
-  <basic-behavior name="go_to" description="Lets the agent move to a point">
-    <decimal-parameter name="go_to.x" measure="px" range="1..78" description="X of destination position"/>
-    <decimal-parameter name="go_to.y" measure="px" range="1..22" description="Y of destination position"/>
-  </basic-behavior>
-  <basic-behavior name="get_behind_ball" description="Approaches the ball and gets behind it"/>
-</basic-behaviors>
