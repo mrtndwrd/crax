@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!ENTITY my_symbols SYSTEM "Symbols/my_symbols.xml">
-<!ENTITY my_basic_behaviors SYSTEM "BasicBehaviors/my_basic_behaviors.xml">
-<!ENTITY options SYSTEM "options.xml">
