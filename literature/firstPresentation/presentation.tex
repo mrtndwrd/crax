@@ -1,0 +1,86 @@
+\documentclass{beamer}
+\usepackage[utf8x]{inputenc}
+%\usepackage{default}
+\usepackage{verbatim}
+
+\title{Combining Roborescue and XABSL}
+\author{Maarten de Waard}
+\institute{UvA}
+\usetheme{Berkeley}
+\newcommand{\slide}[2]
+{
+\begin{frame}
+\frametitle{#1} 
+
+#2
+
+\end{frame}
+}
+
+
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+
+
+\section{Used projects}
+\slide{Roborescue}
+{
+    Currently roborescue mainly involves the exploration task:
+\vspace{0.5cm}
+\begin{itemize}
+	\item Deploy several robots and a base station
+	\item Autonomous exploration will be started:
+	\begin{itemize}
+		\item Simultaneous Localization and Mapping
+		\item Avoiding obstacles
+        \item Avoiding walls
+    \end{itemize}
+    \item Different subroutines are used.
+\end{itemize}
+}
+\slide{XABSL\\\small Extensible Agent Behavior Specification Language}
+{
+   \textit{XABSL is a very simple language to describe behaviors for autonomous agents
+   based on hierarchical finite state machines.}\footnote{www.xabsl.de}
+    
+    Advantages:
+    \begin{itemize}
+        \item Simple to use
+        \item Easy to keep track on a big FSM hierarchy
+        \item Lots of debugging tools
+        \item Lots of testing tools
+    \end{itemize}
+}
+\section{Research goal}
+\slide{Combining the two}
+{
+Why:
+\begin{itemize}
+\item XABSL has proven itself in the robocup soccer competition
+\item Behavior has not been used in rescue (and exploration) yet
+\item The current rescue code is in Visual Basic: 
+    \begin{itemize}
+    \item It's difficult to organize a big behavior hierarchy in Visual Basic
+    \item It's easy to lose track of what you are doing
+    \end{itemize}
+\end{itemize}
+}
+
+\section{Measuring results}
+\slide{Measuring Results}
+{
+    How results can be measured:
+    \begin{itemize}
+        \item Ammount of exploration done
+        \item Time taken for current ammount of exploration
+    \end{itemize}
+    These should be compared with the results of the old code. Furthermore it
+    should be easier to tweak variables, which could give extra advantages in
+    the points above.
+}
+
+\end{document}

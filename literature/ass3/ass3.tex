@@ -1,0 +1,146 @@
+\documentclass[a4paper,10pt]{article}
+%\usepackage[margin=2.5cm, nohead]{geometry}
+\usepackage{palatino, url, multicol}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage[all]{xy}
+\usepackage[english]{babel}
+\usepackage{cite}
+
+
+\title{Bachelor project: Assignment 3\\\vspace{.2cm}\large A First Step in Literature and
+Research Goals}
+\author{Maarten de Waard\\\small 5894883}
+\begin{document}
+\maketitle
+\section{Research goal}
+The research will be focussing on combining the \textit{Extensible Agent
+Behavior Specification Language} (XABSL) with the current RoboRescue code, used
+by Arnoud Visser, in the Robocup RoboRescue missions. 
+
+In roborescue there has been a lot of research to make the current `behaviors'
+as good as possible. Trying to improve that as a bachelor thesis would be a
+futile attempt. There are however a lot of possibilities of improving how the
+current behaviors are selected. XABSL is one of these possibilities, and has
+proven itself in robot soccer competitions. \cite{lotzsch2004designing} \cite{loetzsch2006xabsl}
+
+My goal is to use XABSL to make the current RoboRescue code work more efficient
+and more human-readable. The first of these can be measured by comparing the
+efficiency of the code. In this case that would mean comparing the efficiency of
+autonomously 
+exploring an unknown area by the current code, and the code using XABSL.
+
+This type of controlling behavior has not been done in Rescue yet. The closest I
+could find was about using behavior for navigation on challenging terrain.
+\cite{seraji2002behavior} If I succeed early, I could start experimenting with
+whatever extra improvements can be done, by changing some parameters, or the
+hierarchy of the FSA's. I can then easily find out which FSA-hierarchy
+structures
+works better and which work worse. 
+
+\section{Keywords and relations}
+Since I don't understand how a concept map can help me specify my research, I
+can only list the keywords:
+\begin{itemize}
+    \item XABSL
+    \item Roborescue
+    \item Behavior based robotics
+    \item Robots
+    \item Autonomous exploration
+\end{itemize}
+
+I think the relations between these keywords are trivial, and thus do not need
+any explanation.
+
+\section{Literature}
+Because I have written most of this section for my LiteratureLog page on the
+wiki of my googlecode
+page\footnote{\url{http://code.google.com/p/crax/wiki/LiteratureLog}}, this
+section is in
+dutch.
+\subsection*{Behavior-Based Robot Navigation on Challenging Terrain: A Fuzzy
+Logic Approach\cite{seraji2002behavior}}
+Algemene inhoud:
+\textit{This paper presents a new strategy for behavior-based navigation of field mobile
+robots on challenging terrain, using a fuzzy logic approach and a novel measure
+of terrain traversability}
+
+\begin{itemize}
+\item Sectie 3 gaat over de structuur van bahavior-based navigation strategy.
+\item Sectie 4, 5 en 6 leggen uit hoe hun bahavior-based navigation strategy in elkaar
+zit.
+\item Sectie 7 gaat over hun behavioral systeem. Niet met een FSA, maar met een iets
+ander systeem
+\item Sectie 8 biedt wat interessante manieren om mijn conclusie uiteindelijk te
+verwoorden.
+\item Sectie 9 bespreekt de resultaten van hun ondeszoek met field studies, voor mij
+niet zo interessant.
+\item Sectie 10 heeft de daadwerkelijke conclusie
+\end{itemize}
+
+Wat heb ik aan dit paper:
+Een groot deel gaat over het navigeren op 'rough terrain'. Daar ga ik niets mee
+doen, hun exacte behavior (sectie 4, 5, 6) is ook niet heel interessant. De
+manier waarop ze hun behavior kiezen (sectie 8) wel, en de manier waarop ze
+rechtvaardigen dat dit interessant is voor de wereld (sectie 8 en 10) ook.
+
+\subsection*{XABSL - A Pragmatic Approach to Behavior
+Engineering\cite{loetzsch2006xabsl}}
+
+Algemene inhoud: Het paper legt uit hoe XABSL toegepast kan worden als
+`hierarchie van finite state machines'.
+\begin{itemize}
+\item Sectie 2 introduceert de architectuur van XABSL
+\item Sectie 3 omschrijft de taal en architectuur
+\item Sectie 4 omschrijft de applicaties van XABSL in verschillende domeinen.
+\end{itemize}
+
+Wat heb ik aan dit paper: Algemene introductie, misschien referentie naar
+gebruik van de taal.
+
+\subsection*{Designing Agent Behavior with the Extensible Agent Behavior
+Specification
+Language XABSL\cite{lotzsch2004designing}}
+
+Algemene inhoud:
+Legt uit hoe XABSL wordt gebruikt in de robocup 4-legged voetbal league
+
+\begin{itemize}
+\item Sectie 2 omschrijft de ontwikkeling in XABSL
+\begin{itemize}
+    \item Sectie 2.1 biedt daarin een korte introductie
+    \item Sectie 2.2 omschrijft de XML-taal binnen het XABSL-framework
+    \item Sectie 2.3 omschrijft het Runtime-systeem, de XabslEngine
+\end{itemize}
+\item Sectie 3 omschrijft een applicatie
+\item Sectie 4 biedt een korte conclusie
+\end{itemize}
+
+Wat heb ik aan dit artikel: Het artikel geeft een duidelijke introductie in het
+werken met XABSL.
+
+
+\subsection*{Beyond frontier exploration\cite{visser2008beyond}}
+
+Algemene inhoud: Het paper legt uit hoe de huidige code werkt, vooral hoe de
+SLAM code werkt.
+
+Wat heb ik aan dit paper: introductie van de code.    
+
+\subsection*{5e artikel}
+Hier hoort voor een goed afgemaakte opdracht nog een 5e artikel. Deze heb ik nog
+niet gevonden, omdat ik nog niet zo veel met het framework heb gewerkt, en
+daardoor nog geen exacte richting heb gevonden om naar het volgende paper te
+zoeken. Er zullen ongetwijfeld tijdens het onderzoek een hoop vragen moeten
+worden beantwoord, waarvoor ik extra artikelen nodig krijg. Een alternatief voor
+een artikel hier was meer van hetzelfde geweest. Zo ga ik een hoop informatie
+halen uit \cite{dehoog2011role} en \cite{balch1998behavior}, maar deze
+boekwerken van ruim 200 pagina's heb ik nog niet volledig gelezen, en ik weet
+nog niet exact wat ik eraan heb.
+ 
+
+\bibliography{bib}{}
+\bibliographystyle{plain}
+\end{document}
+
