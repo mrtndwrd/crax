@@ -1,0 +1,18 @@
+/***
+  Title: XABSL Example Agent Team
+  Platform: Soccer simulation.
+  Software-Environment: The ascii-soccer environment (http://www-2.cs.cmu.edu/~trb/soccer/).
+*/
+
+include "my-basic-behaviors.xabsl";
+include "my-symbols.xabsl";
+include "Options/play-soccer.xabsl";
+include "Options/midfielder.xabsl";
+include "Options/pass.xabsl";
+include "Options/dribble.xabsl";
+include "Options/defender.xabsl";
+include "Options/striker.xabsl";
+
+/** A simple soccer agent behavior */
+agent soccer("Soccer", play_soccer);
+

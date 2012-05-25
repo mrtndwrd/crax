@@ -1,0 +1,42 @@
+/** The soccer root behavior */
+option play_soccer {
+
+  common decision {
+    /** player role is striker */
+    if (role() == striker) {
+      goto striker;
+    }
+    else {
+      /** player role is defender */
+      if (role() == defender) {
+        goto defender;
+      }
+      else {
+        /** player role is midfielder */
+        if (role() == midfielder) {
+          goto midfielder;
+        }
+      }
+    }
+  }
+
+  state striker {
+    action {
+      striker();
+    }
+  }
+
+  initial state midfielder {
+    action {
+      midfielder();
+    }
+  }
+
+  state defender {
+    action {
+      defender();
+    }
+  }
+
+}
+

@@ -1,0 +1,11 @@
+/** Waits infront of the other players for a pass */
+option striker {
+
+  initial state __initial {
+    action {
+      go_to(x = ball.x() - 8, y = 11);
+    }
+  }
+
+}
+
