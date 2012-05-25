@@ -1,0 +1,50 @@
+/** Dribbles the ball without kicking */
+option dribble {
+
+  initial state behind_ball {
+    decision {
+      /** not behind ball */
+      if (ball.local.direction() != W) {
+        goto not_behind_ball;
+      }
+      else {
+        /** near opponent goal */
+        if (x() < 13) {
+          goto behind_ball_near_opponent_goal;
+        }
+        else {
+          stay;
+        }
+      }
+    }
+    action {
+      next_action = W;
+    }
+  }
+
+  state behind_ball_near_opponent_goal {
+    decision {
+      goto behind_ball;
+    }
+    action {
+      next_action = kick;
+    }
+  }
+
+  state not_behind_ball {
+    decision {
+      /** not behind ball */
+      if (ball.local.direction() != W) {
+        stay;
+      }
+      else {
+        goto behind_ball;
+      }
+    }
+    action {
+      get_behind_ball();
+    }
+  }
+
+}
+
