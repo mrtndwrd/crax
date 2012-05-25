@@ -1,0 +1,53 @@
+/** My most used symbols */
+namespace my_symbols("My Symbols") {
+
+  /** The possible roles of a player */
+  enum role {
+    defender,
+    midfielder,
+    striker
+  };
+  
+  /** The possible direction and actions */
+  enum next_action {
+    undefined,
+    NW,
+    N,
+    NE,
+    E,
+    SE,
+    S,
+    SW,
+    W,
+    kick,
+    do_nothing
+  };
+  
+  /** The next action to be performed */
+  enum next_action output next_action;
+
+  /** The dynamically assigned role of the player */
+  enum role input role;
+
+  /** The x position of the player */
+  float input x;
+
+  /** The y position of the player */
+  float input y;
+
+  /** The x position of the ball */
+  float input ball.x;
+
+  /** The y position of the ball */
+  float input ball.y;
+
+  /** The distance to the ball */
+  float input ball.distance;
+
+  /** The direction of the ball if in the local area of the player. If the ball is not in the local area, undefined is returned */
+  enum next_action input ball.local.direction;
+
+  /** The x position of the most westerly teammate */
+  float input most_westerly_teammate.x;
+}
+
