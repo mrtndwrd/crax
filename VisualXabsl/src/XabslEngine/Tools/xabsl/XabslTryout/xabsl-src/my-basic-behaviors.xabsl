@@ -1,0 +1,16 @@
+/** My common basic behaviors */
+namespace my_basic_behaviors("My Basic Behaviors") {
+
+  /** Lets the agent move to a point */
+  behavior go_to {
+    /** X of destination position */
+    float x [1..78] "px";
+    /** Y of destination position */
+    float y [1..22] "px";
+  }
+
+  /** Approaches the ball and gets behind it */
+  behavior get_behind_ball {
+  }
+}
+
