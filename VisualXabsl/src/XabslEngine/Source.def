@@ -2,4 +2,5 @@ LIBRARY "Source"
 DESCRIPTION "An example DLL for interfacing with C++"
 
 EXPORTS
-	TestFunc  @1LIBRARY
+	TestFunc		@1LIBRARY
+	Initialize		@2LIBRARY
