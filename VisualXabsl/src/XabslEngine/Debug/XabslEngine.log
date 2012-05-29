@@ -1,41 +1,29 @@
-﻿Build started 5/26/2012 6:22:43 PM.
-     1>Project "C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\src\XabslEngine\XabslEngine.vcxproj" on node 2 (Rebuild target(s)).
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Debug\XabslEngine.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
+﻿Build started 5/29/2012 5:22:10 PM.
+     1>Project "C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\src\XabslEngine\XabslEngine.vcxproj" on node 2 (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\XabslEngine.pch" /Fo"Debug\//" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BasicBehaviorImplementation.h main.cpp
+         BasicBehaviorImplementation.h
      1>c:\cygwin\home\maarten\uva\afstuderen\crax\visualxabsl\src\xabslengine\tools\xabsl\xabsl\xabslengine\xabslarray.h(36): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : see declaration of 'strcpy'
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt dllmain.cpp
-         dllmain.cpp
-     1>c:\cygwin\home\maarten\uva\afstuderen\crax\visualxabsl\src\xabslengine\tools\xabsl\xabsl\xabslengine\xabslarray.h(36): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\string.h(110) : see declaration of 'strcpy'
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\XabslEngine.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MyBasicBehaviors.cpp MyBasicBehaviors.h Tools.h main.cpp WorldState.cpp
-         WorldState.cpp
-         main.cpp
-         Tools.h
-         MyBasicBehaviors.h
-         MyBasicBehaviors.cpp
          Generating Code...
-         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /nologo /fo"Debug\XabslEngine.dll.embed.manifest.res" Debug\XabslEngine_manifest.rc 
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"Source.def" /MANIFEST /ManifestFile:"Debug\XabslEngine.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.lib" /MACHINE:X86 /DLL Debug\dllmain.obj
-         Debug\MyBasicBehaviors.obj
-         Debug\MyBasicBehaviors.obj
-         Debug\Tools.obj
-         Debug\stdafx.obj
-         Debug\main.obj
-         Debug\WorldState.obj
+         Skipping... (no relevant changes detected)
+         main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"Source.def" /MANIFEST /ManifestFile:"Debug\XabslEngine.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.lib" /MACHINE:X86 /DLL Debug\//dllmain.obj
+         Debug\//BasicBehaviorImplementation.cpp.obj
+         Debug\//BasicBehaviorImplementation.obj
+         Debug\//Tools.obj
+         Debug\//stdafx.obj
+         Debug\//main.obj
+         Debug\//WorldState.obj
          Debug\XabslEngine.dll.embed.manifest.res
-     1>Debug\MyBasicBehaviors.obj : warning LNK4042: object specified more than once; extras ignored
-     1>Source.def(2): warning LNK4017: DESCRIPTION statement not supported for the target platform; ignored
             Creating library C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.lib and object C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.exp
-     1>XabslEngine.exp : warning LNK4070: /OUT:Source.dll directive in .EXP differs from output filename 'C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.dll'; ignoring directive
+     1>main.obj : error LNK2019: unresolved external symbol "public: void __thiscall xabsl::Parameters::registerDecimal(char const *,double &)" (?registerDecimal@Parameters@xabsl@@QAEXPBDAAN@Z) referenced in function "public: virtual void __thiscall TestBehavior::registerParameters(void)" (?registerParameters@TestBehavior@@UAEXXZ)
      1>main.obj : error LNK2019: unresolved external symbol "public: void __thiscall xabsl::Symbols::registerDecimalInputSymbol(char const *,double (__cdecl*)(void))" (?registerDecimalInputSymbol@Symbols@xabsl@@QAEXPBDP6ANXZ@Z) referenced in function "void __cdecl Initialize(void)" (?Initialize@@YAXXZ)
      1>main.obj : error LNK2019: unresolved external symbol "public: __thiscall xabsl::Engine::Engine(class xabsl::ErrorHandler &,unsigned int (__cdecl*)(void))" (??0Engine@xabsl@@QAE@AAVErrorHandler@1@P6AIXZ@Z) referenced in function "void __cdecl Initialize(void)" (?Initialize@@YAXXZ)
      1>main.obj : error LNK2019: unresolved external symbol "public: void __thiscall xabsl::Engine::createOptionGraph(class xabsl::InputSource &)" (?createOptionGraph@Engine@xabsl@@QAEXAAVInputSource@2@@Z) referenced in function "void __cdecl Initialize(void)" (?Initialize@@YAXXZ)
      1>main.obj : error LNK2019: unresolved external symbol "public: void __thiscall xabsl::Engine::registerBasicBehavior(class xabsl::BasicBehavior &)" (?registerBasicBehavior@Engine@xabsl@@QAEXAAVBasicBehavior@2@@Z) referenced in function "void __cdecl Initialize(void)" (?Initialize@@YAXXZ)
-     1>main.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall TestBehavior::execute(void)" (?execute@TestBehavior@@UAEXXZ)
      1>C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Debug\XabslEngine.dll : fatal error LNK1120: 5 unresolved externals
-     1>Done Building Project "C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\src\XabslEngine\XabslEngine.vcxproj" (Rebuild target(s)) -- FAILED.
+     1>Done Building Project "C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\src\XabslEngine\XabslEngine.vcxproj" (Build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:09.20
+Time Elapsed 00:00:01.55

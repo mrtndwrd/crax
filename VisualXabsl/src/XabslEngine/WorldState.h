@@ -4,6 +4,8 @@
 #define __WorldState_h_
 
 //#include "../Xabsl/XabslEngine/XabslSymbols.h"
+#include "Tools/xabsl/Xabsl/XabslEngine/XabslEngine.h"
+
 
 
 class WorldState

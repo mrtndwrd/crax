@@ -1,5 +1,4 @@
-LIBRARY "Source"
-DESCRIPTION "An example DLL for interfacing with C++"
+LIBRARY 
 
 EXPORTS
 	TestFunc		@1LIBRARY

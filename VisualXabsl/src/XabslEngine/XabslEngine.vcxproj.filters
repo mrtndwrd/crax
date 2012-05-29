@@ -24,9 +24,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Header.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldState.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -41,16 +38,16 @@
     <ClCompile Include="Tools.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyBasicBehaviors.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyBasicBehaviors.cpp">
+    <ClCompile Include="BasicBehaviorImplementation.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicBehaviorImplementation.cpp.backup">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,5 +55,6 @@
     <None Include="Source.def">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
