@@ -2,10 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 11
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "XabslEngineCreator", "src\XabslEngineCreator\XabslEngineCreator.vbproj", "{C3B572B3-776D-4B85-8ED0-33A951191592}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6CDCFB97-DFCF-8BCF-8E56-FF347276F4A2} = {6CDCFB97-DFCF-8BCF-8E56-FF347276F4A2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XabslEngine", "src\XabslEngine\XabslEngine.vcxproj", "{6CDCFB97-DFCF-8BCF-8E56-FF347276F4A2}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Xabsl", "src\Xabsl\Xabsl.vcxproj", "{7D3B33C1-157B-068E-F5F8-504FD097A277}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +34,6 @@ Global
 		{6CDCFB97-DFCF-8BCF-8E56-FF347276F4A2}.Release|Win32.Build.0 = Release|Win32
 		{6CDCFB97-DFCF-8BCF-8E56-FF347276F4A2}.Release|x64.ActiveCfg = Release|x64
 		{6CDCFB97-DFCF-8BCF-8E56-FF347276F4A2}.Release|x64.Build.0 = Release|x64
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Debug|Win32.Build.0 = Debug|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Debug|x64.ActiveCfg = Debug|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Release|Any CPU.ActiveCfg = Release|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Release|Win32.ActiveCfg = Release|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Release|Win32.Build.0 = Release|Win32
-		{7D3B33C1-157B-068E-F5F8-504FD097A277}.Release|x64.ActiveCfg = Release|Win32
 		{C3B572B3-776D-4B85-8ED0-33A951191592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3B572B3-776D-4B85-8ED0-33A951191592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B572B3-776D-4B85-8ED0-33A951191592}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

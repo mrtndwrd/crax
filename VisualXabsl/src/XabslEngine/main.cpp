@@ -2,10 +2,13 @@
 //
 
 #include "stdafx.h"
-#include "Tools.h"
-#include "MyBasicBehaviors.h"
-#include "WorldState.h"
 
+extern "C++" {
+#include "Tools/xabsl/Xabsl/XabslEngine/XabslEngine.h"
+#include "Tools.h"
+#include "BasicBehaviorImplementation.h"
+#include "WorldState.h"
+};
 
 	// an instance of the derived error handler 
 MyErrorHandler myErrorHandler;
@@ -20,7 +23,7 @@ int nextAction;
 xabsl::Engine* pEngine[1];
 
 // My basic TestBehavior
-TestBehavior testBehavior(myErrorHandler, worldState, nextAction);
+TestBehavior testBehavior(myErrorHandler);
 
 void __declspec(dllexport) TestFunc()
 {
