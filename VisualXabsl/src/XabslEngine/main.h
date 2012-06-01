@@ -18,3 +18,4 @@ xabsl::Engine* pEngine[1];
 TestBehavior testBehavior(myErrorHandler);
 void TestFunc();
 void Initialize();
+};
