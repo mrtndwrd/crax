@@ -1,0 +1,24 @@
+// Intermediate code for the agents of Test agent
+
+1
+Color 3 Color.red Color.green Color.blue
+1
+e Color c
+
+1
+fetch 0
+
+1
+init n
+
+init
+0
+1
+e c
+v Color.blue 
+t init
+
+
+
+1
+robot fetch

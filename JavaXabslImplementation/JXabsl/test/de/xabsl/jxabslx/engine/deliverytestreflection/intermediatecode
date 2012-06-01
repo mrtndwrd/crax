@@ -1,0 +1,188 @@
+// Intermediate code for the agents of Delivery robot
+
+0
+1
+d currentPacket
+
+3
+deliver 0
+main 0
+move_to 2 d move_to.x d move_to.y
+
+4
+fetch n
+grab n
+bring n
+leave n
+
+fetch
+0
+1
+o move_to
+2
+d move_to.x
+i currentPacketX
+1
+d currentPacketX.packet
+o currentPacket
+d move_to.y
+i currentPacketY
+1
+d currentPacketY.packet
+o currentPacket
+i
+& 2
+=
+i currentPacketX
+1
+d currentPacketX.packet
+o currentPacket
+i getX
+0
+=
+i currentPacketY
+1
+d currentPacketY.packet
+o currentPacket
+i getY
+0
+t grab
+t fetch
+0
+1
+a pickUp
+0
+t bring
+0
+1
+o move_to
+2
+d move_to.x
+i currentDestinationX
+1
+d currentDestinationX.packet
+o currentPacket
+d move_to.y
+i currentDestinationY
+1
+d currentDestinationY.packet
+o currentPacket
+i
+& 2
+=
+i currentDestinationX
+1
+d currentDestinationX.packet
+o currentPacket
+i getX
+0
+=
+i currentDestinationY
+1
+d currentDestinationY.packet
+o currentPacket
+i getY
+0
+t leave
+t bring
+1
+1
+a leave
+0
+t leave
+
+
+
+3
+getNext n
+deliver n
+done n
+
+getNext
+0
+1
+d currentPacket
++
+o currentPacket
+v 1
+t deliver
+0
+1
+o deliver
+0
+i
+t
+i
+<
+o currentPacket
+-
+i getNrPackets
+0
+v 1
+t getNext
+t done
+t deliver
+1
+0
+t done
+
+
+
+4
+adjust_direction n
+turn_left n
+turn_right n
+move_forward n
+
+adjust_direction
+0
+0
+i
+c
+i directionToPoint
+2
+d directionToPoint.x
+p move_to.x
+d directionToPoint.y
+p move_to.y
+i getDirection
+0
+t move_forward
+i
+i turnWhichWay
+1
+e Direction turnWhichWay.to
+i directionToPoint
+2
+d directionToPoint.x
+i currentDestinationX
+1
+d currentDestinationX.packet
+o currentPacket
+d directionToPoint.y
+i currentDestinationY
+1
+d currentDestinationY.packet
+o currentPacket
+t turn_right
+t turn_left
+0
+1
+a turnLeft
+0
+t adjust_direction
+0
+1
+a turnRight
+0
+t adjust_direction
+0
+1
+a moveForward
+0
+t adjust_direction
+
+
+
+1
+robot main
