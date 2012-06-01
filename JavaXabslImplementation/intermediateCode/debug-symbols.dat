@@ -1,0 +1,34 @@
+// Debug Symbols for the agents of XABSL tryout
+
+// number of enumerations
+0
+// enumerations
+// (name number-of-elements (element)*)+
+
+
+// number of input symbols
+2
+// input symbols
+// (d decimal-input-symbol | b boolean-input-symbol | e enum-name enumerated-input-symbol)+
+d x 
+d y 
+
+
+// number of output symbols
+0
+// output symbols
+// (d decimal-output-symbol | b boolean-output-symbol | e enum-name enumerated-output-symbol)+
+
+
+// number of options
+1
+//options: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
+testOption 0 
+
+
+// number of basic behaviors
+1
+//basic behaviors: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
+test 2 d test.x d test.y 
+
+

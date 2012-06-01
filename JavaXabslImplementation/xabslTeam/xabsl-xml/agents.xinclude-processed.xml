@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<agent-collection xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <title>XABSL tryout</title>
+  <platform>RoboRescue.</platform>
+  <software-environment>RoboRescue environment</software-environment>
+  <agent id="test" title="Test" description="Start an agent with a name and a specified option." root-option="testOption"/>
+  
+<option-definitions>
+  <option-definition name="testOption" description=""/>
+</option-definitions>
+
+  <options>
+    <option name="testOption" initial-state="test_state_1" xml:base="Options/testOption.xml">
+  
+<symbols id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+</symbols>
+
+  
+<basic-behaviors id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+</basic-behaviors>
+
+  
+<option-definitions>
+  <option-definition name="testOption" description=""/>
+</option-definitions>
+
+  <state name="test_state_1">
+    <subsequent-basic-behavior ref="test">
+      <set-parameter ref="test.x">
+        <plus>
+          <decimal-input-symbol-ref ref="x"/>
+          <decimal-value value="1"/>
+        </plus>
+      </set-parameter>
+      <set-parameter ref="test.y">
+        <decimal-input-symbol-ref ref="y"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-input-symbol-ref ref="x"/>
+            <decimal-value value="10"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="test_state_1"/>
+      </if>
+      <else>
+        <transition-to-state ref="test_state_2"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="test_state_2">
+    <subsequent-basic-behavior ref="test">
+      <set-parameter ref="test.x">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="test.y">
+        <decimal-input-symbol-ref ref="y"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <equal-to>
+            <decimal-input-symbol-ref ref="x"/>
+            <decimal-value value="10"/>
+          </equal-to>
+        </condition>
+        <transition-to-state ref="test_state_2"/>
+      </if>
+      <else>
+        <transition-to-state ref="test_state_1"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>
+  </options>
+</agent-collection>
