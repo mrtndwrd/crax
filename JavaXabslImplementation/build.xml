@@ -34,7 +34,7 @@
     </target>
     <target depends="build-project" name="create_run_jar">
         <echo message="creating jar"/>
-        <jar destfile="/home/maarten/uva/afstuderen/crax/JavaXabslImplementation/dist/alles.jar">
+        <jar destfile="dist/alles.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
                 <attribute name="Rsrc-Main-Class" value="jxi.engine.EngineRunner"/>
@@ -42,9 +42,9 @@
                 <attribute name="Rsrc-Class-Path" value="./ jxabsl.jar"/>
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
-            <fileset dir="/home/maarten/uva/afstuderen/crax/JavaXabslImplementation/bin"/>
-            <zipfileset dir="/home/maarten/uva/afstuderen/crax/JavaXabslImplementation/JXabsl/dist/lib" includes="jxabsl.jar"/>
-            <fileset dir="/home/maarten/uva/afstuderen/crax/JavaXabslImplementation/JXabsl/bin"/>
+            <fileset dir="bin"/>
+            <zipfileset dir="JXabsl/dist/lib" includes="jxabsl.jar"/>
+            <fileset dir="JXabsl/bin"/>
         </jar>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>

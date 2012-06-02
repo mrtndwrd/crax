@@ -99,7 +99,7 @@ public class Robot {
 		try
         {
             File ic = new File(
-                "../intermediateCode/intermediate-code.dat");
+                "intermediateCode/intermediate-code.dat");
             engine.createOptionGraph(new ScannerInputSource(ic));
         }
         catch(Exception e)
