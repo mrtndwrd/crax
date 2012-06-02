@@ -1,14 +1,11 @@
 package jxi.engine;
 
-/** Class that instantiates everything needed for a robo
- * Of course, for now it is only a test class...
- * Based on the Robot.java test class in engine/deliveryTest/
- */
 
 import java.io.File;
 import java.io.FileNotFoundException;
-//import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.Socket;
+import java.io.IOException;
 
 import de.xabsl.jxabsl.IntermediateCodeMalformedException;
 import de.xabsl.jxabsl.behavior.BasicBehavior;
@@ -24,32 +21,58 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import jxi.util.MyTimeFunction;
 import jxi.behaviors.TestBehavior;
+import jxi.connection.ConnectionHandler;
 
+/** Class that instantiates everything needed for a robo
+ * Of course, for now it is only a test class...
+ * Based on the Robot.java test class in engine/deliveryTest/
+ */
 public class Robot {
-    /* TODO Probably not needed:
-	public enum Direction {
-		north, east, south, west
-	};
-
-	private Vector2 packet;
-	private Direction direction = Direction.north;
-	protected World world;
-    */
-    
     /** Capacity for the receiveQueue */
     public static final int RQCAPACITY = 10;
+    /** some x */
 	private float x;
+    /** some y */
 	private float y;
+    /** The XabslEngine on which this robot bases its behavior */
 	protected Engine engine;
     /** A queue for all the messages that are to be parsed: */
     ArrayBlockingQueue<String> receiveQueue;
+    /** ConnectionHandler for the connection with UsarCommander */
+    ConnectionHandler usarConnection;
     
-
+    /** 
+     * Constructor, socket connection is now hardcoded to 127.0.0.1:5005
+     */
 	public Robot() throws FileNotFoundException,
 			NoSuchFieldException, IntermediateCodeMalformedException,
 			SecurityException, NoSuchMethodException 
     {
+        // Instantiate receiveQueue
         receiveQueue = new ArrayBlockingQueue<String>(RQCAPACITY);
+        // The socket needed for the connection with UsarCommander:
+        // TODO: This socket is now hardcoded, that's not desirable!
+        Socket socket = null;
+        try
+        {
+            socket = new Socket("127.0.0.1", 5000);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Couldn't make socket");
+            e.printStackTrace();
+        }
+        // Instantiate connection
+        try
+        {
+            usarConnection = new ConnectionHandler(this, true, socket);
+        }
+        catch(IOException e)
+        {
+            System.out.println("Couldn't make any connection with UsarCommander");
+            e.printStackTrace();
+        }
+
 
         // I won't be needing a world representation hiero...
 		//this.world = world;
@@ -97,6 +120,8 @@ public class Robot {
             System.out.println("Cought exception in accessing intermediate code");
             e.printStackTrace();
         }
+        usarConnection.sendMessage("Done initializing");
+
         System.out.println("Na maken engine\n");
     }
 
