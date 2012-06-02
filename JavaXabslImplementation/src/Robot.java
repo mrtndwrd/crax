@@ -1,3 +1,5 @@
+package jxi.engine;
+
 /** Class that instantiates everything needed for a robo
  * Of course, for now it is only a test class...
  * Based on the Robot.java test class in engine/deliveryTest/
@@ -28,9 +30,13 @@ import de.xabsl.jxabslx.symbols.JavaEnumeration;
 import de.xabsl.jxabslx.utils.ScannerInputSource;
 import de.xabsl.jxabslx.utils.PrintStreamDebug;
 
+import java.util.concurrent.ArrayBlockingQueue;
+
+import jxi.util.MyTimeFunction;
+import jxi.behaviors.TestBehavior;
+
 public class Robot {
-    
-    /*
+    /* TODO Probably not needed:
 	public enum Direction {
 		north, east, south, west
 	};
@@ -39,14 +45,22 @@ public class Robot {
 	private Direction direction = Direction.north;
 	protected World world;
     */
+    
+    /** Capacity for the receiveQueue */
+    public static final int RQCAPACITY = 10;
 	private float x;
 	private float y;
 	protected Engine engine;
+    /** A queue for all the messages that are to be parsed: */
+    ArrayBlockingQueue<String> receiveQueue;
+    
 
 	public Robot() throws FileNotFoundException,
 			NoSuchFieldException, IntermediateCodeMalformedException,
 			SecurityException, NoSuchMethodException 
     {
+        receiveQueue = new ArrayBlockingQueue<String>(RQCAPACITY);
+
         // I won't be needing a world representation hiero...
 		//this.world = world;
 
@@ -109,5 +123,11 @@ public class Robot {
     {
         return this.y;
     }
+
+    public ArrayBlockingQueue<String> getReceiveQueue()
+    {
+        return receiveQueue;
+    }
 }
+
 

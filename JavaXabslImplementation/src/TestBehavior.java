@@ -1,14 +1,21 @@
+package jxi.behaviors;
+
 import de.xabsl.jxabsl.behavior.BasicBehavior;
 import de.xabsl.jxabsl.parameters.Parameters;
 import de.xabsl.jxabslx.utils.PrintStreamDebug;
 
+import jxi.parameters.MyDecimalParameter;
+
+/**
+ * Very simple behavior 
+ */
 public class TestBehavior extends BasicBehavior
 {
     Parameters myParameters;
     MyDecimalParameter x;
     MyDecimalParameter y;
 
-    TestBehavior(String name, PrintStreamDebug myDebug, double xIn, double yIn)
+    public TestBehavior(String name, PrintStreamDebug myDebug, double xIn, double yIn)
     {
         super(name, myDebug);
         myParameters = new Parameters(myDebug);

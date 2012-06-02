@@ -1,3 +1,4 @@
+package jxi.util;
 import de.xabsl.jxabsl.*;
 
 public class MyTimeFunction implements TimeFunction
