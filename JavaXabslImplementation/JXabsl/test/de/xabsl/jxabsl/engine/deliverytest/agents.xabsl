@@ -1,0 +1,14 @@
+/***
+  Title: Delivery robot 
+*/
+
+include "my-basic-behaviors.xabsl";
+include "my-symbols.xabsl";
+
+include "options/main.xabsl";
+include "options/deliver.xabsl";
+include "options/move_to.xabsl";
+
+/**  */
+agent robot("Robot", main);
+

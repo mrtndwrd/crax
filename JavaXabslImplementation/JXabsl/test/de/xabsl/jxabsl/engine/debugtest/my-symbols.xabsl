@@ -1,0 +1,25 @@
+
+namespace my_symbols("My Symbols") {
+
+     
+ float internal internalSymbol1;
+
+ /** End internal symbols */
+
+enum SomeEnumeration internal {
+    value1,
+    value2,
+    value3,
+    value4
+};
+
+ float input input1;
+ bool input input2;
+
+ enum SomeEnumeration input input3 (enum SomeEnumeration x; float y;);  
+ enum SomeEnumeration output output1;
+
+ 
+
+}
+

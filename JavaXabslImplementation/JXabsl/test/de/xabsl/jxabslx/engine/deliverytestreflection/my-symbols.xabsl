@@ -1,0 +1,33 @@
+
+namespace my_symbols("My Symbols") {
+
+ float internal currentPacket;
+
+ /** End internal symbols */
+
+enum Direction {
+    north,
+    east,
+    south,
+    west
+};
+
+ float input currentPacketX(float packet;);
+ float input currentPacketY(float packet;);
+
+ float input currentDestinationX(float packet;);
+ float input currentDestinationY(float packet;);
+
+ float input getX;
+ float input getY;
+
+ enum Direction input directionToPoint (float x; float y;);
+
+ enum Direction input getDirection;
+ 
+ bool input turnWhichWay (enum Direction to;);
+ 
+ float input getNrPackets;
+
+}
+

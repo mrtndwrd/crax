@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>Xabsl</RootNamespace>
+    <ProjectGuid>{7D3B33C1-157B-068E-F5F8-504FD097A277}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslAction.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslAgent.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslBooleanExpression.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslDecimalExpression.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslEngine.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslEnumeratedExpression.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslOption.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslParameters.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslState.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslStatement.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslSymbols.cpp" />
+    <ClCompile Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslTools.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslAction.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslAgent.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslArray.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslBasicBehavior.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslBehavior.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslBooleanExpression.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslCoopState.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslDecimalExpression.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslEngine.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslEnumeratedExpression.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslOption.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslParameters.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslState.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslStatement.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslSymbols.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslTeamMessage.h" />
+    <ClInclude Include="..\XabslEngine\Tools\xabsl\Xabsl\XabslEngine\XabslTools.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
