@@ -1,0 +1,35 @@
+/** Passes the ball to a teammate. */
+option pass {
+
+  initial state get_behind_ball {
+    decision {
+      /** at ball */
+      if (ball.local.direction() == NW || ball.local.direction() == W || ball.local.direction() == SW) {
+        goto kick;
+      }
+      else {
+        stay;
+      }
+    }
+    action {
+      get_behind_ball();
+    }
+  }
+
+  state kick {
+    decision {
+      /** still behind ball */
+      if (ball.local.direction() == N || ball.local.direction() == NW || ball.local.direction() == W || ball.local.direction() == SW || ball.local.direction() == S) {
+        stay;
+      }
+      else {
+        goto get_behind_ball;
+      }
+    }
+    action {
+      next_action = kick;
+    }
+  }
+
+}
+

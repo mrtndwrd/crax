@@ -1,0 +1,11 @@
+
+namespace my_symbols("My Symbols") {
+
+  enum Color internal {
+  	red, green, blue
+  };
+
+  enum Color internal c;
+
+}
+

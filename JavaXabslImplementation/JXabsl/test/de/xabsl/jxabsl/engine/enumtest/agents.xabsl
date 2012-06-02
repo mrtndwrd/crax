@@ -1,0 +1,12 @@
+/***
+  Title: Test agent 
+*/
+
+include "my-basic-behaviors.xabsl";
+
+include "my-symbols.xabsl";
+
+include "options/fetch.xabsl";
+
+agent robot("Robot", fetch);
+

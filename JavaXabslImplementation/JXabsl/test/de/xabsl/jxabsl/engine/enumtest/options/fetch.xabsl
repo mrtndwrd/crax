@@ -1,0 +1,19 @@
+
+
+/** Fetch */
+
+
+option fetch {
+
+  initial state init {
+    
+    decision {
+    	stay;
+    }
+    
+    action {
+     c = blue;
+    }
+  }
+}
+

@@ -1,0 +1,13 @@
+/** My most used symbols */
+namespace my_symbols("My Symbols") {
+
+  /** The x position of the player */
+  float input x;
+
+  /** The y position of the player */
+  float input y;
+
+  float ammount_turned;
+
+}
+

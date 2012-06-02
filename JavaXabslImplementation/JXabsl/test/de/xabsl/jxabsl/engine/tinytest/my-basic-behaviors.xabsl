@@ -1,0 +1,8 @@
+/** My common basic behaviors */
+namespace my_basic_behaviors("My Basic Behaviors") {
+
+  /** Say hello.  */
+  behavior helloworld {
+  }
+}
+
