@@ -7,26 +7,16 @@ package jxi.engine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Field;
+//import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import de.xabsl.jxabsl.IntermediateCodeMalformedException;
 import de.xabsl.jxabsl.behavior.BasicBehavior;
 import de.xabsl.jxabsl.engine.Engine;
-import de.xabsl.jxabsl.parameters.EnumeratedParameter;
-import de.xabsl.jxabsl.parameters.DecimalParameter;
-import de.xabsl.jxabsl.parameters.Parameters;
-import de.xabsl.jxabsl.symbols.BooleanInputSymbol;
-import de.xabsl.jxabsl.symbols.Enumeration;
-import de.xabsl.jxabsl.utils.InputSource;
+
 import de.xabsl.jxabslx.conversions.Conversions;
-import de.xabsl.jxabslx.io.InputFromField;
 import de.xabsl.jxabslx.io.InputFromMethod;
-import de.xabsl.jxabslx.io.OutputToField;
 import de.xabsl.jxabslx.symbols.DecimalInputSymbolImpl;
-import de.xabsl.jxabslx.symbols.DecimalOutputSymbolImpl;
-import de.xabsl.jxabslx.symbols.EnumeratedInputSymbolImpl;
-import de.xabsl.jxabslx.symbols.JavaEnumeration;
 import de.xabsl.jxabslx.utils.ScannerInputSource;
 import de.xabsl.jxabslx.utils.PrintStreamDebug;
 
@@ -76,11 +66,11 @@ public class Robot {
 		//final Enumeration enumDirection = new JavaEnumeration("Direction",
 		//		Direction.class, myDebug);
 		//engine.registerEnumeration(enumDirection);
-
-		Field field;
+		// TODO: Probably not needed.
+		//Field field;
 
         // Register x as a decimal input symbol
-		Class thisClass = this.getClass();
+		Class<? extends Robot> thisClass = this.getClass();
 		Method method = thisClass.getMethod("currentX");
 		engine.registerDecimalInputSymbol("x",
 				new DecimalInputSymbolImpl(new InputFromMethod(method, this),
@@ -99,7 +89,7 @@ public class Robot {
 		try
         {
             File ic = new File(
-                "../intermediateCode/intermediate-code.dat");
+                "intermediateCode/intermediate-code.dat");
             engine.createOptionGraph(new ScannerInputSource(ic));
         }
         catch(Exception e)
