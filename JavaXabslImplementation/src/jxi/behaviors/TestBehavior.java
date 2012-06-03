@@ -5,35 +5,29 @@ import de.xabsl.jxabsl.parameters.Parameters;
 import de.xabsl.jxabslx.utils.PrintStreamDebug;
 
 import jxi.parameters.MyDecimalParameter;
+import jxi.behaviors.StandardBehavior;
+import jxi.connection.ConnectionHandler;
 
 /**
  * Very simple behavior 
  */
-public class TestBehavior extends BasicBehavior
+public class TestBehavior extends StandardBehavior
 {
     Parameters myParameters;
     MyDecimalParameter x;
     MyDecimalParameter y;
 
-    public TestBehavior(String name, PrintStreamDebug myDebug, double xIn, double yIn)
+    public TestBehavior(String name, PrintStreamDebug myDebug, ConnectionHandler usarConnection, double xIn, double yIn)
     {
-        super(name, myDebug);
-        myParameters = new Parameters(myDebug);
+        super(name, myDebug, usarConnection);
         this.x = new MyDecimalParameter();
         this.x.set(xIn);
         this.y = new MyDecimalParameter();
         this.y.set(yIn);
         myParameters.registerDecimal("test.x", this.x);
         myParameters.registerDecimal("test.y", this.y);
-
     }
         
-        @Override
-        public Parameters getParameters() 
-        {
-            return myParameters;
-        }
-
         @Override
         public void execute() 
         {

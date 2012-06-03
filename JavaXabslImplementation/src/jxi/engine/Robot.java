@@ -20,7 +20,8 @@ import de.xabsl.jxabslx.utils.PrintStreamDebug;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import jxi.util.MyTimeFunction;
-import jxi.behaviors.TestBehavior;
+// Import ALL behaviors
+import jxi.behaviors.*;
 import jxi.connection.ConnectionHandler;
 
 /** Class that instantiates everything needed for a robo
@@ -107,7 +108,9 @@ public class Robot {
 						Conversions
 								.getDecimalConversion(method.getReturnType()),
 						new String[]{}, engine, myDebug));
-		engine.registerBasicBehavior(createTestBehavior(myDebug));
+        // TODO: Make degrees the right kind of registered symbol
+        double degrees = 10;
+		engine.registerBasicBehavior(new Turn("turn", myDebug, usarConnection, degrees));
 
 		try
         {
@@ -127,7 +130,7 @@ public class Robot {
 
     public BasicBehavior createTestBehavior(PrintStreamDebug myDebug)
     {
-        return new TestBehavior("test", myDebug, x, y);
+        return new TestBehavior("test", myDebug, usarConnection, x, y);
     }
     
     public float currentX()

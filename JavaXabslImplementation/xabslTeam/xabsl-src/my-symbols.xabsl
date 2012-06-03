@@ -7,7 +7,11 @@ namespace my_symbols("My Symbols") {
   /** The y position of the player */
   float input y;
 
-  float ammount_turned;
+  /** The ammount my robot has turned */
+  float internal ammount_turned;
+
+  /** A counter */
+  float internal stayed;
 
 }
 

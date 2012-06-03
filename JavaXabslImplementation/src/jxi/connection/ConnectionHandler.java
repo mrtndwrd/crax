@@ -37,8 +37,6 @@ public class ConnectionHandler extends Thread {
 	 * 
 	 * This constructor is for the base-class self-started connections.
 	 * 
-	 * @param usar
-	 *            If true, handle a USARsim Connection
 	 * @throws IOException
 	 */
 	public ConnectionHandler(Robot robot, boolean bidirection, Socket socket) throws IOException 
