@@ -3,18 +3,21 @@
   <title>XABSL tryout</title>
   <platform>RoboRescue.</platform>
   <software-environment>RoboRescue environment</software-environment>
-  <agent id="test" title="Test" description="Start an agent with a name and a specified option." root-option="testOption"/>
+  <agent id="drive_circle" title="DriveCircle" description="Start an agent with a name and a specified option." root-option="drive_circle"/>
   
 <option-definitions>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
   <option-definition name="testOption" description=""/>
 </option-definitions>
 
   <options>
-    <option name="testOption" initial-state="test_state_1" xml:base="Options/testOption.xml">
+    <option name="drive_circle" initial-state="turn" xml:base="Options/drive_circle.xml">
   
 <symbols id="my_symbols" title="My Symbols" description="My most used symbols">
   <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
   <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-output-symbol name="ammount_turned" description="The ammount my robot has turned" measure="" range="" internal="true"/>
+  <decimal-output-symbol name="stayed" description="A counter" measure="" range="" internal="true"/>
 </symbols>
 
   
@@ -23,10 +26,96 @@
     <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
     <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
   </basic-behavior>
+  <basic-behavior name="drive_forward" description="Drives forward for &lt;distance&gt; meters">
+    <decimal-parameter name="drive_forward.distance" measure="m" range="1..100" description="The number of meters to drive forward"/>
+  </basic-behavior>
+  <basic-behavior name="turn" description="Turns the robot a couple of degrees">
+    <decimal-parameter name="turn.degrees" measure="deg" range="1..360" description="Number of degrees to turn the robot"/>
+  </basic-behavior>
 </basic-behaviors>
 
   
 <option-definitions>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+  <option-definition name="testOption" description=""/>
+</option-definitions>
+
+  <state name="turn">
+    <subsequent-basic-behavior ref="turn">
+      <set-parameter ref="turn.degrees">
+        <decimal-value value="10"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <set-decimal-output-symbol ref="ammount_turned">
+      <plus>
+        <decimal-output-symbol-ref ref="ammount_turned"/>
+        <decimal-value value="1"/>
+      </plus>
+    </set-decimal-output-symbol>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-output-symbol-ref ref="ammount_turned"/>
+            <decimal-value value="360"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="turn"/>
+      </if>
+      <else>
+        <transition-to-state ref="done"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="done">
+    <set-decimal-output-symbol ref="stayed">
+      <plus>
+        <decimal-output-symbol-ref ref="stayed"/>
+        <decimal-value value="1"/>
+      </plus>
+    </set-decimal-output-symbol>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-output-symbol-ref ref="stayed"/>
+            <decimal-value value="1000"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="done"/>
+      </if>
+      <else>
+        <transition-to-state ref="turn"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>
+    <option name="testOption" initial-state="test_state_1" xml:base="Options/testOption.xml">
+  
+<symbols id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-output-symbol name="ammount_turned" description="The ammount my robot has turned" measure="" range="" internal="true"/>
+  <decimal-output-symbol name="stayed" description="A counter" measure="" range="" internal="true"/>
+</symbols>
+
+  
+<basic-behaviors id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+  <basic-behavior name="drive_forward" description="Drives forward for &lt;distance&gt; meters">
+    <decimal-parameter name="drive_forward.distance" measure="m" range="1..100" description="The number of meters to drive forward"/>
+  </basic-behavior>
+  <basic-behavior name="turn" description="Turns the robot a couple of degrees">
+    <decimal-parameter name="turn.degrees" measure="deg" range="1..360" description="Number of degrees to turn the robot"/>
+  </basic-behavior>
+</basic-behaviors>
+
+  
+<option-definitions>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
   <option-definition name="testOption" description=""/>
 </option-definitions>
 

@@ -1,10 +1,49 @@
 // Intermediate code for the agents of XABSL tryout
 
 0
-0
+2
+d ammount_turned
+d stayed
 
-1
+2
+drive_circle 0
 testOption 0
+
+2
+turn n
+done n
+
+turn
+0
+2
+a turn
+1
+d turn.degrees
+v 10
+d ammount_turned
++
+o ammount_turned
+v 1
+i
+<
+o ammount_turned
+v 360
+t turn
+t done
+0
+1
+d stayed
++
+o stayed
+v 1
+i
+<
+o stayed
+v 1000
+t done
+t turn
+
+
 
 2
 test_state_1 n
@@ -50,4 +89,4 @@ t test_state_1
 
 
 1
-test testOption
+drive_circle drive_circle
