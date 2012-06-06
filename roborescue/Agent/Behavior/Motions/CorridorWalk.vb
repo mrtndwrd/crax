@@ -75,7 +75,7 @@ Public Class CorridorWalk
     End Sub
 
    
-
+    ' A counter that is apparently never used:
     Private _Counter As Integer = 5
     Protected Overrides Sub ProcessSensorUpdate(ByVal sensor As Sensor)
         ' RIKNOTE: pass the update to our Motion parent as well

@@ -1,0 +1,11 @@
+option walk_corridor
+{   
+     initial state process_sensor_update
+     {
+         decision 
+         {
+             /** Kies hier een sensor type, geen idee wat de syntax is */
+         }
+     }
+
+}
