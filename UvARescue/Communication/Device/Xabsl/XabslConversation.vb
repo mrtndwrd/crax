@@ -18,7 +18,7 @@ Public Class XabslConversation
 #Region " Constructor "
 
     Public Sub New(ByVal owner As ICommOwner, _
-        ByVal device As WssDevice, _
+        ByVal device As XabslDevice, _
         ByVal conversationID As Integer, _
         ByVal client As TcpClient, _
         ByVal agentName As String, _
@@ -30,7 +30,7 @@ Public Class XabslConversation
 
         Me._Owner = owner
         Me._Device = device
-        Me._Connection = device.WssConnection()
+        Me._Connection = device.XabslConnection()
         Me._Client = client
         Me._Stream = client.GetStream
 
@@ -46,7 +46,7 @@ Public Class XabslConversation
     End Sub
 
     'Public Sub New(ByVal owner As ICommOwner, _
-    '    ByVal device As WssDevice, _
+    '    ByVal device As XabslDevice, _
     '    ByVal conversationID As Guid, _
     '    ByVal connection As TcpConnection, _
     '    ByVal agentName As String, _
@@ -72,20 +72,20 @@ Public Class XabslConversation
     'End Sub
 #End Region
 
-#Region " TcpConnection to via WSS to other robot"
+#Region " TcpConnection to via XABSL to other robot"
 
 
-    Public ReadOnly Property ConnectedToWss() As Boolean
+    Public ReadOnly Property ConnectedToXabsl() As Boolean
         Get
             Return Me._Connection.IsConnected
         End Get
     End Property
 
-    Protected Sub ConnectToWss(ByVal host As String, ByVal port As Integer)
+    Protected Sub ConnectToXabsl(ByVal host As String, ByVal port As Integer)
         Me._Connection.Connect(host, port)
     End Sub
 
-    Protected Sub DisconnectFromWss()
+    Protected Sub DisconnectFromXabsl()
         Me._Connection.Disconnect()
     End Sub
 
@@ -124,7 +124,7 @@ Public Class XabslConversation
     Protected Mutex As New Object
 
     Private _Owner As ICommOwner
-    Private _Device As WssDevice
+    Private _Device As XabslDevice
     Private _Client As TcpClient
     Private _Connection As TcpConnection
     Private _AgentName As String
@@ -154,7 +154,7 @@ Public Class XabslConversation
 
     Public Sub StartConversation() Implements ICommConversation.StartConversation
         Me.Start()
-        'Me._Owner.NotifyConversationStarted(Me, "WSS")
+        'Me._Owner.NotifyConversationStarted(Me, "XABSL")
     End Sub
 
     Public Sub StopConversation() Implements ICommConversation.StopConversation
@@ -197,7 +197,7 @@ Public Class XabslConversation
         End If
 
         If String.IsNullOrEmpty(Thread.CurrentThread.Name) Then
-            Thread.CurrentThread.Name = Me._AgentName & " [WssConversation]" & sensor
+            Thread.CurrentThread.Name = Me._AgentName & " [XabslConversation]" & sensor
         End If
 
         Try
@@ -221,9 +221,9 @@ Public Class XabslConversation
                         'while actually it isn't. The ping works nicely though.
 
                         If Now - lastAlive > TimeSpan.FromSeconds(30) Then
-                            'only once per 30 secs, to avoid blowing up the WSS
+                            'only once per 30 secs, to avoid blowing up the XABSL
                             Me.SendText("Ping")
-                            Console.WriteLine("[WssConversation]: Send Ping")
+                            Console.WriteLine("[XabslConversation]: Send Ping")
                             lastAlive = Now
                         End If
 
@@ -254,7 +254,7 @@ Public Class XabslConversation
     ''' <summary>
     ''' This routine actually streams the bytes of the tcp-wire.
     ''' It does so by wrapping the bytes in a SEND command as dictated
-    ''' by the WSS specs.
+    ''' by the XABSL specs.
     ''' </summary>
     ''' <param name="protocol"></param>
     ''' <param name="data"></param>
@@ -351,7 +351,7 @@ Public Class XabslConversation
             Else
                 'expand previously retrieved data and append buffer into it
                 offset = msgbuffer.Length
-                'Console.WriteLine(String.Format("[WssConversation] expand buffer with {0}", offset))
+                'Console.WriteLine(String.Format("[XabslConversation] expand buffer with {0}", offset))
                 ReDim Preserve msgbuffer(msgbuffer.Length + nread - 1)
             End If
 
@@ -366,13 +366,13 @@ Public Class XabslConversation
 
             receivedNewData = True
 
-            'Console.WriteLine("[WssConversation] Receive NewData.")
+            'Console.WriteLine("[XabslConversation] Receive NewData.")
 
 
         End If
 
         '      If Not IsNothing(Me.msgbuffer) Then
-        '           Console.WriteLine(String.Format("[WssConversation] bufferLength {0}", Me.msgbuffer.Length))
+        '           Console.WriteLine(String.Format("[XabslConversation] bufferLength {0}", Me.msgbuffer.Length))
         'End If
 
         'at this point the buffer may contain a complete or a partial message
@@ -393,13 +393,13 @@ Public Class XabslConversation
 
             'Select Case msgprotocol
             '    Case Protocol.Text
-            '        Console.WriteLine(String.Format("[WssConversation] Text msglength {0}", msglength))
+            '        Console.WriteLine(String.Format("[XabslConversation] Text msglength {0}", msglength))
             '    Case Protocol.Binary
-            '        Console.WriteLine(String.Format("[WssConversation] Binary msglength {0}", msglength))
+            '        Console.WriteLine(String.Format("[XabslConversation] Binary msglength {0}", msglength))
             '    Case Protocol.Compressed
-            '        Console.WriteLine(String.Format("[WssConversation] Compressed msglength {0}", msglength))
+            '        Console.WriteLine(String.Format("[XabslConversation] Compressed msglength {0}", msglength))
             '    Case Else
-            '        Console.WriteLine(String.Format("[WssConversation] unknown protocol {0}", msgprotocol))
+            '        Console.WriteLine(String.Format("[XabslConversation] unknown protocol {0}", msgprotocol))
             'End Select
 
             'check if we have this msg in full within the current msgbuffer
@@ -476,7 +476,7 @@ Public Class XabslConversation
     ''' <param name="data"></param>
     ''' <remarks></remarks>
     Protected Sub ReceiveText(ByVal data() As Byte)
-        'Console.WriteLine("[WssConversation] Receiving text.")
+        'Console.WriteLine("[XabslConversation] Receiving text.")
         If Not IsNothing(data) Then
             Dim message As New TextMessage(Encoding.ASCII.GetString(data))
             Me._Owner.NotifyMessageReceived(Me, message)
@@ -498,7 +498,7 @@ Public Class XabslConversation
     Protected Sub SendMessage(ByVal message As Message) Implements ICommConversation.SendMessage
         If IsNothing(message) Then Exit Sub
 
-        'Console.WriteLine("[WssConversation] Sending message.")
+        'Console.WriteLine("[XabslConversation] Sending message.")
 
         Try
 
@@ -548,7 +548,7 @@ Public Class XabslConversation
     Protected Sub ReceiveMessage(ByVal data() As Byte, ByVal useCompression As Boolean)
         If IsNothing(data) Then Exit Sub
 
-        'Console.WriteLine("[WssConversation] Receiving message.")
+        'Console.WriteLine("[XabslConversation] Receiving message.")
 
         Using stream As New MemoryStream(data)
 
