@@ -5,14 +5,14 @@ Imports System.Net.Sockets
 Imports System.Threading
 
 ''' <summary>
-''' The central object that provides Xabsl capabilities to the Agent, adjusted from WssDevice
+''' The central object that provides Xabsl capabilities to the Agent, adjusted from XabslDevice
 ''' 
 ''' The XabslDevice:
 ''' - holds a single TcpConnection to the XABSL server to send 
 ''' information
 ''' - holds a single XabslListener on which it accepts incoming messages
 ''' - holds a single XabslConversation for every currently active connection
-''' with other agents through the WSS. Note: multiple conversations can
+''' with other agents through the XABSL. Note: multiple conversations can
 ''' be active simultaneously.
 ''' </summary>
 ''' <remarks></remarks>
@@ -24,8 +24,8 @@ Public Class XabslDevice
 
     Public Sub New( _
             ByVal owner As ICommOwner, _
-            ByVal wssHost As String, _
-            ByVal wssPort As Integer, _
+            ByVal xabslHost As String, _
+            ByVal xabslPort As Integer, _
             ByVal operatorName As String, _
             ByVal teamMembers As String, _
             ByVal agentName As String, _
@@ -38,24 +38,24 @@ Public Class XabslDevice
         'Thread.Sleep(TimeSpan.FromSeconds(10))
 
         If IsNothing(owner) Then Throw New ArgumentNullException("owner")
-        If String.IsNullOrEmpty(wssHost) Then Throw New ArgumentNullException("wssHost")
+        If String.IsNullOrEmpty(xabslHost) Then Throw New ArgumentNullException("xabslHost")
         If String.IsNullOrEmpty(operatorName) Then Throw New ArgumentNullException("operatorName")
         If String.IsNullOrEmpty(teamMembers) Then Throw New ArgumentNullException("teamMembers")
         If String.IsNullOrEmpty(agentName) Then Throw New ArgumentNullException("agentName")
         If Not IPAddress.TryParse(agentHost, Me._AgentHost) Then Throw New ArgumentException("host should be an IP address", "agentHost")
 
-        'Console.WriteLine(String.Format("[WSSDevice] Creating device for {0} (SpawnNumber {1}) towards host {2} for owner {3}", agentName, agentNumber, agentHost, owner.ToString))
+        'Console.WriteLine(String.Format("[XABSLDevice] Creating device for {0} (SpawnNumber {1}) towards host {2} for owner {3}", agentName, agentNumber, agentHost, owner.ToString))
 
         If Not System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator = System.Globalization.NumberFormatInfo.InvariantInfo.NumberDecimalSeparator Then
             'This prevents reading wrong dBm for European cultures
             Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("en-US", False)
-            Console.WriteLine("[WssDriver:Run]: CurrentCulture is now {0}for thread '{1}'.", System.Globalization.CultureInfo.CurrentCulture.Name, Thread.CurrentThread.Name)
+            Console.WriteLine("[XabslDriver:Run]: CurrentCulture is now {0}for thread '{1}'.", System.Globalization.CultureInfo.CurrentCulture.Name, Thread.CurrentThread.Name)
         End If
 
         'save args in local vars
         Me._Owner = owner
-        Me._WssHost = wssHost
-        Me._WssPort = wssPort
+        Me._XabslHost = xabslHost
+        Me._XabslPort = xabslPort
 
         Me._OperatorName = operatorName
         Me._TeamMembers = New Dictionary(Of String, Integer)
@@ -71,7 +71,7 @@ Public Class XabslDevice
 
         Me._AgentName = agentName
         Me._ListenerPort = 8000 + agentNumber
-        Me._Listener = New WssListener(Me, Me._AgentName, Me._AgentHost, Me._ListenerPort)
+        Me._Listener = New XabslListener(Me, Me._AgentName, Me._AgentHost, Me._ListenerPort)
         Me._Conversations = New Dictionary(Of Integer, ICommConversation)
 
     End Sub
@@ -87,75 +87,77 @@ Public Class XabslDevice
         End Get
     End Property
 
-    Private _WssHost As String
+    Private _XabslHost As String
     Public ReadOnly Property Host() As String Implements ICommDevice.Host
         Get
-            Return Me._WssHost
+            Return Me._XabslHost
         End Get
     End Property
 
-    Private _WssPort As Integer
+    Private _XabslPort As Integer
     Public ReadOnly Property Port() As Integer Implements ICommDevice.Port
         Get
-            Return Me._WssPort
+            Return Me._XabslPort
         End Get
     End Property
 
-    Private _WssConnection As New TcpConnection
-    Public ReadOnly Property WssConnection() As TcpConnection
+    Private _XabslConnection As New TcpConnection
+    Public ReadOnly Property XabslConnection() As TcpConnection
         Get
-            Return Me._WssConnection
+            Return Me._XabslConnection
         End Get
     End Property
 
 #End Region
 
-#Region " TcpConnection to Send Control Messages to WSS "
+#Region " TcpConnection to Send Control Messages to XABSL "
 
 
-    Public ReadOnly Property ConnectedToWss() As Boolean
+    Public ReadOnly Property ConnectedToXabsl() As Boolean
         Get
-            Return Me._WssConnection.IsConnected
+            Return Me._XabslConnection.IsConnected
         End Get
     End Property
 
-    Protected Sub ConnectToWss()
+    Protected Sub ConnectToXabsl()
         Thread.Sleep(TimeSpan.FromSeconds(3)) 'was 1 second, seemed to short for UDK
-        Console.WriteLine("[WssDevice]: ConnectToWSS")
-        Me._WssConnection.Connect(Me._WssHost, Me._WssPort)
+        Console.WriteLine("[XabslDevice]: ConnectToXABSL")
+        Me._XabslConnection.Connect(Me._XabslHost, Me._XabslPort)
     End Sub
 
-    Protected Sub DisconnectFromWss()
-        Console.WriteLine("[WssDevice]: DisconnectToWSS")
+    Protected Sub DisconnectFromXabsl()
+        Console.WriteLine("[XabslDevice]: DisconnectToXABSL")
 
-        Me._WssConnection.Disconnect()
+        Me._XabslConnection.Disconnect()
     End Sub
 
 #End Region
 
-#Region " Wss Commands "
+#Region " Xabsl Commands "
 
-    Protected Function SendWssCommand(ByVal command As String, ByVal waitForReply As Boolean, Optional ByRef reply As String = "") As Boolean
+    ' Sends a command, if waitForReply is set, a reply can be received. When the reply starts with ERROR, success will be set to 'false'.
+    Protected Function SendXabslCommand(ByVal command As String, ByVal waitForReply As Boolean, Optional ByRef reply As String = "") As Boolean
 
         'default to true
         Dim success As Boolean = True
 
-        SyncLock Me._WssConnection
+        SyncLock Me._XabslConnection
 
             Try
+                ' Append \r\n (or the other way around, I dont know)
                 If Not command.Trim.EndsWith(Chr(13) + Chr(10)) Then
                     command += Chr(13) + Chr(10)
                 End If
 
-                Me._WssConnection.Send(command)
+                Me._XabslConnection.Send(command)
 
                 If waitForReply Then
                     'block this thread until acknowledgement or failure message is received
                     Dim done As Boolean = False
                     While Not done
 
-                        If Me._WssConnection.DataAvailable() Then
-                            Dim msg As String = Me._WssConnection.Receive(1024)
+                        If Me._XabslConnection.DataAvailable() Then
+                            Dim msg As String = Me._XabslConnection.Receive(1024)
                             If msg.TrimStart.ToUpper.StartsWith("ERROR") Then
                                 reply = msg
                                 success = False
@@ -182,125 +184,14 @@ Public Class XabslDevice
         End SyncLock
 
         If Not success Then
-            Console.WriteLine(String.Format("[WSS] - ERROR: command: '{0}' received reply '{1}'", command, reply))
+            Console.WriteLine(String.Format("[XABSL] - ERROR: command: '{0}' received reply '{1}'", command, reply))
         End If
 
         Return success
 
     End Function
 
-    Protected Function RegisterAgent() As Boolean
-
-        'note that the request may fail (success = false) because
-        'the agent was already registered. So this function will
-        'not return the response from WSS, but will return whether there
-        'occurred any exceptions.
-
-        Try
-            'Dim success As Boolean = Me.SendWssCommand(String.Format("REGISTER {0} {1};", Me._AgentName, Me._AgentHost), True) 'RoboCup Atlanta 2007 WSS
-            Dim reply As String = ""
-            Dim success As Boolean = Me.SendWssCommand(String.Format("INIT {{Robot {0}}} {{Port {1}}}", Me._AgentName, Me._ListenerPort), True, reply)
-
-            Dim start As Integer = reply.IndexOf("{Status ") + 8
-            Dim until As Integer = reply.IndexOf("}", start)
-
-            If start > 7 AndAlso until > start Then
-                Dim status As String = reply.Substring(start, until - start)
-                If status.Contains("OK") Then
-                    Console.WriteLine(reply)
-                End If
-            End If
-
-        Catch ex As Exception
-            Console.WriteLine(ex)
-            Return False
-        End Try
-
-        'return true by default, see also note above
-        Return True
-
-    End Function
-
-    Protected Function RegisterListenerPort() As Boolean
-
-        'note that the request may fail (success = false) because
-        'the listener was already registered. So this function will
-        'not return the response from WSS, but will return whether there
-        'occurred any exceptions.
-
-        Try
-            Dim success As Boolean = Me.SendWssCommand(String.Format("LISTEN {0} {1};", Me._AgentName, Me._ListenerPort), True)
-        Catch ex As Exception
-            Console.WriteLine(ex)
-            Return False
-        End Try
-
-        'return true by default, see also note above
-        Return True
-
-    End Function
-
-    'Protected Sub RequestConversation(ByVal toRobot As String) Implements ICommDevice.RequestConversation
-    '    If Not Me._TeamMembers.ContainsKey(toRobot) Then
-    '        Console.WriteLine("Conversation requested to unknown robot " & toRobot)
-    '    Else
-    '        Dim toPort As Integer = Me._TeamMembers(toRobot)
-    '        Dim success As Boolean = Me.SendWssCommand(String.Format("OPEN {0} {1} {2} {3};", Me._AgentName, Me._ListenerPort, toRobot, toPort), False)
-    '    End If
-    'End Sub
-
-    Protected Sub RequestDNS(ByVal toRobot As String) Implements ICommDevice.RequestDNS
-        If Not Me._TeamMembers.ContainsKey(toRobot) Then
-            Console.WriteLine("DNS requested of unknown robot " & toRobot)
-        Else
-            Dim reply As String = ""
-            If Me.SendWssCommand(String.Format("DNS {{Robot {0}}}", toRobot), True, reply) Then
-                Console.WriteLine(reply)
-
-                Dim start As Integer = reply.IndexOf("{Port ") + 6
-                Dim until As Integer = reply.IndexOf("}", start)
-
-                If start > 5 AndAlso until > start Then
-                    Dim port As String = reply.Substring(start, until - start)
-                    If IsNumeric(port) Then
-                        Dim number As Integer = Integer.Parse(port)
-                        'Console.WriteLine("[WssDevice] Can connect to port " & number)
-
-
-                        Me._Owner.NotifyDNSReceived(toRobot, number)
-                    End If
-                End If
-            Else
-                Console.WriteLine(String.Format("DNS for Robot {0} FAILED!", toRobot))
-            End If
-        End If
-    End Sub
-
-    Protected Sub RequestSignalStrength(ByVal toRobot As String)
-
-        If Not System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator = System.Globalization.NumberFormatInfo.InvariantInfo.NumberDecimalSeparator Then
-            'This prevents reading wrong dBm for European cultures
-            Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("en-US", False)
-            Console.WriteLine("[WssDriver:RequestSignalStrength]: CurrentCulture is now {0} for thread '{1}'.", System.Globalization.CultureInfo.CurrentCulture.Name, Thread.CurrentThread.Name)
-        End If
-        Dim reply As String = ""
-        If Me.SendWssCommand(String.Format("GETSS {{Robot {0}}}", toRobot), True, reply) Then
-            'Console.WriteLine(reply)
-
-            Dim start As Integer = reply.IndexOf("{Strength ") + 10
-            Dim until As Integer = reply.IndexOf("}", start)
-
-            If start > 9 AndAlso until > start Then
-                Dim pathloss As String = reply.Substring(start, until - start)
-                If IsNumeric(pathloss) AndAlso Not pathloss.Contains("NaN") Then
-                    Dim decibel As Double = Double.Parse(pathloss)
-                    Me._Owner.NotifySignalStrengthReceived(toRobot, decibel)
-                End If
-            End If
-
-        End If
-    End Sub
-
+  
 #End Region
 
 #Region " Device Lifetime "
@@ -324,13 +215,15 @@ Public Class XabslDevice
         '   Throw New Exception("Could not register Listner port")
         'End If
 
-        Me.ConnectToWss()
         While Not Me.RegisterAgent()
             'Throw New Exception("Registering Agent failed")
-            MsgBox("Registering Agent failed. Perhaps start WSS?", MsgBoxStyle.OkOnly, "Registration failure")
-            Me.ConnectToWss()
+            MsgBox("Registering Agent failed. Perhaps start XABSL?", MsgBoxStyle.OkOnly, "Registration failure")
+            Me.ConnectToXabsl()
         End While
+        ' First start a listener for Xabsl to connect to
         Me._Listener.StartListening()
+        ' Then connect to the Xabsl listener
+        Me.ConnectToXabsl()
 
         'start the thread
         Me.Start()
@@ -353,7 +246,7 @@ Public Class XabslDevice
 
         With Thread.CurrentThread
             If String.IsNullOrEmpty(.Name) Then
-                .Name = Me._AgentName & " [WssDevice]"
+                .Name = Me._AgentName & " [XabslDevice]"
             End If
             .IsBackground = True
         End With
@@ -405,7 +298,7 @@ Public Class XabslDevice
                 'Console.WriteLine("Opening conversation with id")
                 'Console.WriteLine(convID)
 
-                Dim conversation As New WssConversation(Me._Owner, Me, convID, client, Me._AgentName, False) 'You can use False if JPEG, but because already compressed. Yet, doesnot seem to slow down.
+                Dim conversation As New XabslConversation(Me._Owner, Me, convID, client, Me._AgentName, False) 'You can use False if JPEG, but because already compressed. Yet, doesnot seem to slow down.
 
                 'NICK
                 conversation.ConversationCam = cam
@@ -438,7 +331,7 @@ Public Class XabslDevice
                 Console.WriteLine(String.Format("Connected to client on port {0}", otherIpPoint.Port))
 
                 Dim uniqueID As Guid = Guid.NewGuid
-                Dim conversation As New WssConversation(Me._Owner, Me, otherIpPoint.Port, client, Me._AgentName, True) 'Lets try, compression seems to take much processing time
+                Dim conversation As New XabslConversation(Me._Owner, Me, otherIpPoint.Port, client, Me._AgentName, True) 'Lets try, compression seems to take much processing time
                 'NICK
                 conversation.incoming = True
                 Me._Conversations.Add(otherIpPoint.Port, conversation)
@@ -447,8 +340,8 @@ Public Class XabslDevice
 
                 Dim reply As String = ""
 
-                'If Me.SendWssCommand(String.Format("REVERSEDNS {{Port {0}}}{1}", otherIpPoint.Port, Environment.NewLine), True, reply) Then
-                If Me.SendWssCommand(String.Format("REVERSEDNS {{Port {0}}}", otherIpPoint.Port), True, reply) Then
+                'If Me.SendXabslCommand(String.Format("REVERSEDNS {{Port {0}}}{1}", otherIpPoint.Port, Environment.NewLine), True, reply) Then
+                If Me.SendXabslCommand(String.Format("REVERSEDNS {{Port {0}}}", otherIpPoint.Port), True, reply) Then
                     Console.WriteLine(reply)
                     'expected REVERSEDNSREPLY {Port PortNumber} {Robot RobotName}
                     'when not use REVERSEDNSREPLY {Port PortNumber} {Error UnknownOrIllegalPort}
@@ -492,7 +385,7 @@ Public Class XabslDevice
 
     '        Try
     '            Dim uniqueID As Guid = Guid.NewGuid
-    '            Dim conversation As New WssConversation(Me._Owner, Me, uniqueID, connection, Me._AgentName, True)
+    '            Dim conversation As New XabslConversation(Me._Owner, Me, uniqueID, connection, Me._AgentName, True)
     '            Me._Conversations.Add(uniqueID, conversation)
     '            conversation.StartConversation()
 
@@ -503,13 +396,13 @@ Public Class XabslDevice
 
     '    End SyncLock
 
-    '    'WSS will automatically remove the registration of the listener 
+    '    'XABSL will automatically remove the registration of the listener 
     '    'for the agent that did NOT request the conversation. Since we 
     '    'don't keep track of who requested the conversation, we simply
     '    're-register the listener on both endpoints. For one of these
     '    'this registration will return a 'Already Registered' failure,
     '    'but that's ok.
-    '    '[TODO: Does the 2008 WSS still automatically remove the registration of the listener?]
+    '    '[TODO: Does the 2008 XABSL still automatically remove the registration of the listener?]
     '    'Me.RegisterListenerPort()
 
     'End Sub

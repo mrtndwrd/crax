@@ -6,7 +6,7 @@ Imports System.Threading
 
 ''' <summary>
 ''' Listens to a dedicated listen-port and accepts incoming 
-''' connections from the WSS.
+''' connections from the XABSL.
 ''' </summary>
 ''' <remarks></remarks>
 Public Class XabslListener
@@ -41,7 +41,7 @@ Public Class XabslListener
 
         With Thread.CurrentThread
             If String.IsNullOrEmpty(.Name) Then
-                .Name = Me._AgentName & " [WssListener]"
+                .Name = Me._AgentName & " [XabslListener]"
             End If
             .IsBackground = True
         End With
@@ -50,10 +50,10 @@ Public Class XabslListener
 
             Try
 
-                'accept incoming tcp connection from WSS
+                'accept incoming tcp connection from XABSL
                 Dim client As TcpClient = Me._Listener.AcceptTcpClient
 
-                Console.WriteLine(String.Format("Accepted to client from WSS"))
+                Console.WriteLine(String.Format("Accepted to client from XABSL"))
 
                 'forward client to device 
 
@@ -63,7 +63,7 @@ Public Class XabslListener
 
 
             Catch ex As Exception
-                Console.WriteLine(String.Format("[WSSListener] connection to WSS closed (exception handled)"))
+                Console.WriteLine(String.Format("[XABSLListener] connection to XABSL closed (exception handled)"))
                 Console.WriteLine(ex)
 
             End Try
