@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE symbol-and-basic-behavior-files SYSTEM "../symbol-and-basic-behavior-files.dtd">
+<option xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="drive_circle" initial-state="turn">
+  &my_symbols;
+  &my_basic_behaviors;
+  &options;
+  <state name="turn">
+    <subsequent-basic-behavior ref="turn">
+      <set-parameter ref="turn.degrees">
+        <decimal-value value="10"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <set-decimal-output-symbol ref="ammount_turned">
+      <plus>
+        <decimal-output-symbol-ref ref="ammount_turned"/>
+        <decimal-value value="1"/>
+      </plus>
+    </set-decimal-output-symbol>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-output-symbol-ref ref="ammount_turned"/>
+            <decimal-value value="360"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="turn"/>
+      </if>
+      <else>
+        <transition-to-state ref="done"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="done">
+    <set-decimal-output-symbol ref="stayed">
+      <plus>
+        <decimal-output-symbol-ref ref="stayed"/>
+        <decimal-value value="1"/>
+      </plus>
+    </set-decimal-output-symbol>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-output-symbol-ref ref="stayed"/>
+            <decimal-value value="1000"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="done"/>
+      </if>
+      <else>
+        <transition-to-state ref="turn"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>

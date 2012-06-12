@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.net.ServerSocket;
 import java.io.IOException;
 
 import de.xabsl.jxabsl.IntermediateCodeMalformedException;
@@ -52,11 +53,15 @@ public class Robot {
         // Instantiate receiveQueue
         receiveQueue = new ArrayBlockingQueue<String>(RQCAPACITY);
         // The socket needed for the connection with UsarCommander:
-        // TODO: This socket is now hardcoded, that's not desirable!
+        // TODO: This sockets is now hardcoded, that's not desirable!
+        ServerSocket ss = null;
         Socket socket = null;
         try
         {
-            socket = new Socket("127.0.0.1", 5000);
+            ss = new ServerSocket(7001);
+            System.out.println("Waiting for connection to UsarCommander");
+            socket = ss.accept();
+            System.out.printf("Accepted connection from ip %s:%d", socket.getInetAddress().toString(), socket.getPort());
         }
         catch(Exception e)
         {
@@ -73,7 +78,7 @@ public class Robot {
             System.out.println("Couldn't make any connection with UsarCommander");
             e.printStackTrace();
         }
-
+        usarConnection.sendMessage("Robot connection accepted");
 
         // I won't be needing a world representation hiero...
 		//this.world = world;

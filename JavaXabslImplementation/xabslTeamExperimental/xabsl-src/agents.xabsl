@@ -1,4 +1,4 @@
-/***
+/**
   Title: XABSL tryout
   Platform: RoboRescue.
   Software-Environment: RoboRescue environment
@@ -10,5 +10,5 @@ include "Options/testOption.xabsl";
 include "Options/drive_circle.xabsl";
 
 /** Start an agent with a name and a specified option. */
-agent test("Test", drive_circle);
-
+agent drive_circle("DriveCircle", drive_circle);
+agent corridorWalk("CorridorWalk", walk_corridor);
