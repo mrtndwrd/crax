@@ -61,7 +61,7 @@ public class Robot {
             ss = new ServerSocket(7001);
             System.out.println("Waiting for connection to UsarCommander");
             socket = ss.accept();
-            System.out.printf("Accepted connection from ip %s:%d", socket.getInetAddress().toString(), socket.getPort());
+            System.out.printf("Accepted connection from ip %s:%d\n", socket.getInetAddress().toString(), socket.getPort());
         }
         catch(Exception e)
         {
@@ -78,7 +78,16 @@ public class Robot {
             System.out.println("Couldn't make any connection with UsarCommander");
             e.printStackTrace();
         }
+        usarConnection.start();
+        System.out.println("Started listening to UsarCommander, Sending first message");
         usarConnection.sendMessage("Robot connection accepted");
+        System.out.println("Waiting for first reaction");
+        try{
+            Thread.sleep(1000);
+        System.out.println(receiveQueue.take());
+           }
+        catch (Exception e){}
+        System.out.println("done sleeping");
 
         // I won't be needing a world representation hiero...
 		//this.world = world;

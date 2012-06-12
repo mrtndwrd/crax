@@ -6,19 +6,5 @@ namespace my_basic_behaviors("My Basic Behaviors") {
     float x [1..78] "px"; 
     float y [1..78] "px"; 
   }
-
-  /** Drives forward for <distance> meters */
-  behavior drive_forward
-  {
-      /** The number of meters to drive forward */
-      float distance;
-  }
-
-  /** Turns the robot a couple of degrees */
-  behavior turn
-  {
-      /** Number of degrees to turn the robot */
-      float degrees;
-  }
 }
 

@@ -7,8 +7,7 @@
 include "my-basic-behaviors.xabsl";
 include "my-symbols.xabsl";
 include "Options/testOption.xabsl";
-include "Options/drive_circle.xabsl";
 
 /** Start an agent with a name and a specified option. */
-agent test("Test", drive_circle);
+agent test("Test", testOption);
 

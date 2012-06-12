@@ -15,25 +15,20 @@ d y
 
 
 // number of output symbols
-2
+0
 // output symbols
 // (d decimal-output-symbol | b boolean-output-symbol | e enum-name enumerated-output-symbol)+
-d ammount_turned 
-d stayed 
 
 
 // number of options
-2
+1
 //options: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
-drive_circle 0 
 testOption 0 
 
 
 // number of basic behaviors
-3
+1
 //basic behaviors: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
 test 2 d test.x d test.y 
-drive_forward 1 d drive_forward.distance 
-turn 1 d turn.degrees 
 
 
