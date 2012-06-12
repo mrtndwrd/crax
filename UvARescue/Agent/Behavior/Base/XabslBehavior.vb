@@ -27,7 +27,7 @@ Public Class XabslBehavior
     ' OnActivated: Seems to be the overridable method that can be ran when the Behavior's "Activate" is called.
     Protected Overrides Sub OnActivated()
         MyBase.OnActivated()
-        Me.xa.ConnectToXabsl()
+        Me.xa.startRunning()
         Console.WriteLine("[XABSLBEHAVIOR] Activating connection")
         ' Activate listen socket for JavaXabslEngine
 
@@ -37,7 +37,7 @@ Public Class XabslBehavior
     Protected Overrides Sub OnDeActivated()
         MyBase.OnDeActivated()
         ' Close listen socket for JavaXabslEngine
-        Me.xa.DisconnectFromXabsl()
+        Me.xa.stopRunning()
         Me.Control.DeActivateMotion(MotionType.XabslCorridorWalk)
     End Sub
 

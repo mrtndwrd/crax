@@ -12,7 +12,7 @@ XABSL_OUTPUT_DIR = ../../intermediateCode
 INTERMEDIATE_CODE = intermediate-code.dat
 DEBUG_SYMBOLS = debug-symbols.dat
 DOC_OUTPUT_DIR = ../xabsl-doc
-XABSL_TEMP_DIR = ./temp
+XABSL_TEMP_DIR = .
 XML_OUTPUT_DIR = ../xabsl-xml
 XABSL_COMPILER_OPTIONS =
 

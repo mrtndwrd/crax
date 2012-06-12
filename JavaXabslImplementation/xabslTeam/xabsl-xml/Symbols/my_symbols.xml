@@ -2,6 +2,4 @@
 <symbols xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="my_symbols" title="My Symbols" description="My most used symbols">
   <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
   <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
-  <decimal-output-symbol name="ammount_turned" description="The ammount my robot has turned" measure="" range="" internal="true"/>
-  <decimal-output-symbol name="stayed" description="A counter" measure="" range="" internal="true"/>
 </symbols>

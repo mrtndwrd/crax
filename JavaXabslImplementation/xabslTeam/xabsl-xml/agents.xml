@@ -6,10 +6,9 @@
   <title>XABSL tryout</title>
   <platform>RoboRescue.</platform>
   <software-environment>RoboRescue environment</software-environment>
-  <agent id="drive_circle" title="DriveCircle" description="Start an agent with a name and a specified option." root-option="drive_circle"/>
+  <agent id="test" title="Test" description="Start an agent with a name and a specified option." root-option="testOption"/>
   &options;
   <options>
-    <xi:include href="Options/drive_circle.xml"/>
     <xi:include href="Options/testOption.xml"/>
   </options>
 </agent-collection>

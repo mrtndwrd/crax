@@ -4,10 +4,4 @@
     <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
     <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
   </basic-behavior>
-  <basic-behavior name="drive_forward" description="Drives forward for &lt;distance&gt; meters">
-    <decimal-parameter name="drive_forward.distance" measure="m" range="1..100" description="The number of meters to drive forward"/>
-  </basic-behavior>
-  <basic-behavior name="turn" description="Turns the robot a couple of degrees">
-    <decimal-parameter name="turn.degrees" measure="deg" range="1..360" description="Number of degrees to turn the robot"/>
-  </basic-behavior>
 </basic-behaviors>

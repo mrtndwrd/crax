@@ -46,6 +46,7 @@ public class ConnectionHandler extends Thread {
 		setPassive(false);
 		setBidirectional(bidirection);
 		out = new PrintWriter(socket.getOutputStream(), true);
+        in = new MessageReader(socket.getInputStream());
 	}
 
 	/** Thread logic. */
@@ -64,9 +65,9 @@ public class ConnectionHandler extends Thread {
 					break;
                 }
 			} catch (Exception e) {
-				System.out.println(String
-								.format("%s IN ConnectionHandler.run, attempting to read message.",
-										e.getMessage()));
+				//System.out.println(String
+				//    .format("%s IN ConnectionHandler.run, attempting to read message.",
+				//						e.getMessage()));
 				e.printStackTrace();
 			}
 		}
