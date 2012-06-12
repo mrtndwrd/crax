@@ -11,14 +11,14 @@ namespace my_basic_behaviors("My Basic Behaviors") {
   behavior drive_forward
   {
       /** The number of meters to drive forward */
-      float distance;
+      float distance [1..100] "m";
   }
 
   /** Turns the robot a couple of degrees */
   behavior turn
   {
       /** Number of degrees to turn the robot */
-      float degrees;
+      float degrees [1..360] "deg";
   }
 }
 
