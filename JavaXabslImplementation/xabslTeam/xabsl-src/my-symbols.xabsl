@@ -7,5 +7,11 @@ namespace my_symbols("My Symbols") {
   /** The y position of the player */
   float input y;
 
+  /** the ammount turned in turn() */
+  float input ammount_turned [1..360] "deg";
+
+  /** the ammount stayed in turn() */
+  float input stayed [1..infty] "s";
+
 }
 

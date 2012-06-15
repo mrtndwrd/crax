@@ -1,6 +1,5 @@
 package jxi.engine;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
@@ -32,10 +31,12 @@ import jxi.connection.ConnectionHandler;
 public class Robot {
     /** Capacity for the receiveQueue */
     public static final int RQCAPACITY = 10;
-    /** some x */
-	private float x;
-    /** some y */
-	private float y;
+
+    /** Variables that can be accesed by the engine: */
+    /** some ammount_turned */
+	private float ammount_turned;
+    /** some stayed */
+	private float stayed;
     /** The XabslEngine on which this robot bases its behavior */
 	protected Engine engine;
     /** A queue for all the messages that are to be parsed: */
@@ -43,6 +44,14 @@ public class Robot {
     /** ConnectionHandler for the connection with UsarCommander */
     ConnectionHandler usarConnection;
     
+    /** Variables that are accesed by behaviors: */
+    /** Speed for DifferentialDrive */
+    double differentialDriveSpeed = 0;
+    /** Turning speed for DifferentialDrive */
+    double differentialDriveTurningSpeed = 0;
+    /** Time for 'wait' */
+    double waitTime = 0;
+
     /** 
      * Constructor, socket connection is now hardcoded to 127.0.0.1:5005
      */
@@ -59,13 +68,13 @@ public class Robot {
         try
         {
             ss = new ServerSocket(7001);
-            System.out.println("Waiting for connection to UsarCommander");
+            System.out.println("[ROBOT] Waiting for connection to UsarCommander");
             socket = ss.accept();
-            System.out.printf("Accepted connection from ip %s:%d\n", socket.getInetAddress().toString(), socket.getPort());
+            System.out.printf("[ROBOT] Accepted connection from ip %s:%d\n", socket.getInetAddress().toString(), socket.getPort());
         }
         catch(Exception e)
         {
-            System.out.println("Couldn't make socket");
+            System.out.println("[ROBOT] Couldn't make socket");
             e.printStackTrace();
         }
         // Instantiate connection
@@ -75,19 +84,20 @@ public class Robot {
         }
         catch(IOException e)
         {
-            System.out.println("Couldn't make any connection with UsarCommander");
+            System.out.println("[ROBOT] Couldn't make any connection with UsarCommander");
             e.printStackTrace();
         }
         usarConnection.start();
-        System.out.println("Started listening to UsarCommander, Sending first message");
+        System.out.println("[ROBOT] Started listening to UsarCommander, Sending first message");
         usarConnection.sendMessage("Robot connection accepted");
-        System.out.println("Waiting for first reaction");
+        System.out.println("[ROBOT] Waiting for first reaction");
         try{
-            Thread.sleep(1000);
-        System.out.println(receiveQueue.take());
+            Thread.sleep(10000);
+            //System.out.println(receiveQueue.take());
            }
         catch (Exception e){}
-        System.out.println("done sleeping");
+        System.out.println("[ROBOT] done sleeping");
+        //usarConnection.sendMessage("DRIVE:10");
 
         // I won't be needing a world representation hiero...
 		//this.world = world;
@@ -107,24 +117,25 @@ public class Robot {
 		// TODO: Probably not needed.
 		//Field field;
 
-        // Register x as a decimal input symbol
+        // Register ammount_turned as a decimal input symbol
 		Class<? extends Robot> thisClass = this.getClass();
-		Method method = thisClass.getMethod("currentX");
-		engine.registerDecimalInputSymbol("x",
+		Method method = thisClass.getMethod("get_ammount_turned");
+		engine.registerDecimalInputSymbol("ammount_turned",
 				new DecimalInputSymbolImpl(new InputFromMethod(method, this),
 						Conversions
 								.getDecimalConversion(method.getReturnType()),
 						new String[]{}, engine, myDebug));
        
-		method = thisClass.getMethod("currentY");
-		engine.registerDecimalInputSymbol("y",
+		method = thisClass.getMethod("get_stayed");
+		engine.registerDecimalInputSymbol("stayed",
 				new DecimalInputSymbolImpl(new InputFromMethod(method, this),
 						Conversions
 								.getDecimalConversion(method.getReturnType()),
 						new String[]{}, engine, myDebug));
-        // TODO: Make degrees the right kind of registered symbol
-        double degrees = 10;
-		engine.registerBasicBehavior(new Turn("turn", myDebug, usarConnection, degrees));
+        //// TODO: Make degrees the right kind of registered symbol
+        //double degrees = 10;
+		engine.registerBasicBehavior(new DifferentialDrive("differential_drive", myDebug, usarConnection, differentialDriveSpeed, differentialDriveTurningSpeed));
+		engine.registerBasicBehavior(new Wait("wait", myDebug, usarConnection, waitTime));
 
 		try
         {
@@ -134,26 +145,25 @@ public class Robot {
         }
         catch(Exception e)
         {
-            System.out.println("Cought exception in accessing intermediate code");
+            System.out.println("[ROBOT] Cought exception in accessing intermediate code");
             e.printStackTrace();
         }
-        usarConnection.sendMessage("Done initializing");
-
-        System.out.println("Na maken engine\n");
+        engine.execute();
+        System.out.println("[ROBOT] Na maken engine\n");
     }
 
     public BasicBehavior createTestBehavior(PrintStreamDebug myDebug)
     {
-        return new TestBehavior("test", myDebug, usarConnection, x, y);
+        return new TestBehavior("test", myDebug, usarConnection, ammount_turned, stayed);
     }
     
-    public float currentX()
+    public float get_ammount_turned()
     {
-        return this.x;
+        return this.ammount_turned;
     }
-    public float currentY()
+    public float get_stayed()
     {
-        return this.y;
+        return this.stayed;
     }
 
     public ArrayBlockingQueue<String> getReceiveQueue()

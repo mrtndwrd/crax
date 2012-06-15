@@ -6,5 +6,16 @@ namespace my_basic_behaviors("My Basic Behaviors") {
     float x [1..78] "px"; 
     float y [1..78] "px"; 
   }
+
+  /** A basic behavior for the differentialDrive in UsarCommander */
+  behavior differential_drive {
+    float speed [0..100] "";
+    float turning_speed [1..100] "";
+  }
+
+  /** A basic behavior to wait */
+  behavior wait {
+    float time [0..infty] "s";
+  }
 }
 
