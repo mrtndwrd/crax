@@ -20,7 +20,7 @@ public class MyDecimalParameter implements DecimalParameter
         this.parameter = value;
     }
 
-    public double get(Object value)
+    public double get()
     {
         return parameter;
     }

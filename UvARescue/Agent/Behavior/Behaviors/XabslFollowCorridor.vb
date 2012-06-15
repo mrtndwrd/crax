@@ -1,5 +1,5 @@
 ﻿Public Class XabslFollowCorridor
-    Inherits XabslBehavior
+    Inherits Behavior
 
     ' Constructor 
     Public Sub New(ByVal control As BehaviorControl)

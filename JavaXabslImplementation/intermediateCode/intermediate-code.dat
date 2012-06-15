@@ -4,50 +4,43 @@
 0
 
 1
-testOption 0
+drive_circle 0
 
 2
-test_state_1 n
-test_state_2 n
+turn n
+done n
 
-test_state_1
+turn
 0
 1
-a test
+a differential_drive
 2
-d test.x
-+
-i x
-0
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
 v 1
-d test.y
-i y
-0
 i
 <
-i x
+i ammount_turned
 0
-v 10
-t test_state_1
-t test_state_2
+v 360
+t turn
+t done
 0
 1
-a test
-2
-d test.x
-v 0
-d test.y
-i y
-0
+a wait
+1
+d wait.time
+v 10
 i
-=
-i x
+<
+i stayed
 0
 v 10
-t test_state_2
-t test_state_1
+t done
+t turn
 
 
 
 1
-test testOption
+drive_circle drive_circle
