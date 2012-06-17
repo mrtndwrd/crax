@@ -45,7 +45,7 @@
         <decimal-value value="0"/>
       </set-parameter>
       <set-parameter ref="differential_drive.turning_speed">
-        <decimal-value value="1"/>
+        <decimal-value value="-0.3"/>
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
@@ -64,14 +64,22 @@
     </decision-tree>
   </state>
   <state name="done">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
     <subsequent-basic-behavior ref="wait">
       <set-parameter ref="wait.time">
-        <decimal-value value="10"/>
+        <decimal-value value="1"/>
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
       <if>
-        <condition description="">
+        <condition description="If we have waited 10 seconds, start over.">
           <less-than>
             <decimal-input-symbol-ref ref="stayed"/>
             <decimal-value value="10"/>
