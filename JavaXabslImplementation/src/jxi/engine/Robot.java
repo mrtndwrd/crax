@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.io.IOException;
+import java.lang.String;
 
 import de.xabsl.jxabsl.IntermediateCodeMalformedException;
 import de.xabsl.jxabsl.behavior.BasicBehavior;
@@ -51,6 +52,11 @@ public class Robot {
     double differentialDriveTurningSpeed = 0;
     /** Time for 'wait' */
     double waitTime = 0;
+
+    /** Internal world variables 
+     *  Maybe later I should put them in a seperate object 
+     */
+    double currentAngle;
 
     /** 
      * Constructor, socket connection is now hardcoded to 127.0.0.1:5005
@@ -148,8 +154,30 @@ public class Robot {
             System.out.println("[ROBOT] Cought exception in accessing intermediate code");
             e.printStackTrace();
         }
-        engine.execute();
-        System.out.println("[ROBOT] Na maken engine\n");
+        while(usarConnection.isConnAlive())
+        {
+            // Remove all the sensor data from ancient history, since
+            // we are not going to use that for reasoning. The first data to
+            // come in will be used by parseMessage.
+            receiveQueue.clear();
+            try
+            {
+                System.out.println("[ROBOT] Executing engine");
+                engine.execute();
+                System.out.println("asking for groundTruth");
+                parseMessage(receiveQueue.take());
+                System.out.printf("ammount turned is now %f\n", ammount_turned);
+                //ammount_turned += 10;
+            }
+            catch (Exception e)
+            {
+                System.out.println("Something went wrong while executing the engine");
+                e.printStackTrace();
+            }
+        }
+        if(usarConnection.isConnAlive())
+            System.out.println("Connection is still alive");
+        System.out.println("[ROBOT] done");
     }
 
     public BasicBehavior createTestBehavior(PrintStreamDebug myDebug)
@@ -169,6 +197,28 @@ public class Robot {
     public ArrayBlockingQueue<String> getReceiveQueue()
     {
         return receiveQueue;
+    }
+
+    public void parseMessage(String message)
+    {
+        System.out.printf("Parsing message %s\n", message);
+        String messageArray[] = message.split(":");
+        if(messageArray[0].equals("GROUNDTRUTH"))
+        {
+            double angle = Double.parseDouble(messageArray[1]);
+            if(currentAngle != 0)
+            {
+                double angleDiff = Math.abs(currentAngle - angle);
+                // Probably reached 360)
+                if (angleDiff > 300)
+                {
+                    angleDiff -= 360;
+                }
+                ammount_turned += angleDiff;
+                System.out.println("changing ammount_turned to " + ammount_turned);
+            }
+            currentAngle = angle;
+        }
     }
 }
 

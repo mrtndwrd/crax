@@ -18,7 +18,7 @@ a differential_drive
 d differential_drive.speed
 v 0
 d differential_drive.turning_speed
-v 1
+v -0.3
 i
 <
 i ammount_turned
@@ -27,11 +27,17 @@ v 360
 t turn
 t done
 0
-1
+2
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v 0
 a wait
 1
 d wait.time
-v 10
+v 1
 i
 <
 i stayed

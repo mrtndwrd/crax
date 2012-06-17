@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.Thread;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 import jxi.engine.*;
 
 /**
- * 
  * This class represents a connection with another module. It continues to
  * listen for incoming messages and puts them in the BlockingQueue of the
  * abstract base. There the message will wait until it can be processed by the
@@ -30,6 +30,11 @@ public class ConnectionHandler extends Thread {
 	private PrintWriter out;
 	private MessageReader in;
 	private boolean alive = true;
+    /** New line character, to make it work under windows */
+    public static String newline = System.getProperty("line.separator");
+
+    /** Variable to make sure the same message is never sent twice */
+    private String lastSentMessage;
 
 	/**
 	 * The constructor, saves arguments and reads in- and outcoming streams from
@@ -45,6 +50,7 @@ public class ConnectionHandler extends Thread {
         this.robot = robot;
 		setPassive(false);
 		setBidirectional(bidirection);
+        setConnAlive(true);
 		out = new PrintWriter(socket.getOutputStream(), true);
         in = new MessageReader(socket.getInputStream());
 	}
@@ -54,6 +60,7 @@ public class ConnectionHandler extends Thread {
 		while (true) {
 			try {
 				String incomingMessage = in.readMessage();
+                //System.out.println("Read message: " + incomingMessage);
 				robot.getReceiveQueue().put(incomingMessage);
 			} catch (SocketTimeoutException e) {
 				System.out.println(String.format(
@@ -64,11 +71,15 @@ public class ConnectionHandler extends Thread {
 					setConnAlive(false);
 					break;
                 }
+            } catch(SocketException e) {
+                System.out.println("Socket down, exiting");
+                setConnAlive(false);
 			} catch (Exception e) {
 				//System.out.println(String
 				//    .format("%s IN ConnectionHandler.run, attempting to read message.",
 				//						e.getMessage()));
 				e.printStackTrace();
+                setConnAlive(false);
 			}
 		}
 	}
@@ -76,9 +87,23 @@ public class ConnectionHandler extends Thread {
 	/**
 	 * Sends a message object, this is currently only the message object
 	 * toString().
+     * Sleeps a second after sending, to work with Visual Basics 
+     * poor network stream reading
 	 */
 	public void sendMessage(String message) {
-		out.println(message);
+        if (!message.equals(lastSentMessage))
+        {
+            out.println(message);
+            /* This was needed for when too many messages are sent. 
+             * Let's hope that doesn't happen :( 
+            try{
+                Thread.sleep(1000);
+            } catch(Exception e){}
+            */
+            lastSentMessage = message;
+        }
+        else
+            System.out.println("[CONNECTIONHANDLER] Not sending duplicate message: " + message);
 	}
 
 	public boolean isConnAlive() {
