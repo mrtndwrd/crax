@@ -1,11 +1,11 @@
-/** Makes the agent be aware of its role, by the enumerated input symbol chosen_behavior */
+/** Makes the agent be aware of its role, by the enumerated input symbol current_behavior */
 option choose_role
 {
     initial state get_role
     {
         decision
         {
-            if(chosen_behavior == drive_circle)
+            if(current_behavior == DRIVE_CIRCLE)
             {
                 goto drive_circle_state;
             }
@@ -23,7 +23,7 @@ option choose_role
     {
         decision
         {
-            if(chosen_behavior == drive_circle)
+            if(current_behavior == DRIVE_CIRCLE)
             {
                 stay;
             }

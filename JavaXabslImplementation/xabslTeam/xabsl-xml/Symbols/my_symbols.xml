@@ -5,8 +5,8 @@
   <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
   <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
   <enumeration name="behaviors" description="All possible behaviors for choose_role">
-    <enum-element name="behaviors.drive_circle"/>
-    <enum-element name="behaviors.unexistant_behavior"/>
+    <enum-element name="behaviors.DRIVE_CIRCLE"/>
+    <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
-  <enumerated-input-symbol name="chosen_behavior" enumeration="behaviors" description=""/>
+  <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description=""/>
 </symbols>
