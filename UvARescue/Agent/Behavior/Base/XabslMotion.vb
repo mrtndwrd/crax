@@ -11,12 +11,15 @@ Public Class XabslMotion
     Protected host As String
     Protected sock As Socket
     Public xa As XabslAll
+    Public desiredBehavior As String
 
     Public Sub New(ByVal control As MotionControl)
         MyBase.New(control)
         ' Setting my host and string, should be dynamic, but for now it's not.
-        Me.host = "192.168.2.11"
-        Me.port = 7001
+        ' Now handled by readXabslConfig
+        'Me.host = "192.168.2.11"
+        'Me.port = 7001
+        readXabslConfig()
         Me.xa = New XabslAll(Me, Me.host, Me.port)
         Console.WriteLine("[RIKNOTE] Agent\Behavior\Behaviors\XabslBehavior.vb::New() called")
     End Sub
@@ -25,7 +28,45 @@ Public Class XabslMotion
     Protected Overrides Sub OnActivated()
         MyBase.OnActivated()
         Me.xa.startRunning()
+        Me.xa.SendMessage("BEHAVIOR:" + Me.desiredBehavior)
         Console.WriteLine("[XABSLBEHAVIOR] Activating connection")
+    End Sub
+
+    Protected Sub readXabslConfig()
+        Dim fileReader As System.IO.StreamReader
+        Try
+            fileReader = _
+            My.Computer.FileSystem.OpenTextFileReader("../../../configs/xabslConfig.cfg")
+        Catch e As IO.FileNotFoundException
+            Console.WriteLine("couldn't find xabsl config file. Are you sure it is in configs/?")
+            Me.host = "127.0.0.1"
+            Me.port = 7001
+            Me.desiredBehavior = "drive_circle"
+            Exit Sub
+        End Try
+
+        Dim stringReader As String
+        Dim sides() As String
+        While (Not fileReader.EndOfStream)
+            stringReader = fileReader.ReadLine()
+            sides = Split(stringReader, " = ")
+            Select Case sides(0)
+                Case "agentNumber"
+                    ' Don't handle yet
+                Case "xabslhost"
+                    Console.WriteLine("[XABSLMOTION] setting xabslHost to {0}", sides(1))
+                    Me.host = sides(1)
+                Case "xabslport"
+                    Console.WriteLine("[XABSLMOTION] setting xabslport to {0}", sides(1))
+                    Me.port = Integer.Parse(sides(1))
+                Case "xabslBehavior"
+                    Console.WriteLine("[XABSLMOTION] setting desiredBehavior to {0}", sides(1))
+                    Me.desiredBehavior = sides(1)
+                Case Else
+                    Console.WriteLine("Couldn't parse rule {0}", stringReader)
+            End Select
+        End While
+
     End Sub
 
     ' Same story as onActivated
