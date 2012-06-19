@@ -16,10 +16,30 @@ namespace my_symbols("My Symbols") {
   /** All possible behaviors for choose_role */
   enum behaviors {
       DRIVE_CIRCLE,
+      WALK_CORRIDOR,
       UNEXISTANT_BEHAVIOR
   };
   
+  /** Behavior currently activated by the user */
   enum behaviors input current_behavior;
 
+  /** maximum distance the robot may have from a wall */
+  float const walk_corridor.maxDistance = 0.1;
+
+  /** Laser sensor information for west-north-west region*/
+  float input laser_min_wnw;
+  /** Laser sensor information for north-west region*/
+  float input laser_min_nw;
+  /** Laser sensor information for north-north-west region */
+  float input laser_min_nnw;
+  /** Laser sensor information for north-north-east region */
+  float input laser_min_nne;
+  /** Laser sensor information for north-east region */
+  float input laser_min_ne;
+  /** Laser sensor information for east-north-east region */
+  float input laser_min_ene;
+
+
+    
 }
 
