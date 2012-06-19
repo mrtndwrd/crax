@@ -11,12 +11,19 @@ option choose_role
             }
             else
             {
-                stay;
+                if(current_behavior == WALK_CORRIDOR)
+                {
+                    goto walk_corridor_state;
+                }
+                else
+                {
+                    stay;
+                }
             }
         }
         action
         {
-            wait(time=1);
+            wait(time=1);   
         }
     }
     state drive_circle_state
@@ -36,6 +43,25 @@ option choose_role
         {
             drive_circle();
         }
+    }
+    state walk_corridor_state
+    {
+        decision
+        {
+            if(current_behavior == WALK_CORRIDOR)
+            {
+                stay;
+            }
+            else
+            {
+                goto get_role;
+            }
+        }
+        action
+        {
+            walk_corridor();
+        }
+
     }
 }
 
