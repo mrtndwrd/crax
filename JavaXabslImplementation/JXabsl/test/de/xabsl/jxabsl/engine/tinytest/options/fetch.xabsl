@@ -1,0 +1,19 @@
+
+
+/** Fetch */
+
+
+option fetch {
+
+  initial state look_around {
+    
+    decision {
+    	stay;
+    }
+    
+    action {
+     i = 3;
+    }
+  }
+}
+

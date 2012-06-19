@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<symbols xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
+  <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
+  <enumeration name="behaviors" description="All possible behaviors for choose_role">
+    <enum-element name="behaviors.drive_circle"/>
+    <enum-element name="behaviors.unexistant_behavior"/>
+  </enumeration>
+  <enumerated-input-symbol name="chosen_behavior" enumeration="behaviors" description=""/>
+</symbols>

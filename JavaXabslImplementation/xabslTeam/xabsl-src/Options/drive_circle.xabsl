@@ -1,0 +1,42 @@
+/** Drives a circle a couple of times */
+option drive_circle
+{
+    initial state turn
+    {
+        decision
+        {
+            if(ammount_turned < 360)
+            {
+                stay;
+            }
+            else
+            {
+                goto done;
+            }
+        }
+        action
+        {
+            differential_drive(speed=0, turning_speed=-0.3);
+        }
+    }
+    state done
+    {
+        decision
+        {
+            /** If we have waited 10 seconds, start over. */
+            if(stayed < 10)
+            {
+                stay;
+            }
+            else
+            {
+                goto turn;
+            }
+        }
+        action 
+        {
+            differential_drive(speed=0, turning_speed=0);
+            wait(time=1);
+        }
+    }
+}

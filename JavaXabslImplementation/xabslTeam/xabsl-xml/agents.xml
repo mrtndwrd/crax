@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE options [
+    <!ENTITY options SYSTEM "options.xml">
+]>
+<agent-collection xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <title>XABSL tryout</title>
+  <platform>JXI.</platform>
+  <software-environment>RoboRescue environment</software-environment>
+  <agent id="robot1" title="Robot-1" description="Start an agent with a name and a specified option." root-option="choose_role"/>
+  &options;
+  <options>
+    <xi:include href="Options/choose_role.xml"/>
+    <xi:include href="Options/drive_circle.xml"/>
+  </options>
+</agent-collection>

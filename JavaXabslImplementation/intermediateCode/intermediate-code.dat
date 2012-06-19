@@ -1,0 +1,85 @@
+// Intermediate code for the agents of XABSL tryout
+
+0
+0
+
+2
+choose_role 0
+drive_circle 0
+
+2
+get_role n
+drive_circle_state n
+
+get_role
+0
+1
+a wait
+1
+d wait.time
+v 1
+i
+c
+i chosen_behavior
+0
+v behaviors.drive_circle 
+t drive_circle_state
+t get_role
+0
+1
+o drive_circle
+0
+i
+c
+i chosen_behavior
+0
+v behaviors.drive_circle 
+t drive_circle_state
+t get_role
+
+
+
+2
+turn n
+done n
+
+turn
+0
+1
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v -0.3
+i
+<
+i ammount_turned
+0
+v 360
+t turn
+t done
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v 0
+a wait
+1
+d wait.time
+v 1
+i
+<
+i stayed
+0
+v 10
+t done
+t turn
+
+
+
+1
+robot1 choose_role

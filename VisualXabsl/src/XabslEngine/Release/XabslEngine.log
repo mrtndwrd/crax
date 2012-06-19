@@ -1,0 +1,24 @@
+﻿Build started 5/25/2012 2:44:54 PM.
+     1>Project "C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\src\XabslEngine\XabslEngine.vcxproj" on node 2 (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\XabslEngine.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt dllmain.cpp
+         dllmain.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D TESTDLLAPPLICATION_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\XabslEngine.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt XabslEngine.cpp
+         XabslEngine.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.dll" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /DEF:"Source.def" /MANIFEST /ManifestFile:"Release\XabslEngine.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.lib" /MACHINE:X86 /SAFESEH /DLL Release\dllmain.obj
+         Release\stdafx.obj
+         Release\XabslEngine.obj
+     1>Source.def(2): warning LNK4017: DESCRIPTION statement not supported for the target platform; ignored
+            Creating library C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.lib and object C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.exp
+     1>XabslEngine.exp : warning LNK4070: /OUT:Source.dll directive in .EXP differs from output filename 'C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.dll'; ignoring directive
+         Generating code
+         Finished generating code
+     1>XabslEngine.exp : warning LNK4070: /OUT:Source.dll directive in .EXP differs from output filename 'C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.dll'; ignoring directive
+         XabslEngine.vcxproj -> C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.dll
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\mt.exe /nologo /verbose /outputresource:"C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\Release\XabslEngine.dll;#2" /manifest Release\XabslEngine.dll.intermediate.manifest
+     1>Done Building Project "C:\cygwin\home\maarten\uva\afstuderen\crax\VisualXabsl\src\XabslEngine\XabslEngine.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.58

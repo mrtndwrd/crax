@@ -1,0 +1,35 @@
+/** Waits behind the ball */
+option defender {
+
+  initial state own_team_has_ball {
+    decision {
+      /** opponent team has ball */
+      if (most_westerly_teammate.x() < ball.x()) {
+        goto opponent_team_has_ball;
+      }
+      else {
+        stay;
+      }
+    }
+    action {
+      go_to(x = ball.x() + 12, y = ball.y());
+    }
+  }
+
+  state opponent_team_has_ball {
+    decision {
+      /** own team has ball */
+      if (most_westerly_teammate.x() >= ball.x()) {
+        goto own_team_has_ball;
+      }
+      else {
+        stay;
+      }
+    }
+    action {
+      go_to(x = ball.x() + 10, y = ball.y());
+    }
+  }
+
+}
+

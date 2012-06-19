@@ -1,0 +1,41 @@
+// Debug Symbols for the agents of XABSL tryout
+
+// number of enumerations
+1
+// enumerations
+// (name number-of-elements (element)*)+
+behaviors 2 behaviors.drive_circle behaviors.unexistant_behavior 
+
+
+// number of input symbols
+5
+// input symbols
+// (d decimal-input-symbol | b boolean-input-symbol | e enum-name enumerated-input-symbol)+
+d x 
+d y 
+d ammount_turned 
+d stayed 
+e behaviors chosen_behavior 
+
+
+// number of output symbols
+0
+// output symbols
+// (d decimal-output-symbol | b boolean-output-symbol | e enum-name enumerated-output-symbol)+
+
+
+// number of options
+2
+//options: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
+choose_role 0 
+drive_circle 0 
+
+
+// number of basic behaviors
+3
+//basic behaviors: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
+test 2 d test.x d test.y 
+differential_drive 2 d differential_drive.speed d differential_drive.turning_speed 
+wait 1 d wait.time 
+
+

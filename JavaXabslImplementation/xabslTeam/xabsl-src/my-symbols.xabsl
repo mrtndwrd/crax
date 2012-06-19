@@ -1,0 +1,25 @@
+/** My most used symbols */
+namespace my_symbols("My Symbols") {
+
+  /** The x position of the player */
+  float input x;
+
+  /** The y position of the player */
+  float input y;
+
+  /** the ammount turned in turn() */
+  float input ammount_turned [1..infty] "deg";
+
+  /** the ammount stayed in turn() */
+  float input stayed [1..infty] "s";
+
+  /** All possible behaviors for choose_role */
+  enum behaviors {
+      drive_circle,
+      unexistant_behavior
+  };
+  
+  enum behaviors input chosen_behavior;
+
+}
+
