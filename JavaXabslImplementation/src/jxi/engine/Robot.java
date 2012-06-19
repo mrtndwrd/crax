@@ -58,9 +58,11 @@ public class Robot {
     /**
      * Constructor, socket connection is now hardcoded to 127.0.0.1:7001
      */
-    public Robot()
+	public Robot() throws FileNotFoundException,
+			NoSuchFieldException, IntermediateCodeMalformedException,
+			SecurityException, NoSuchMethodException 
     {
-        Robot(7001);
+        this(7001);
     }
     
     /** 
