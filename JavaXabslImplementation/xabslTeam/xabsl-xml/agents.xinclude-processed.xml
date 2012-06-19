@@ -6,7 +6,7 @@
   <agent id="robot1" title="Robot-1" description="Start an agent with a name and a specified option." root-option="choose_role"/>
   
 <option-definitions>
-  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol chosen_behavior"/>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
   <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
 </option-definitions>
 
@@ -19,10 +19,10 @@
   <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
   <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
   <enumeration name="behaviors" description="All possible behaviors for choose_role">
-    <enum-element name="behaviors.drive_circle"/>
-    <enum-element name="behaviors.unexistant_behavior"/>
+    <enum-element name="behaviors.DRIVE_CIRCLE"/>
+    <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
-  <enumerated-input-symbol name="chosen_behavior" enumeration="behaviors" description=""/>
+  <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description=""/>
 </symbols>
 
   
@@ -42,7 +42,7 @@
 
   
 <option-definitions>
-  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol chosen_behavior"/>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
   <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
 </option-definitions>
 
@@ -56,8 +56,8 @@
       <if>
         <condition description="">
           <enumerated-input-symbol-comparison>
-            <enumerated-input-symbol-ref ref="chosen_behavior"/>
-            <enum-element-ref ref="behaviors.drive_circle"/>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.DRIVE_CIRCLE"/>
           </enumerated-input-symbol-comparison>
         </condition>
         <transition-to-state ref="drive_circle_state"/>
@@ -73,8 +73,8 @@
       <if>
         <condition description="">
           <enumerated-input-symbol-comparison>
-            <enumerated-input-symbol-ref ref="chosen_behavior"/>
-            <enum-element-ref ref="behaviors.drive_circle"/>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.DRIVE_CIRCLE"/>
           </enumerated-input-symbol-comparison>
         </condition>
         <transition-to-state ref="drive_circle_state"/>
@@ -93,10 +93,10 @@
   <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
   <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
   <enumeration name="behaviors" description="All possible behaviors for choose_role">
-    <enum-element name="behaviors.drive_circle"/>
-    <enum-element name="behaviors.unexistant_behavior"/>
+    <enum-element name="behaviors.DRIVE_CIRCLE"/>
+    <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
-  <enumerated-input-symbol name="chosen_behavior" enumeration="behaviors" description=""/>
+  <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description=""/>
 </symbols>
 
   
@@ -116,7 +116,7 @@
 
   
 <option-definitions>
-  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol chosen_behavior"/>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
   <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
 </option-definitions>
 
