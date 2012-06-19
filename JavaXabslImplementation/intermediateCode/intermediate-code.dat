@@ -20,9 +20,9 @@ d wait.time
 v 1
 i
 c
-i chosen_behavior
+i current_behavior
 0
-v behaviors.drive_circle 
+v behaviors.DRIVE_CIRCLE 
 t drive_circle_state
 t get_role
 0
@@ -31,9 +31,9 @@ o drive_circle
 0
 i
 c
-i chosen_behavior
+i current_behavior
 0
-v behaviors.drive_circle 
+v behaviors.DRIVE_CIRCLE 
 t drive_circle_state
 t get_role
 
