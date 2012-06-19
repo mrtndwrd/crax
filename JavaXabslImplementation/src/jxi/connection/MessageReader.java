@@ -29,7 +29,6 @@ public class MessageReader extends BufferedReader {
      */
     public String readMessage() throws IOException 
     {
-       System.out.println("[MessageReader] reading message");
        String line = null;
        boolean succeeded = false;
 

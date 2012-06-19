@@ -60,7 +60,6 @@ public class ConnectionHandler extends Thread {
 		while (true) {
 			try {
 				String incomingMessage = in.readMessage();
-                //System.out.println("Read message: " + incomingMessage);
 				robot.getReceiveQueue().put(incomingMessage);
 			} catch (SocketTimeoutException e) {
 				System.out.println(String.format(
@@ -102,8 +101,6 @@ public class ConnectionHandler extends Thread {
             */
             lastSentMessage = message;
         }
-        else
-            System.out.println("[CONNECTIONHANDLER] Not sending duplicate message: " + message);
 	}
 
 	public boolean isConnAlive() {
