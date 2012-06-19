@@ -31,9 +31,9 @@ public class DifferentialDrive extends StandardBehavior
     @Override
     public void execute() 
     {
-        System.out.println("[DIFFERENTIALDRIVE] executing");
+        //System.out.println("[DIFFERENTIALDRIVE] executing");
         usarConnection.sendMessage("DIFFERENTIALDRIVE:" + this.speed.get() + "," + this.turningSpeed.get());
-        System.out.println("Sending message: " +
-            " DIFFERENTIALDRIVE:" + this.speed.get() + "," + this.turningSpeed.get());
+        //System.out.println("Sending message: " +
+        //    " DIFFERENTIALDRIVE:" + this.speed.get() + "," + this.turningSpeed.get());
     }
 };

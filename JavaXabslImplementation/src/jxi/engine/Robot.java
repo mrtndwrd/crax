@@ -24,6 +24,7 @@ import jxi.util.MyTimeFunction;
 // Import ALL behaviors
 import jxi.behaviors.*;
 import jxi.connection.ConnectionHandler;
+import jxi.world.World;
 
 /** Class that instantiates everything needed for a robo
  * Of course, for now it is only a test class...
@@ -32,12 +33,10 @@ import jxi.connection.ConnectionHandler;
 public class Robot {
     /** Capacity for the receiveQueue */
     public static final int RQCAPACITY = 10;
+    
+    /** Decides once in how many parsed messages the engine executes */
+    public static final int runEngineAfter = 5;
 
-    /** Variables that can be accesed by the engine: */
-    /** some ammount_turned */
-	private float ammount_turned;
-    /** some stayed */
-	private float stayed;
     /** The XabslEngine on which this robot bases its behavior */
 	protected Engine engine;
     /** A queue for all the messages that are to be parsed: */
@@ -53,15 +52,22 @@ public class Robot {
     /** Time for 'wait' */
     double waitTime = 0;
 
-    /** Internal world variables 
-     *  Maybe later I should put them in a seperate object 
+    /** Internal world representation */
+    World world;
+    
+    /**
+     * Constructor, socket connection is now hardcoded to 127.0.0.1:7001
      */
-    double currentAngle;
-
+    public Robot()
+    {
+        Robot(7001);
+    }
+    
     /** 
-     * Constructor, socket connection is now hardcoded to 127.0.0.1:5005
+     * Constructor, creates a serversocket on this machine.
+     * @param port: The port to connect with UsarCommander
      */
-	public Robot() throws FileNotFoundException,
+	public Robot(int port) throws FileNotFoundException,
 			NoSuchFieldException, IntermediateCodeMalformedException,
 			SecurityException, NoSuchMethodException 
     {
@@ -73,7 +79,7 @@ public class Robot {
         Socket socket = null;
         try
         {
-            ss = new ServerSocket(7001);
+            ss = new ServerSocket(port);
             System.out.println("[ROBOT] Waiting for connection to UsarCommander");
             socket = ss.accept();
             System.out.printf("[ROBOT] Accepted connection from ip %s:%d\n", socket.getInetAddress().toString(), socket.getPort());
@@ -83,6 +89,7 @@ public class Robot {
             System.out.println("[ROBOT] Couldn't make socket");
             e.printStackTrace();
         }
+        world = new World();
         // Instantiate connection
         try
         {
@@ -120,21 +127,19 @@ public class Robot {
 		//final Enumeration enumDirection = new JavaEnumeration("Direction",
 		//		Direction.class, myDebug);
 		//engine.registerEnumeration(enumDirection);
-		// TODO: Probably not needed.
-		//Field field;
 
         // Register ammount_turned as a decimal input symbol
-		Class<? extends Robot> thisClass = this.getClass();
-		Method method = thisClass.getMethod("get_ammount_turned");
+		Class<? extends World> theWorld = world.getClass();
+		Method method = theWorld.getMethod("getAmmount_turned");
 		engine.registerDecimalInputSymbol("ammount_turned",
-				new DecimalInputSymbolImpl(new InputFromMethod(method, this),
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
 						Conversions
 								.getDecimalConversion(method.getReturnType()),
 						new String[]{}, engine, myDebug));
        
-		method = thisClass.getMethod("get_stayed");
+		method = theWorld.getMethod("getStayed");
 		engine.registerDecimalInputSymbol("stayed",
-				new DecimalInputSymbolImpl(new InputFromMethod(method, this),
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
 						Conversions
 								.getDecimalConversion(method.getReturnType()),
 						new String[]{}, engine, myDebug));
@@ -164,10 +169,23 @@ public class Robot {
             {
                 System.out.println("[ROBOT] Executing engine");
                 engine.execute();
-                System.out.println("asking for groundTruth");
-                parseMessage(receiveQueue.take());
-                System.out.printf("ammount turned is now %f\n", ammount_turned);
-                //ammount_turned += 10;
+                for (int i=0;i<runEngineAfter;i++)
+                {
+                    parseMessage(receiveQueue.take());
+                }
+                // if(receiveQueue.peek() != null)
+                // {
+                //     while(receiveQueue.peek() != null)
+                //     {
+                //         parseMessage(receiveQueue.take());
+                //     }
+                //     System.out.printf("ammount turned is now %f\n", world.getAmmount_turned());         
+                // }
+                // else 
+                // {
+                //     // To not eat all of UsarCommanders resources:
+                //     Thread.sleep(500);
+                // }
             }
             catch (Exception e)
             {
@@ -180,45 +198,53 @@ public class Robot {
         System.out.println("[ROBOT] done");
     }
 
-    public BasicBehavior createTestBehavior(PrintStreamDebug myDebug)
-    {
-        return new TestBehavior("test", myDebug, usarConnection, ammount_turned, stayed);
-    }
-    
-    public float get_ammount_turned()
-    {
-        return this.ammount_turned;
-    }
-    public float get_stayed()
-    {
-        return this.stayed;
-    }
-
     public ArrayBlockingQueue<String> getReceiveQueue()
     {
         return receiveQueue;
     }
 
+    /** 
+     * Parses messages sent from UsarCommander. Possible messages are the following:
+     * - GROUNDTRUTH:X,Y,Yaw
+     *
+     */
     public void parseMessage(String message)
     {
         System.out.printf("Parsing message %s\n", message);
         String messageArray[] = message.split(":");
         if(messageArray[0].equals("GROUNDTRUTH"))
         {
-            double angle = Double.parseDouble(messageArray[1]);
+            processGroundTruth(messageArray);
+        }
+    }
+
+    public void processGroundTruth(String[] messageArray)
+    {
+            double currentAngle = world.getLastAngle();
+            String[] parameters = messageArray[1].split(",");
+            world.setX(Double.parseDouble(parameters[0]));
+            world.setY(Double.parseDouble(parameters[1]));
+            world.setYaw(Double.parseDouble(parameters[2]));
+            // Part used for drive_circle 
+            double angle = world.getYaw();
             if(currentAngle != 0)
             {
                 double angleDiff = Math.abs(currentAngle - angle);
-                // Probably reached 360)
-                if (angleDiff > 300)
+                // current angle reached 360 and went to 0
+                if (angleDiff > 300 && angle < 60)
                 {
-                    angleDiff -= 360;
+                    angleDiff = Math.abs(currentAngle - 360 - angle);
                 }
-                ammount_turned += angleDiff;
-                System.out.println("changing ammount_turned to " + ammount_turned);
+                // current angle reached 0 and went to 360
+                else if (angleDiff > 300 && angle > 300)
+                {
+                    angleDiff = Math.abs(currentAngle + 360-angle);
+                }
+                world.setAmmount_turned(world.getAmmount_turned() + angleDiff);
+                System.out.println("changing ammount_turned to " + world.getAmmount_turned());
             }
-            currentAngle = angle;
-        }
+            world.setLastAngle(angle);
+
     }
 }
 
