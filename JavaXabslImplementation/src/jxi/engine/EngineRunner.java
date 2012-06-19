@@ -30,9 +30,17 @@ public class EngineRunner
     public static void main(String[] args)  
     {  
         System.out.println("voor maken engine\n");
+        int port;
+        if(args.length > 0)
+        {
+            port = Integer.parseInt(args[0]);
+            System.out.printf("Setting xabsl connection port to %d\n", port);
+        }
+        else
+            port = 7001;
         try
         {
-            Robot testRobot = new Robot();
+            Robot testRobot = new Robot(port);
         }
         catch(Exception e)
         {
