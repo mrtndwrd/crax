@@ -107,8 +107,8 @@ public class Robot {
         usarConnection.sendMessage("Robot connection accepted");
         System.out.println("[ROBOT] Waiting for first reaction");
         try{
-            Thread.sleep(10000);
-            //System.out.println(receiveQueue.take());
+            //Thread.sleep(10000);
+            parseMessage(receiveQueue.take());
            }
         catch (Exception e){}
         System.out.println("[ROBOT] done sleeping");

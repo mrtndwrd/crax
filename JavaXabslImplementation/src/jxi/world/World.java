@@ -18,6 +18,8 @@ public class World
     private double lastAngle;
     /** Ammount turned for basic behavior Drive Circle */
     private double ammount_turned;
+    /** The robot's current behavior */
+    private String behavior;
 
     /** Constructor */
     public World()
@@ -52,6 +54,10 @@ public class World
     {
         this.lastAngle = angle;
     }
+    public void setBehavior(String behavior)
+    {
+        this.behavior = behavior;
+    }
 
 // }}}
 
@@ -79,6 +85,10 @@ public class World
     public double getLastAngle()
     {
         return this.lastAngle;
+    }
+    public String getBehavior()
+    {
+        return this.behavior;
     }
 
 // }}}
