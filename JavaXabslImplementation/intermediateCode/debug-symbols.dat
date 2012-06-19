@@ -4,18 +4,27 @@
 1
 // enumerations
 // (name number-of-elements (element)*)+
-behaviors 2 behaviors.drive_circle behaviors.unexistant_behavior 
+behaviors 3 behaviors.DRIVE_CIRCLE behaviors.WALK_CORRIDOR behaviors.UNEXISTANT_BEHAVIOR 
 
 
 // number of input symbols
-5
+14
 // input symbols
 // (d decimal-input-symbol | b boolean-input-symbol | e enum-name enumerated-input-symbol)+
 d x 
 d y 
 d ammount_turned 
 d stayed 
-e behaviors chosen_behavior 
+e behaviors current_behavior 
+d laser_min_wnw 
+d laser_min_nw 
+d laser_min_nnw 
+d laser_min_n 
+d laser_min_nne 
+d laser_min_ne 
+d laser_min_ene 
+d laser_min 
+d laser_max 
 
 
 // number of output symbols
@@ -25,10 +34,11 @@ e behaviors chosen_behavior
 
 
 // number of options
-2
+3
 //options: (name num-of-parameters (d decimal-parameter | b boolean_parameter | e enum-name enumerated-parameter)*)+
 choose_role 0 
 drive_circle 0 
+walk_corridor 0 
 
 
 // number of basic behaviors

@@ -27,7 +27,7 @@ option walk_corridor{
       }
     }
     action{
-      walk_corridor();
+      wait(time=10);
     }
   }
 
@@ -40,7 +40,6 @@ option walk_corridor{
     action
     {
       differential_drive(speed=-forward_speed, turning_speed=0);
-      walk_corridor();
     }
   }
 
@@ -53,7 +52,6 @@ option walk_corridor{
     action
     {
       differential_drive(speed=forward_speed, turning_speed=turning_speed);
-      walk_corridor();
     }
   }
 
@@ -66,7 +64,6 @@ option walk_corridor{
     action
     {
       differential_drive(speed=forward_speed, turning_speed=-turning_speed);
-      walk_corridor();
     }
   }
   
@@ -79,7 +76,6 @@ option walk_corridor{
     action
     {
       differential_drive(speed=-reverse_speed, turning_speed=0);
-      walk_corridor();
     }
   }
 }

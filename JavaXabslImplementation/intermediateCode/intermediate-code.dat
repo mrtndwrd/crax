@@ -110,8 +110,10 @@ move_back n
 decide_movement
 0
 1
-o walk_corridor
-0
+a wait
+1
+d wait.time
+v 10
 i
 <
 i laser_max
@@ -163,7 +165,7 @@ i laser_min_ene
 t move_left
 t decide_movement
 0
-2
+1
 a differential_drive
 2
 d differential_drive.speed
@@ -172,22 +174,18 @@ v 0
 c 0.6
 d differential_drive.turning_speed
 v 0
-o walk_corridor
-0
 t move_forward
 0
-2
+1
 a differential_drive
 2
 d differential_drive.speed
 c 0.6
 d differential_drive.turning_speed
 c 0.3
-o walk_corridor
-0
 t move_left
 0
-2
+1
 a differential_drive
 2
 d differential_drive.speed
@@ -196,11 +194,9 @@ d differential_drive.turning_speed
 -
 v 0
 c 0.3
-o walk_corridor
-0
 t move_right
 0
-2
+1
 a differential_drive
 2
 d differential_drive.speed
@@ -209,8 +205,6 @@ v 0
 c 0.5
 d differential_drive.turning_speed
 v 0
-o walk_corridor
-0
 t move_back
 
 
