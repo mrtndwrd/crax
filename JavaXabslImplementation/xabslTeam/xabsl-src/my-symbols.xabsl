@@ -25,6 +25,18 @@ namespace my_symbols("My Symbols") {
 
   /** maximum distance the robot may have from a wall */
   float const walk_corridor.maxDistance = 0.1;
+  /** Speed in which the robot will normally go forward */
+  float const forward_speed = 0.6;
+  /** Speed in which the robot will normally turn */
+  float const turning_speed = 0.3;
+  /** Speed in which the robot will normally reverse. Because Xabsl doesn't
+   * allow negative constants it's positive, and everything that uses it, should
+   * negate it.
+   */
+  float const reverse_speed = 0.5;
+  /** Allowed maximum before retreating */
+  float const maximum_laser_value = 0.1;
+
 
   /** Laser sensor information for west-north-west region*/
   float input laser_min_wnw;
@@ -32,12 +44,18 @@ namespace my_symbols("My Symbols") {
   float input laser_min_nw;
   /** Laser sensor information for north-north-west region */
   float input laser_min_nnw;
+  /** Laser sensor information for north region */
+  float input laser_min_n;
   /** Laser sensor information for north-north-east region */
   float input laser_min_nne;
   /** Laser sensor information for north-east region */
   float input laser_min_ne;
   /** Laser sensor information for east-north-east region */
   float input laser_min_ene;
+  /** minimum laser value */
+  float input laser_min;
+  /** maximum laser value */
+  float input laser_max;
 
 
     
