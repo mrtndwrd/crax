@@ -254,7 +254,19 @@ public class Robot {
         world.setLaserMinNNE(Double.parseDouble(parameters[3]));
         world.setLaserMinNE(Double.parseDouble(parameters[4]));
         world.setLaserMinENE(Double.parseDouble(parameters[5]));
+        world.setLaserMaxValue(...);
+        world.setLaserMinValue(...);
         System.out.println("set all relevant laser parameters");
+    }
+
+    /** Function that loops trough values, determining the minimum and maximum at the same time! */
+    public double[] maxAndMin(double[] values)
+    {
+        double[] returnValue = {0, 0};
+        for(double value : values)
+        {
+            // TODO: Finish him!
+        }
     }
 // LaserSensor }}}
 
