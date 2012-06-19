@@ -12,6 +12,18 @@ public class World
     private double robotY;
     /** The robot's yaw (angle on z-axis) */
     private double robotYaw;
+    /** The minimum value for the WNW region of the lasersensor */
+    private double robotLaserMinWNW;
+    /** The minimum value for the NW region of the lasersensor */
+    private double robotLaserMinNW;
+    /** The minimum value for the NNW region of the lasersensor */
+    private double robotLaserMinNNW;
+    /** The minimum value for the NNE region of the lasersensor */
+    private double robotLaserMinNNE;
+    /** The minimum value for the NE region of the lasersensor */
+    private double robotLaserMinNE;
+    /** The minimum value for the ENE region of the lasersensor */
+    private double robotLaserMinENE;
     /** Time spent waiting with basic behavior Wait */
     private double stayed;
     /** The angle the world had the position before now */
@@ -66,6 +78,30 @@ public class World
         if(behavior.equals("drive_circle"))
             current_behavior = Behaviors.DRIVE_CIRCLE;
     }
+    public void setLaserMinWNW(double value)
+    {
+        this.robotLaserMinWNW = value;
+    }
+    public void setLaserMinNW(double value)
+    {
+        this.robotLaserMinNW = value;
+    }
+    public void setLaserMinNNW(double value)
+    {
+        this.robotLaserMinNNW = value;
+    }
+    public void setLaserMinNNE(double value)
+    {
+        this.robotLaserMinNNE = value;
+    }
+    public void setLaserMinNE(double value)
+    {
+        this.robotLaserMinNE = value;
+    }
+    public void setLaserMinENE(double value)
+    {
+        this.robotLaserMinENE = value;
+    }
 
 // }}}
 
@@ -97,6 +133,30 @@ public class World
     public Behaviors getCurrent_behavior()
     {
         return this.current_behavior;
+    }
+    public double getLaserMinWNW()
+    {
+        return this.robotLaserMinWNW;
+    }
+    public double getLaserMinNW()
+    {
+        return this.robotLaserMinNW;
+    }
+    public double getLaserMinNNW()
+    {
+        return this.robotLaserMinNNW;
+    }
+    public double getLaserMinNNE()
+    {
+        return this.robotLaserMinNNE;
+    }
+    public double getLaserMinNE()
+    {
+        return this.robotLaserMinNE;
+    }
+    public double getLaserMinENE()
+    {
+        return this.robotLaserMinENE;
     }
 
 // }}}

@@ -210,10 +210,12 @@ public class Robot {
         return receiveQueue;
     }
 
+// ParseMessage {{{
     /** 
      * Parses messages sent from UsarCommander. Possible messages are the following:
      * - GROUNDTRUTH:X,Y,Yaw
-     *
+     * - LASERSENSOR:minWNW,minNW,minNNW,minN,minNNE,minNE,minENE
+     * - BEHAVIOR:<behavior type in world.Behaviors>
      */
     public void parseMessage(String message)
     {
@@ -222,6 +224,10 @@ public class Robot {
         if(messageArray[0].equals("GROUNDTRUTH"))
         {
             processGroundTruth(messageArray);
+        }
+        else if(messageArray[0].equals("LASERSENSOR"))
+        {
+            processLaserSensor(messageArray);
         }
         else if(messageArray[0].equals("BEHAVIOR"))
         {
@@ -233,7 +239,38 @@ public class Robot {
             System.out.printf("Couldn't parse\n");
         }
     }
+// ParseMessage }}}
 
+// LaserSensor {{{
+    /**
+     * Processes the laser sensor data, not all laser data is sent, so only 6 values have to be processed.
+     */
+    public void processLaserSensor(String[] messageArray)
+    {
+        String[] parameters = messageArray[1].split(",");
+        world.setLaserMinWNW(Double.parseDouble(parameters[0]));
+        world.setLaserMinNW(Double.parseDouble(parameters[1]));
+        world.setLaserMinNNW(Double.parseDouble(parameters[2]));
+        world.setLaserMinNNE(Double.parseDouble(parameters[3]));
+        world.setLaserMinNE(Double.parseDouble(parameters[4]));
+        world.setLaserMinENE(Double.parseDouble(parameters[5]));
+        world.setLaserMaxValue(...);
+        world.setLaserMinValue(...);
+        System.out.println("set all relevant laser parameters");
+    }
+
+    /** Function that loops trough values, determining the minimum and maximum at the same time! */
+    public double[] maxAndMin(double[] values)
+    {
+        double[] returnValue = {0, 0};
+        for(double value : values)
+        {
+            // TODO: Finish him!
+        }
+    }
+// LaserSensor }}}
+
+// GroundTruth {{{
     public void processGroundTruth(String[] messageArray)
     {
         double currentAngle = world.getLastAngle();
@@ -261,6 +298,7 @@ public class Robot {
         }
         world.setLastAngle(angle);
     }
+// GroundTruth }}}
 }
 
 

@@ -11,5 +11,6 @@
   <options>
     <xi:include href="Options/choose_role.xml"/>
     <xi:include href="Options/drive_circle.xml"/>
+    <xi:include href="Options/walk_corridor.xml"/>
   </options>
 </agent-collection>
