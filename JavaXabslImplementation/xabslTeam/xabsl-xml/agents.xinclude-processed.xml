@@ -287,7 +287,11 @@
 </option-definitions>
 
   <state name="decide_movement">
-    <subsequent-option ref="walk_corridor"/>
+    <subsequent-basic-behavior ref="wait">
+      <set-parameter ref="wait.time">
+        <decimal-value value="10"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
     <decision-tree>
       <if>
         <condition description="">
@@ -368,7 +372,6 @@
         <decimal-value value="0"/>
       </set-parameter>
     </subsequent-basic-behavior>
-    <subsequent-option ref="walk_corridor"/>
     <decision-tree>
       <transition-to-state ref="move_forward"/>
     </decision-tree>
@@ -382,7 +385,6 @@
         <constant-ref ref="turning_speed"/>
       </set-parameter>
     </subsequent-basic-behavior>
-    <subsequent-option ref="walk_corridor"/>
     <decision-tree>
       <transition-to-state ref="move_left"/>
     </decision-tree>
@@ -399,7 +401,6 @@
         </minus>
       </set-parameter>
     </subsequent-basic-behavior>
-    <subsequent-option ref="walk_corridor"/>
     <decision-tree>
       <transition-to-state ref="move_right"/>
     </decision-tree>
@@ -416,7 +417,6 @@
         <decimal-value value="0"/>
       </set-parameter>
     </subsequent-basic-behavior>
-    <subsequent-option ref="walk_corridor"/>
     <decision-tree>
       <transition-to-state ref="move_back"/>
     </decision-tree>
