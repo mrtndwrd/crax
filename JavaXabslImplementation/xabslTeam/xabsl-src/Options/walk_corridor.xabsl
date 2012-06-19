@@ -1,6 +1,4 @@
-/** Uses the data from the laser sensor to walk through a corridor as good as
- * possible, without bumping into the walls
- */
+/** Uses the data from the laser sensor to walk through a corridor as good as possible, without bumping into the walls */
 option walk_corridor{
   initial state decide_movement{
     decision{
