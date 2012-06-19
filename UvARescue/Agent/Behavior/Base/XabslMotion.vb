@@ -35,8 +35,9 @@ Public Class XabslMotion
     Protected Sub readXabslConfig()
         Dim fileReader As System.IO.StreamReader
         Try
+            ' This is a relative file path, but it could always fail, so maybe later this should be done better
             fileReader = _
-            My.Computer.FileSystem.OpenTextFileReader("../../../configs/xabslConfig.cfg")
+            My.Computer.FileSystem.OpenTextFileReader("../../../../configs/xabslConfig.cfg")
         Catch e As IO.FileNotFoundException
             Console.WriteLine("couldn't find xabsl config file. Are you sure it is in configs/?")
             Me.host = "127.0.0.1"
@@ -59,7 +60,7 @@ Public Class XabslMotion
                 Case "xabslport"
                     Console.WriteLine("[XABSLMOTION] setting xabslport to {0}", sides(1))
                     Me.port = Integer.Parse(sides(1))
-                Case "xabslBehavior"
+                Case "xabslbehavior"
                     Console.WriteLine("[XABSLMOTION] setting desiredBehavior to {0}", sides(1))
                     Me.desiredBehavior = sides(1)
                 Case Else
