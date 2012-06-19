@@ -15,11 +15,11 @@ namespace my_symbols("My Symbols") {
 
   /** All possible behaviors for choose_role */
   enum behaviors {
-      drive_circle,
-      unexistant_behavior
+      DRIVE_CIRCLE,
+      UNEXISTANT_BEHAVIOR
   };
   
-  enum behaviors input chosen_behavior;
+  enum behaviors input current_behavior;
 
 }
 

@@ -14,7 +14,9 @@ import de.xabsl.jxabsl.engine.Engine;
 
 import de.xabsl.jxabslx.conversions.Conversions;
 import de.xabsl.jxabslx.io.InputFromMethod;
+import de.xabsl.jxabslx.symbols.JavaEnumeration;
 import de.xabsl.jxabslx.symbols.DecimalInputSymbolImpl;
+import de.xabsl.jxabslx.symbols.EnumeratedInputSymbolImpl;
 import de.xabsl.jxabslx.utils.ScannerInputSource;
 import de.xabsl.jxabslx.utils.PrintStreamDebug;
 
@@ -113,10 +115,6 @@ public class Robot {
            }
         catch (Exception e){}
         System.out.println("[ROBOT] done sleeping");
-        //usarConnection.sendMessage("DRIVE:10");
-
-        // I won't be needing a world representation hiero...
-		//this.world = world;
 
         // My own 'debug stream', maybe later this should go to a file or
         // something...
@@ -126,10 +124,10 @@ public class Robot {
 				myTimeFunction);
 
 		// register symbols
-
-		//final Enumeration enumDirection = new JavaEnumeration("Direction",
-		//		Direction.class, myDebug);
-		//engine.registerEnumeration(enumDirection);
+        
+        final JavaEnumeration behaviors = new JavaEnumeration("behaviors", 
+            World.Behaviors.class, myDebug);
+        engine.registerEnumeration(behaviors);
 
         // Register ammount_turned as a decimal input symbol
 		Class<? extends World> theWorld = world.getClass();
@@ -146,8 +144,13 @@ public class Robot {
 						Conversions
 								.getDecimalConversion(method.getReturnType()),
 						new String[]{}, engine, myDebug));
-        //// TODO: Make degrees the right kind of registered symbol
-        //double degrees = 10;
+		method = theWorld.getMethod("getCurrent_behavior");
+		engine.registerEnumeratedInputSymbol("current_behavior",
+				new EnumeratedInputSymbolImpl(behaviors, 
+                    new InputFromMethod(method, world),
+						Conversions
+								.getEnumeratedConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
 		engine.registerBasicBehavior(new DifferentialDrive("differential_drive", myDebug, usarConnection, differentialDriveSpeed, differentialDriveTurningSpeed));
 		engine.registerBasicBehavior(new Wait("wait", myDebug, usarConnection, waitTime));
 
@@ -161,6 +164,7 @@ public class Robot {
         {
             System.out.println("[ROBOT] Cought exception in accessing intermediate code");
             e.printStackTrace();
+            System.exit(-1);
         }
         while(usarConnection.isConnAlive())
         {
@@ -218,6 +222,15 @@ public class Robot {
         if(messageArray[0].equals("GROUNDTRUTH"))
         {
             processGroundTruth(messageArray);
+        }
+        else if(messageArray[0].equals("BEHAVIOR"))
+        {
+            world.setCurrent_behavior(messageArray[1]);
+            System.out.printf("Setting current behavior to '%s'\n", messageArray[1]);
+        }
+        else
+        {
+            System.out.printf("Couldn't parse\n");
         }
     }
 

@@ -18,8 +18,15 @@ public class World
     private double lastAngle;
     /** Ammount turned for basic behavior Drive Circle */
     private double ammount_turned;
-    /** The robot's current behavior */
-    private String behavior;
+    /** The robot's possible behaviors */
+    public enum Behaviors 
+    {
+        DRIVE_CIRCLE,
+        UNEXISTANT_BEHAVIOR
+    }
+    /** Enumerated version of the robots current behavior */
+    public Behaviors current_behavior;
+
 
     /** Constructor */
     public World()
@@ -54,9 +61,10 @@ public class World
     {
         this.lastAngle = angle;
     }
-    public void setBehavior(String behavior)
+    public void setCurrent_behavior(String behavior)
     {
-        this.behavior = behavior;
+        if(behavior.equals("drive_circle"))
+            current_behavior = Behaviors.DRIVE_CIRCLE;
     }
 
 // }}}
@@ -86,9 +94,9 @@ public class World
     {
         return this.lastAngle;
     }
-    public String getBehavior()
+    public Behaviors getCurrent_behavior()
     {
-        return this.behavior;
+        return this.current_behavior;
     }
 
 // }}}
