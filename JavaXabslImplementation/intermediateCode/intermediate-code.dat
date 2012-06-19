@@ -3,13 +3,15 @@
 0
 0
 
-2
+3
 choose_role 0
 drive_circle 0
+walk_corridor 0
 
-2
+3
 get_role n
 drive_circle_state n
+walk_corridor_state n
 
 get_role
 0
@@ -24,6 +26,12 @@ i current_behavior
 0
 v behaviors.DRIVE_CIRCLE 
 t drive_circle_state
+i
+c
+i current_behavior
+0
+v behaviors.WALK_CORRIDOR 
+t walk_corridor_state
 t get_role
 0
 1
@@ -35,6 +43,17 @@ i current_behavior
 0
 v behaviors.DRIVE_CIRCLE 
 t drive_circle_state
+t get_role
+0
+1
+o walk_corridor
+0
+i
+c
+i current_behavior
+0
+v behaviors.WALK_CORRIDOR 
+t walk_corridor_state
 t get_role
 
 
@@ -78,6 +97,121 @@ i stayed
 v 10
 t done
 t turn
+
+
+
+5
+decide_movement n
+move_forward n
+move_left n
+move_right n
+move_back n
+
+decide_movement
+0
+1
+o walk_corridor
+0
+i
+<
+i laser_max
+0
+c 0.1
+t move_back
+i
+=
+i laser_max
+0
+i laser_min_n
+0
+t move_forward
+i
+| 3
+=
+i laser_max
+0
+i laser_min_nnw
+0
+=
+i laser_max
+0
+i laser_min_nw
+0
+=
+i laser_max
+0
+i laser_min_wnw
+0
+t move_right
+i
+| 3
+=
+i laser_max
+0
+i laser_min_nne
+0
+=
+i laser_max
+0
+i laser_min_ne
+0
+=
+i laser_max
+0
+i laser_min_ene
+0
+t move_left
+t decide_movement
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+-
+v 0
+c 0.6
+d differential_drive.turning_speed
+v 0
+o walk_corridor
+0
+t move_forward
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+c 0.6
+d differential_drive.turning_speed
+c 0.3
+o walk_corridor
+0
+t move_left
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+c 0.6
+d differential_drive.turning_speed
+-
+v 0
+c 0.3
+o walk_corridor
+0
+t move_right
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+-
+v 0
+c 0.5
+d differential_drive.turning_speed
+v 0
+o walk_corridor
+0
+t move_back
 
 
 
