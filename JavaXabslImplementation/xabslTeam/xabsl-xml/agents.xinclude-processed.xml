@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<agent-collection xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <title>XABSL tryout</title>
+  <platform>JXI.</platform>
+  <software-environment>RoboRescue environment</software-environment>
+  <agent id="drive_circle" title="Drive Circle" description="Start an agent with a name and a specified option." root-option="drive_circle"/>
+  
+<option-definitions>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+</option-definitions>
+
+  <options>
+    <option name="drive_circle" initial-state="turn" xml:base="Options/drive_circle.xml">
+  
+<symbols id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..360"/>
+  <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
+</symbols>
+
+  
+<basic-behaviors id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+  <basic-behavior name="differential_drive" description="A basic behavior for the differentialDrive in UsarCommander">
+    <decimal-parameter name="differential_drive.speed" measure="" range="0..100" description=""/>
+    <decimal-parameter name="differential_drive.turning_speed" measure="" range="1..100" description=""/>
+  </basic-behavior>
+  <basic-behavior name="wait" description="A basic behavior to wait">
+    <decimal-parameter name="wait.time" measure="s" range="0..infty" description=""/>
+  </basic-behavior>
+</basic-behaviors>
+
+  
+<option-definitions>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+</option-definitions>
+
+  <state name="turn">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="-0.3"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-input-symbol-ref ref="ammount_turned"/>
+            <decimal-value value="360"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="turn"/>
+      </if>
+      <else>
+        <transition-to-state ref="done"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="done">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <subsequent-basic-behavior ref="wait">
+      <set-parameter ref="wait.time">
+        <decimal-value value="1"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="If we have waited 10 seconds, start over.">
+          <less-than>
+            <decimal-input-symbol-ref ref="stayed"/>
+            <decimal-value value="10"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="done"/>
+      </if>
+      <else>
+        <transition-to-state ref="turn"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>
+  </options>
+</agent-collection>

@@ -1,0 +1,10 @@
+/** My common basic behaviors */
+namespace my_basic_behaviors("My Basic Behaviors") {
+
+  
+  behavior behavior1 {}
+  behavior behavior2 {}
+  behavior behavior3 {}
+  
+}
+

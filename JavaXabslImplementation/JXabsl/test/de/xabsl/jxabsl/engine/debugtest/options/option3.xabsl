@@ -1,0 +1,30 @@
+
+option option3 {
+ 
+  float @x;
+  float @y;
+  enum SomeEnumeration @z;
+ 
+ 
+ state state1 {
+  decision {
+    stay;
+   } 
+  
+  action {}
+ }
+ 
+ initial target state state2   {
+  decision {
+    stay; 
+  }
+  
+  action {
+    behavior2();
+
+  }
+  
+ }
+ 
+
+}

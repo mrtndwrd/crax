@@ -1,0 +1,15 @@
+Prerequisites:
+ 
+  * UDK
+  * USARSim for UDK
+  * Visual Studio 2011
+  * Roborescue code
+  * WSS
+
+Running the code:
+
+  * Start USARSim using a map .bat file
+  * Start WSS
+  * Start Roborescue
+  * Configure robot according to ErrorVarianceAssignment
+

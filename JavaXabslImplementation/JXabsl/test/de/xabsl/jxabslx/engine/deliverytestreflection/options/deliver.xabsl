@@ -1,0 +1,55 @@
+include "move_to.xabsl";
+
+
+option deliver {
+
+ initial state fetch {
+  decision {
+    if (currentPacketX(packet=currentPacket) == getX && 
+        currentPacketY(packet=currentPacket) == getY) {
+    goto grab;
+   } else {
+    stay;
+   }
+  }
+  action {
+   move_to (x = currentPacketX(packet=currentPacket), 
+            y = currentPacketY(packet=currentPacket));
+  }
+ }
+ 
+ state grab {
+  decision {
+   goto bring;
+  }
+  
+  action {
+   pickUp();
+  }
+ }
+ 
+ state bring {
+  decision {
+   if (currentDestinationX(packet=currentPacket) == getX &&
+       currentDestinationY(packet=currentPacket) == getY) {
+    goto leave;    
+   } else {
+    stay;
+   }
+  }
+  
+  action {
+   move_to (x = currentDestinationX(packet=currentPacket), 
+            y = currentDestinationY(packet=currentPacket));
+  }
+ }
+ 
+ target state leave {
+  decision {
+   stay; 
+  }
+  action {
+   leave();
+  }
+ }
+}

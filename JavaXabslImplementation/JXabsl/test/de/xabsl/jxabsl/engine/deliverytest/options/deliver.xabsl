@@ -1,0 +1,55 @@
+include "move_to.xabsl";
+
+
+option deliver {
+
+ initial state fetch {
+  decision {
+    if (getPacketX(packet=packet) == robotX && 
+	getPacketY(packet=packet) == robotY) {
+    goto grab;
+   } else {
+    stay;
+   }
+  }
+  action {
+    move_to (x = getPacketX(packet=packet),
+             y = getPacketY(packet=packet));
+  }
+ }
+ 
+ state grab {
+  decision {
+   goto bring;
+  }
+  
+  action {
+   pickUp();
+  }
+ }
+ 
+ state bring {
+  decision {
+   if (getDestinationX(packet=packet) == robotX &&
+       getDestinationY(packet=packet) == robotY) {
+    goto leave;    
+   } else {
+    stay;
+   }
+  }
+  
+  action {
+   move_to (x = getDestinationX(packet=packet),
+            y = getDestinationY(packet=packet));
+  }
+ }
+ 
+ target state leave {
+  decision {
+   stay; 
+  }
+  action {
+   leave();
+  }
+ }
+}

@@ -1,0 +1,25 @@
+= Over XABSL =
+==XABSL - A Pragmatic Approach to Behavior Engineering==
+===Martin Loetzsch, Max Risler, Matthias J\"ungel===
+Algemene inhoud:
+Het paper legt uit hoe XABSL toegepast kan worden als `hierarchie van finite
+state machines'. 
+
+Section 2 introduceert de architectuur van XABSL
+Section 3 omschrijft de taal en architectuur
+Section 4 omschrijft de applicaties van XABSL in verschillen de domeinen.
+
+Wat heb ik aan dit paper:
+Algemene introductie
+
+= Over Rescue =
+== Beyond frontier exploration ==
+=== Arnoud Visser, Xingrui-Ji, Merlijn van Ittersum, Luis A. Gonz ́lez Jaime, and
+Laurentiu A. Stancu ===
+
+Algemene inhoud:
+Het paper legt uit hoe de huidige code werkt, vooral hoe de SLAM code werkt.
+
+Wat heb ik aan dit paper:
+introductie van de code
+

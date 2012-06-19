@@ -1,0 +1,22 @@
+// Intermediate code for the agents of Test agent
+
+0
+0
+
+1
+fetch 0
+
+1
+look_around n
+
+look_around
+0
+1
+d i
+v 3
+t look_around
+
+
+
+1
+robot fetch

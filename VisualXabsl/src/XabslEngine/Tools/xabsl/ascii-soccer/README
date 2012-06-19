@@ -1,0 +1,209 @@
+ASCII Soccer version 2.0
+========================
+
+This program is a tool for investigating how groups of simple agents
+interact while playing a soccer-like game.  You can develop your own 
+team strategies and test them against others.
+
+Two teams of players attempt to push a ball across the other team's 
+goal.  The game can be viewed on your screen using patented 
+ASCII-animation(tm) technology.
+
+Where to get it:
+
+ASCII Soccer Homepage: http://www.cc.gatech.edu/grads/b/Tucker.Balch/soccer/
+Source code: ftp://ftp.cc.gatech.edu/pub/people/tucker/soccer.2.0.tar.Z
+
+For a synopsis of what's new in version 2.0, see the NEW file.
+
+
+Compatibility
+=============
+
+NOTE: this is AS IS unsupported software.  It was developed on and runs
+on SunOS 4.1.3 and Linux systems, but it may compile on other systems.  
+
+To unpack the source code you will need uncompress and tar.
+To compile you will need make, g++, csh, and the curses and termcap libraries.
+
+It seems that most incompatiblities arise from OLD versions of gcc/g++.
+I have compiled with versions of g++ as old as 2.5.8.  To see which version
+you have, type g++ --version . Note that gcc and g++ are usually installed
+together.
+
+To use the packteam and unpackteam you'll need tar, compress and uuencode.
+
+
+Quickstart
+==========
+
+Get the source code off the web 
+
+http://www.cc.gatech.edu/grads/b/Tucker.Balch/soccer/
+
+After you've uncompressed and untarred it, type:
+
+        contest example wall
+
+This will set up a soccer match between the "example" team and the
+"wall" team, by compiling and linking teams in the directories teams/example 
+and teams/wall.  If it does not compile, you probably don't have all the 
+software you need to compile it.  See COMPATIBLIY above.  Don't be too 
+concerned about "warnings" but "errors" are bad!  After the compilation 
+is complete the teams will automatically start a game.  The first team to 
+7 points wins.  To run another game, type "soccer"
+
+Look in the "teams" directory for other teams to try.
+
+
+RULES
+=====
+
+The teams consist of four players.  Each team member is provided with
+sensors that tell it about the immediately adjoining 8 cells and a 
+compass heading towards the ball, and their location on the field.  Players 
+can push the ball by trying to move to the cell it occupies, but they 
+cannot move over one another or outside the boundaries.  Players may also 
+kick the ball if they are immediately next to it.  A kicked ball travels 
+10 cells at 8 times the speed of a player.  When kicking the ball, the 
+player also moves into the cell were the ball was previously.
+
+A point is scored when the ball is pushed or kicked across a goal line.
+The game continues until the first team scores 7 points.
+
+Occasionally, the ball gets "stuck" between two competitors.  In that case
+the ball is automatically "nudged" up or down, so play can resume.
+
+
+Designing Your Own Team
+=======================
+
+Take a look at teams/example/main.c as a start.  There are several things to
+keep in mind as you write your code:
+
+	1) You MUST have the following functions:
+		player1(), player2(), player3(), player4() and
+		team_name(), initialize_point(), won_point(), lost_point(),
+		initialize_game(), game_over().  Just use the example
+		team as a shell and this will happen for you.
+	2) Always assume you are the East Team: you start on the east 
+		side and you want to push the ball to the west.  The 
+		program will automatically reverse things for you when 
+		you start on the other side.
+
+The player() functions represent each player's strategy, the team_name 
+function is used to print your team's name on the screen.
+
+You will notice a macro called UN().  This is used to ensure that function 
+and variable names are not duplicated between team's .c files.  
+For instance, for the east team, UN(team_name)() will become EASTteam_name().  
+This is necessary for the automatic compiling and linking of arbitrary teams 
+for tournaments.  It also allows the same team to play itself.  Be sure to 
+use the macro around all functions and global variables in your main.c file.
+
+The players are actually functions player1() through player4().  Each
+function is passed 4 parameters.  The incoming parameters are the robot's 
+sensory information:  
+
+	local_area[]	Reveals what's nearby.  Indexed by
+			N,NE,E,SE,S, etc. so that, for example,
+			local_area[S] tells you what is in the
+			cell to the south of the robot.  Possible 
+			values include: BOUNDARY, OPPONENT, TEAMMATE,
+			BALL and EMPTY.
+
+	ball_direction	Compass heading to the ball: N, S, E, W, NE, etc.
+
+	x, y		The robot's location.  y varies from 1 to 22,
+			x varies from 1 to 78.  +x is east, +y is south.
+			0 and 79 are goal lines, so your players will never
+			occupy those locations.
+
+Each player function should return an integer indicating either a direction to
+move (N, NE, E, S, etc) or KICK to kick the ball.
+
+
+How the Compiling and Linking Works
+====================================
+
+You don't have to read this section!
+
+This is rather hairy mostly because we can link together any two arbitrary
+teams, and they can play on either side of the field.  Fortunately, if you 
+just copy everything from the teams/example directory to a new directory, 
+and develop your team there, you shouldn't have to worry about this too much.  
+
+The default makefile assumes your team is coded in main.c .
+main.c is compiled into either west.o or east.o depending on whether your
+team will take the east or west side of the field.  The symbols WEST_TEAM
+and EAST_TEAM are defined/not defined according to which side you're on.
+
+The makefile also compiles common.c which is presumed to include functions
+and globals that do not have unique names and that might be shared if your 
+team was playing itself.  Even if you don't use common.c, don't remove it!
+the contest script and makefiles aren't smart enough not to use it. I found 
+I needed this to make it easier to use some c++ classes I use for my 
+learning team.
+
+Finally, the .o files are grouped into libraries: libeast.a libwest.a
+and libcommon.a .  The contest script copies the appropriate libraries
+up to the top directory, then links soccer.o with them to generate the
+final executable.
+
+You can take advantage of this library approach now to design more complex
+teams composed of several separately compiled modules - but you don't have
+to!  Just make sure your makefile correctly generates libeast.a libwest.a
+and libcommon.a .
+
+
+Advanced Techniques
+===================
+
+There are some additional hooks for learning, etc. which you may choose
+to use.  You will notice at the bottom of example.c there are several
+additional functions with no body.  These functions are automatically
+called at various points in the game, as follows:
+
+	initialize_game()	Called once per game before play begins.
+	game_over()		Called once per game at the end of the game.
+	initialize_point()	Called once per point before play begins.
+	lost_point()		Called if your team loses a point.
+	won_point()		Called if your team wins a point.
+
+You may find these functions handy for initialization and learning strategies.
+
+
+Command-line Arguments
+======================
+
+The soccer executable offers a few command-line arguments you may want
+to use:
+
+	-d		Don't display the game on the screen.
+	-s seed		Use seed as the random seed for the game.
+			time() is used otherwise.
+	-p points	Play to points instead of the default 7.
+
+
+packteam and unpackteam
+=======================
+
+These two scipts will pack up or unpack a team for you so that they are more
+convenient to exchange by email.  The command "packteam fred" will look for
+a team in the teams/fred directory and tar, compress and uuencode it.  The
+resulting file fred.tar.Z.uu is plain ascii text.  If someone sends you one
+of these files, or you download one you can unpack it with the command
+"unpackteam fred"  Unpackteam will look for fred.tar.Z.uu, so make sure all
+the file extensions are there.  
+
+When you use either of these scripts make sure you cd to the top of your
+soccer directory structure. 
+
+
+Bugs, Gripes, Complaints
+========================
+
+I don't promise ANYTHING, but I am very glad to see your teams and hear 
+about bugs.  Especially if you have fixed them!!!!
+
+Email: tucker@cc.gatech.edu

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xabsl:option-trees xmlns:xabsl="http://www.xabsl.de" xmlns="http://www.w3.org/1999/xhtml" xmlns:dotml="http://www.martin-loetzsch.de/DOTML">
+  <xabsl:option-tree root-option="drive_circle">
+    <xabsl:o-n name="drive_circle">
+      <xabsl:e2b to="turn"/>
+    </xabsl:o-n>
+    <xabsl:b-n name="turn" g="my_basic_behaviors"/>
+  </xabsl:option-tree>
+  <xabsl:option-tree root-option="testOption">
+    <xabsl:o-n name="testOption">
+      <xabsl:e2b to="test"/>
+    </xabsl:o-n>
+    <xabsl:b-n name="test" g="my_basic_behaviors"/>
+  </xabsl:option-tree>
+</xabsl:option-trees>

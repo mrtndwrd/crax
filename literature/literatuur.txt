@@ -1,0 +1,25 @@
+XABSL:
+    - Alternatieven zoeken
+    - Lezen over de taal
+    - `amsterdam oxford joint rescue forces' --hele boel dingen
+    - Beyond Frontier Exploration - A Visser en Stacnu Gonzales Ittersum
+    - Bayu Slamet ManifoldSLAM a multi-agent SLAM for the robocub
+        * Is beschrijving van de C++ code, daarna is het geherimplementeerd in
+          Visual Basic, dus niet alles klopt perfect.
+    - Arnoud voegt me toe aan de svn
+    - Julian de Hoog, PHD thesis, Role based multi-robot exploration.
+
+DOEN:
+    - Software krijgen en laten werken
+    - Literatuuronderzoek
+        * Waarom lees je iets?
+        * Schrijf op: Heb je gevonden wat je hoopte te vinden
+        * Research logs - ook voor literatuuronderzoek
+            + Artikel samenvatten in een paar zinnen.
+    - Onderzoeksvraag
+        * Nieuw behavior maken wordt niks, maar ik kan wel andermans spullen
+          gebruiken.
+        * Limiet van XABSL opzoeken
+        * Gebruik van behaviors binnen Rescue is nog niet veel gedaan.
+        * Avoid table/chair behavior
+        * Mood based?

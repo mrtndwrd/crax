@@ -1,0 +1,13 @@
+/***
+  Title: XABSL tryout
+  Platform: JXI.
+  Software-Environment: RoboRescue environment
+*/
+
+include "my-basic-behaviors.xabsl";
+include "my-symbols.xabsl";
+include "Options/drive_circle.xabsl";
+
+/** Start an agent with a name and a specified option. */
+agent drive_circle("Drive Circle", drive_circle);
+
