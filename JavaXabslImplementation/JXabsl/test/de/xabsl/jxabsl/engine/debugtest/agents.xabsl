@@ -1,0 +1,14 @@
+/***
+  Title: Debug robot 
+*/
+
+include "my-basic-behaviors.xabsl";
+include "my-symbols.xabsl";
+
+include "options/option1.xabsl";
+include "options/option2.xabsl";
+include "options/option3.xabsl";
+
+/**  */
+agent robot("Robot", option1);
+

@@ -1,0 +1,32 @@
+/** My most used symbols */
+namespace my_symbols("My Symbols") {
+
+  /** The x position of the player */
+  float input x;
+
+  /** The y position of the player */
+  float input y;
+
+  /** The ammount my robot has turned */
+  float internal ammount_turned;
+
+  /** A counter */
+  float internal stayed;
+
+  /** Symbols needed for walk_corridor */
+  /** An enum for the different types of sensor
+   * TODO: check how the syntax of this enum should be */
+  enum input sensor_type
+  {
+    laser_range_scanner,
+    sonar,
+    ins,
+    ground_truth,
+    victim
+  }
+
+
+
+
+}
+

@@ -1,0 +1,35 @@
+
+option option1 {
+
+ initial state state1 {
+  decision {
+    goto state3;
+  }
+  action {
+    internalSymbol1 = 23;
+  }
+ }
+ 
+ state state2 {
+  decision {
+   goto state3;
+  }
+  
+  action {
+    internalSymbol1 = 23;
+  }
+ }
+ 
+ state state3 {
+  decision {
+    stay;
+  } 
+  action {
+    option3(x=2, y=4, z=value4);
+    option2();
+  }
+ }
+ 
+ 
+}
+

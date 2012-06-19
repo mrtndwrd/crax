@@ -1,0 +1,41 @@
+
+
+/** main option */
+
+
+option main {
+
+  initial state getNext {
+   decision {
+    goto deliver;
+   }
+	action {
+	 currentPacket = currentPacket + 1;
+    }
+  }
+  
+  state deliver {
+   decision {
+    if (action_done) {
+     if (currentPacket < getNrPackets - 1) {
+       goto getNext;
+     } else {
+       goto done;
+     } 
+    } else {
+     stay;
+    }
+   
+   }
+   
+   action {
+    deliver();
+   }
+  }
+
+  target state done {
+	decision { stay; }
+	action {}
+  }
+}
+

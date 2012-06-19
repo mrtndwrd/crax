@@ -1,0 +1,16 @@
+// Here we test the input scanner
+
+//Whitelines and comments should be skipped
+
+4
+5 6 //comment until eol 78
+
+test 9 //blah
+10 true false
+
+// two lines
+// of comment
+
+3.14
+
+end
