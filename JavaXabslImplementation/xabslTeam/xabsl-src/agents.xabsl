@@ -6,8 +6,10 @@
 
 include "my-basic-behaviors.xabsl";
 include "my-symbols.xabsl";
+include "Options/choose_role.xabsl";
 include "Options/drive_circle.xabsl";
 
 /** Start an agent with a name and a specified option. */
-agent drive_circle("Drive Circle", drive_circle);
+agent robot1("Robot-1", choose_role);
+
 

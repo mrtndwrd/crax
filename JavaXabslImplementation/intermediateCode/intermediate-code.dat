@@ -3,8 +3,41 @@
 0
 0
 
-1
+2
+choose_role 0
 drive_circle 0
+
+2
+get_role n
+drive_circle_state n
+
+get_role
+0
+1
+a wait
+1
+d wait.time
+v 1
+i
+c
+i chosen_behavior
+0
+v behaviors.drive_circle 
+t drive_circle_state
+t get_role
+0
+1
+o drive_circle
+0
+i
+c
+i chosen_behavior
+0
+v behaviors.drive_circle 
+t drive_circle_state
+t get_role
+
+
 
 2
 turn n
@@ -49,4 +82,4 @@ t turn
 
 
 1
-drive_circle drive_circle
+robot1 choose_role

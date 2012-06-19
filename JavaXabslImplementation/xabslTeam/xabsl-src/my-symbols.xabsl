@@ -8,10 +8,18 @@ namespace my_symbols("My Symbols") {
   float input y;
 
   /** the ammount turned in turn() */
-  float input ammount_turned [1..360] "deg";
+  float input ammount_turned [1..infty] "deg";
 
   /** the ammount stayed in turn() */
   float input stayed [1..infty] "s";
+
+  /** All possible behaviors for choose_role */
+  enum behaviors {
+      drive_circle,
+      unexistant_behavior
+  };
+  
+  enum behaviors input chosen_behavior;
 
 }
 
