@@ -99,6 +99,7 @@ public class ConnectionHandler extends Thread {
                 Thread.sleep(1000);
             } catch(Exception e){}
             */
+            System.out.printf("CH: Sent message %s\n", message);
             lastSentMessage = message;
         }
 	}

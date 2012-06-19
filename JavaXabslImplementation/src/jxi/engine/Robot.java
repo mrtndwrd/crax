@@ -107,8 +107,9 @@ public class Robot {
         usarConnection.sendMessage("Robot connection accepted");
         System.out.println("[ROBOT] Waiting for first reaction");
         try{
-            //Thread.sleep(10000);
             parseMessage(receiveQueue.take());
+            // Sleep, because initialization takes some time
+            Thread.sleep(5000);
            }
         catch (Exception e){}
         System.out.println("[ROBOT] done sleeping");
@@ -222,31 +223,30 @@ public class Robot {
 
     public void processGroundTruth(String[] messageArray)
     {
-            double currentAngle = world.getLastAngle();
-            String[] parameters = messageArray[1].split(",");
-            world.setX(Double.parseDouble(parameters[0]));
-            world.setY(Double.parseDouble(parameters[1]));
-            world.setYaw(Double.parseDouble(parameters[2]));
-            // Part used for drive_circle 
-            double angle = world.getYaw();
-            if(currentAngle != 0)
+        double currentAngle = world.getLastAngle();
+        String[] parameters = messageArray[1].split(",");
+        world.setX(Double.parseDouble(parameters[0]));
+        world.setY(Double.parseDouble(parameters[1]));
+        world.setYaw(Double.parseDouble(parameters[2]));
+        // Part used for drive_circle 
+        double angle = world.getYaw();
+        if(currentAngle != 0)
+        {
+            double angleDiff = Math.abs(currentAngle - angle);
+            // current angle reached 360 and went to 0
+            if (angleDiff > 300 && angle < 60)
             {
-                double angleDiff = Math.abs(currentAngle - angle);
-                // current angle reached 360 and went to 0
-                if (angleDiff > 300 && angle < 60)
-                {
-                    angleDiff = Math.abs(currentAngle - 360 - angle);
-                }
-                // current angle reached 0 and went to 360
-                else if (angleDiff > 300 && angle > 300)
-                {
-                    angleDiff = Math.abs(currentAngle + 360-angle);
-                }
-                world.setAmmount_turned(world.getAmmount_turned() + angleDiff);
-                System.out.println("changing ammount_turned to " + world.getAmmount_turned());
+                angleDiff = Math.abs(currentAngle - 360 - angle);
             }
-            world.setLastAngle(angle);
-
+            // current angle reached 0 and went to 360
+            else if (angleDiff > 300 && angle > 300)
+            {
+                angleDiff = Math.abs(currentAngle + 360-angle);
+            }
+            world.setAmmount_turned(world.getAmmount_turned() + angleDiff);
+            System.out.println("changing ammount_turned to " + world.getAmmount_turned());
+        }
+        world.setLastAngle(angle);
     }
 }
 
