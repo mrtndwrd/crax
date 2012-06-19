@@ -1,0 +1,44 @@
+/** Makes the agent be aware of its role, by the enumerated input symbol chosen_behavior */
+option choose_role
+{
+    initial state get_role
+    {
+        decision
+        {
+            if(chosen_behavior == drive_circle)
+            {
+                goto drive_circle_state;
+            }
+            else
+            {
+                stay;
+            }
+        }
+        action
+        {
+            wait(time=1);
+        }
+    }
+    state drive_circle_state
+    {
+        decision
+        {
+            if(chosen_behavior == drive_circle)
+            {
+                stay;
+            }
+            else
+            {
+                goto get_role;
+            }
+        }
+        action
+        {
+            drive_circle();
+        }
+    }
+}
+
+
+
+
