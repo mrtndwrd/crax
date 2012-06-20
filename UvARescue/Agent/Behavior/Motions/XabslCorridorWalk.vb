@@ -46,7 +46,7 @@ Public Class XabslCorridorWalk
     '   Protected Overridable Sub ProcessVictimData(ByVal current_data As VictimData)
     '  End Sub
 
-    Protected Overridable Sub ProcessLaserRangeData(ByVal sensorName As String, ByVal laser As LaserRangeData)
+    Protected Overrides Sub ProcessLaserRangeData(ByVal sensorName As String, ByVal laser As LaserRangeData)
         'It is possible that a sensor is mounted on a tilt.  Not interested in that here.
         If (sensorName = "TiltedScanner") Then
             Exit Sub
@@ -61,17 +61,14 @@ Public Class XabslCorridorWalk
         Dim minNorthNorthEast As Double = Double.MaxValue
         Dim minNorthEast As Double = Double.MaxValue
         Dim minEastNorthEast As Double = Double.MaxValue
-
-        'Corridors typical dimensions
-        Dim minDistance As Double = 1.0
-        Dim maxDistance As Double = 0.1
+        'Corridors typical dimensions - Moved to xabsl
+        'Dim minDistance As Double = 1.0
+        'Dim maxDistance As Double = 0.1
 
         'helper vars
         Dim length As Integer = laser.Range.Length - 1      ' index of last laser beam (180)
         Dim start As Double
         Dim until As Double
-
-
 
         'determine min distance in minWestNorthWest direction
         start = fov / 2
@@ -80,90 +77,61 @@ Public Class XabslCorridorWalk
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minWestNorthWest = Min(minWestNorthWest, laser.Range(i))
         Next
-        If minWestNorthWest < minDistance Then
-            minDistance = minWestNorthWest
-        End If
-        If minWestNorthWest > maxDistance Then
-            maxDistance = minWestNorthWest
-        End If
-
         'determine min distance in minNorthWest direction
         start = until
         until = start + fov
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minNorthWest = Min(minNorthWest, laser.Range(i))
         Next
-        If minNorthWest < minDistance Then
-            minDistance = minNorthWest
-        End If
-        If minNorthWest > maxDistance Then
-            maxDistance = minNorthWest
-        End If
-
         'determine min distance in minNorthNorthWest direction
         start = until
         until = start + fov
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minNorthNorthWest = Min(minNorthNorthWest, laser.Range(i))
         Next
-        If minNorthNorthWest < minDistance Then
-            minDistance = minNorthNorthWest
-        End If
-        If minNorthNorthWest > maxDistance Then
-            maxDistance = minNorthNorthWest
-        End If
-
         'determine min distance in minNorth direction
         start = until
         until = start + fov
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minNorth = Min(minNorth, laser.Range(i))
         Next
-        If minNorth < minDistance Then
-            minDistance = minNorth
-        End If
-        If minNorth > maxDistance Then
-            maxDistance = minNorth
-        End If
-
         'determine min distance in minNorthNorthEast direction
         start = until
         until = start + fov
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minNorthNorthEast = Min(minNorthNorthEast, laser.Range(i))
         Next
-        If minNorthNorthEast < minDistance Then
-            minDistance = minNorthNorthEast
-        End If
-        If minNorthNorthEast > maxDistance Then
-            maxDistance = minNorthNorthEast
-        End If
-
         'determine min distance in minNorthEast direction
         start = until
         until = start + fov
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minNorthEast = Min(minNorthEast, laser.Range(i))
         Next
-        If minNorthEast < minDistance Then
-            minDistance = minNorthNorthEast
-        End If
-        If minNorthEast > maxDistance Then
-            maxDistance = minNorthEast
-        End If
-
         'determine min distance in minEastNorthEast direction
         start = until
         until = start + fov
         For i As Integer = Max(0, CInt(start / laser.Resolution)) To Min(CInt(until / laser.Resolution), length)
             minEastNorthEast = Min(minEastNorthEast, laser.Range(i))
         Next
-        If minEastNorthEast < minDistance Then
-            minDistance = minEastNorthEast
-        End If
-        If minEastNorthEast > maxDistance Then
-            maxDistance = minEastNorthEast
-        End If
+
+        Console.WriteLine("Sending LASERSENSOR:{0},{1},{2},{3},{4},{5},{6}",
+        minWestNorthWest,
+        minNorthWest,
+        minNorthNorthWest,
+        minNorth,
+        minNorthNorthEast,
+        minNorthEast,
+        minEastNorthEast)
+
+        Me.xa.SendMessage(String.Format("LASERSENSOR:{0},{1},{2},{3},{4},{5},{6}",
+        minWestNorthWest,
+        minNorthWest,
+        minNorthNorthWest,
+        minNorth,
+        minNorthNorthEast,
+        minNorthEast,
+        minEastNorthEast))
+
     End Sub
 
 
