@@ -10,12 +10,12 @@ option walk_corridor{
           goto move_forward;
         }
         else{
-          if(laser_max == laser_min_nnw || laser_max ==laser_min_nw || laser_max == laser_min_wnw)
+          if(laser_max == laser_min_nne || laser_max ==laser_min_ne || laser_max == laser_min_ene)
           {
             goto move_right;
           }
           else{
-            if(laser_max == laser_min_nne || laser_max ==laser_min_ne || laser_max == laser_min_ene)
+            if(laser_max == laser_min_nnw || laser_max ==laser_min_nw || laser_max == laser_min_wnw)
             {
               goto move_left;
             }
@@ -27,7 +27,8 @@ option walk_corridor{
       }
     }
     action{
-      wait(time=10);
+      differential_drive(speed=0, turning_speed=0);
+      wait(time=2);
     }
   }
 
@@ -35,11 +36,18 @@ option walk_corridor{
   {
     decision
     {
-      stay;
+      if(laser_max == laser_min_n)
+      {
+        stay;
+      }
+      else
+      {
+        goto decide_movement;
+      }
     }
     action
     {
-      differential_drive(speed=-forward_speed, turning_speed=0);
+      differential_drive(speed=forward_speed, turning_speed=0);
     }
   }
 
@@ -47,7 +55,16 @@ option walk_corridor{
   {
     decision
     {
+      /** go on till threat is over */
+      if(laser_max == laser_min_nnw || laser_max ==laser_min_nw || laser_max ==
+          laser_min_wnw || laser_max == laser_min_n)
+      {
+        goto decide_movement;
+      }
+      else
+      {
         stay;
+      }
     }
     action
     {
@@ -59,7 +76,15 @@ option walk_corridor{
   {
     decision
     {
-      stay;
+      if(laser_max == laser_min_nnw || laser_max ==laser_min_nw || laser_max ==
+        laser_min_wnw || laser_max == laser_min_n)
+      {
+        goto decide_movement;
+      }
+      else
+      {
+        stay;
+      }
     }
     action
     {
@@ -71,7 +96,14 @@ option walk_corridor{
   {
     decision
     {
-      stay;
+      if(laser_max > maximum_laser_value)
+      {
+          goto decide_movement;
+      }
+      else
+      {
+          stay;
+      }
     }
     action
     {

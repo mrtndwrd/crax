@@ -13,11 +13,11 @@
     <xabsl:b-n name="differential_drive" g="my_basic_behaviors"/>
     <xabsl:b-n name="wait" g="my_basic_behaviors"/>
     <xabsl:o-n name="walk_corridor">
-      <xabsl:e2b to="wait"/>
       <xabsl:e2b to="differential_drive"/>
+      <xabsl:e2b to="wait"/>
     </xabsl:o-n>
-    <xabsl:b-n name="wait" g="my_basic_behaviors"/>
     <xabsl:b-n name="differential_drive" g="my_basic_behaviors"/>
+    <xabsl:b-n name="wait" g="my_basic_behaviors"/>
     <xabsl:b-n name="wait" g="my_basic_behaviors"/>
   </xabsl:option-tree>
   <xabsl:option-tree root-option="drive_circle">
@@ -30,10 +30,10 @@
   </xabsl:option-tree>
   <xabsl:option-tree root-option="walk_corridor">
     <xabsl:o-n name="walk_corridor">
-      <xabsl:e2b to="wait"/>
       <xabsl:e2b to="differential_drive"/>
+      <xabsl:e2b to="wait"/>
     </xabsl:o-n>
-    <xabsl:b-n name="wait" g="my_basic_behaviors"/>
     <xabsl:b-n name="differential_drive" g="my_basic_behaviors"/>
+    <xabsl:b-n name="wait" g="my_basic_behaviors"/>
   </xabsl:option-tree>
 </xabsl:option-trees>
