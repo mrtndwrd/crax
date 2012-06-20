@@ -16,6 +16,15 @@ public class DifferentialDrive extends StandardBehavior
     MyDecimalParameter speed;
     MyDecimalParameter turningSpeed;
 
+    /** 
+     * Constructor that will instantiate the internal parameters.
+     * The speedIn and turningSpeedIn parameters should be registered as decimal parameters with the engine.
+     * @param name name of the behavior in XABSL
+     * @param myDebug debug stream to print messages to. This could just a PrintStreamDebug created by PrintStreamDebug(System.out, System.out)
+     * @param usarConnection ConnectionHandler connection to usarsim
+     * @param speedIn MyDecimalParameter containing the speed in which the robot should drive. Can also be negative
+     * @param turningSpeedIn MyDecimalParameter containing the speed in which the robot should turn
+     */
     public DifferentialDrive(String name, PrintStreamDebug myDebug, 
         ConnectionHandler usarConnection, double speedIn, double turningSpeedIn)
     {
