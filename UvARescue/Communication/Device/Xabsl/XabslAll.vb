@@ -81,7 +81,7 @@ Public Class XabslAll
         While (Me.ConnectedToXabsl)
             Dim msg As String
             Try
-                msg = Me._XabslConnection.Receive(1000)
+                msg = Me._XabslConnection.Receive(100)
             Catch ex As Exception
                 Exit Sub
             End Try
