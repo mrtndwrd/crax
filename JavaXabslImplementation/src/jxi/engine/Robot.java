@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.net.ServerSocket;
 import java.io.IOException;
 import java.lang.String;
+import java.util.Arrays;
+import java.util.HashSet;
 
 import de.xabsl.jxabsl.IntermediateCodeMalformedException;
 import de.xabsl.jxabsl.behavior.BasicBehavior;
@@ -124,35 +126,7 @@ public class Robot {
 				myTimeFunction);
 
 		// register symbols
-        
-        final JavaEnumeration behaviors = new JavaEnumeration("behaviors", 
-            World.Behaviors.class, myDebug);
-        engine.registerEnumeration(behaviors);
-
-        // Register ammount_turned as a decimal input symbol
-		Class<? extends World> theWorld = world.getClass();
-		Method method = theWorld.getMethod("getAmmount_turned");
-		engine.registerDecimalInputSymbol("ammount_turned",
-				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
-						Conversions
-								.getDecimalConversion(method.getReturnType()),
-						new String[]{}, engine, myDebug));
-       
-		method = theWorld.getMethod("getStayed");
-		engine.registerDecimalInputSymbol("stayed",
-				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
-						Conversions
-								.getDecimalConversion(method.getReturnType()),
-						new String[]{}, engine, myDebug));
-		method = theWorld.getMethod("getCurrent_behavior");
-		engine.registerEnumeratedInputSymbol("current_behavior",
-				new EnumeratedInputSymbolImpl(behaviors, 
-                    new InputFromMethod(method, world),
-						Conversions
-								.getEnumeratedConversion(method.getReturnType()),
-						new String[]{}, engine, myDebug));
-		engine.registerBasicBehavior(new DifferentialDrive("differential_drive", myDebug, usarConnection, differentialDriveSpeed, differentialDriveTurningSpeed));
-		engine.registerBasicBehavior(new Wait("wait", myDebug, usarConnection, waitTime));
+        registerEverything(myDebug);
 
 		try
         {
@@ -166,6 +140,9 @@ public class Robot {
             e.printStackTrace();
             System.exit(-1);
         }
+        // Needed for the cruel implementation of getDecimalInputSymbol, which
+        // has 3 empty sets as arguments...
+        java.util.Set<String> emptySet = new HashSet<String>();
         while(usarConnection.isConnAlive())
         {
             // Remove all the sensor data from ancient history, since
@@ -219,7 +196,7 @@ public class Robot {
      */
     public void parseMessage(String message)
     {
-        System.out.printf("Parsing message %s\n", message);
+        //System.out.printf("Parsing message %s\n", message);
         String messageArray[] = message.split(":");
         if(messageArray[0].equals("GROUNDTRUTH"))
         {
@@ -251,23 +228,20 @@ public class Robot {
         world.setLaserMinWNW(Double.parseDouble(parameters[0]));
         world.setLaserMinNW(Double.parseDouble(parameters[1]));
         world.setLaserMinNNW(Double.parseDouble(parameters[2]));
-        world.setLaserMinNNE(Double.parseDouble(parameters[3]));
-        world.setLaserMinNE(Double.parseDouble(parameters[4]));
-        world.setLaserMinENE(Double.parseDouble(parameters[5]));
-        world.setLaserMaxValue(...);
-        world.setLaserMinValue(...);
-        System.out.println("set all relevant laser parameters");
+        world.setLaserMinN(Double.parseDouble(parameters[3]));
+        world.setLaserMinNNE(Double.parseDouble(parameters[4]));
+        world.setLaserMinNE(Double.parseDouble(parameters[5]));
+        world.setLaserMinENE(Double.parseDouble(parameters[6]));
+        // Okay, this is tricky, because maybe there will be a reference
+        // problem, but I'm still going to try this, else there should be some
+        // copy used...
+        //double[] sorted = Arrays.sort(parameters);
+        Arrays.sort(parameters);
+        // First of sorted array is minimum, last is maximum
+        world.setLaserMax(Double.parseDouble(parameters[parameters.length-1]));
+        world.setLaserMin(Double.parseDouble(parameters[0]));
     }
 
-    /** Function that loops trough values, determining the minimum and maximum at the same time! */
-    public double[] maxAndMin(double[] values)
-    {
-        double[] returnValue = {0, 0};
-        for(double value : values)
-        {
-            // TODO: Finish him!
-        }
-    }
 // LaserSensor }}}
 
 // GroundTruth {{{
@@ -294,11 +268,101 @@ public class Robot {
                 angleDiff = Math.abs(currentAngle + 360-angle);
             }
             world.setAmmount_turned(world.getAmmount_turned() + angleDiff);
-            System.out.println("changing ammount_turned to " + world.getAmmount_turned());
         }
         world.setLastAngle(angle);
     }
 // GroundTruth }}}
+
+// RegisterValues {{{
+    public void registerEverything(PrintStreamDebug myDebug)
+        throws NoSuchMethodException
+    {
+        final JavaEnumeration behaviors = new JavaEnumeration("behaviors", 
+            World.Behaviors.class, myDebug);
+        engine.registerEnumeration(behaviors);
+
+        // Register ammount_turned as a decimal input symbol
+		Class<? extends World> theWorld = world.getClass();
+		Method method = theWorld.getMethod("getAmmount_turned");
+		engine.registerDecimalInputSymbol("ammount_turned",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+       
+		method = theWorld.getMethod("getStayed");
+		engine.registerDecimalInputSymbol("stayed",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getCurrent_behavior");
+		engine.registerEnumeratedInputSymbol("current_behavior",
+				new EnumeratedInputSymbolImpl(behaviors, 
+                    new InputFromMethod(method, world),
+						Conversions
+								.getEnumeratedConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+                        
+		method = theWorld.getMethod("getLaserMinWNW");
+		engine.registerDecimalInputSymbol("laser_min_wnw",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMinNW");
+		engine.registerDecimalInputSymbol("laser_min_nw",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMinNNW");
+		engine.registerDecimalInputSymbol("laser_min_nnw",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMinN");
+		engine.registerDecimalInputSymbol("laser_min_n",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMinNNE");
+		engine.registerDecimalInputSymbol("laser_min_nne",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMinNE");
+		engine.registerDecimalInputSymbol("laser_min_ne",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMinENE");
+		engine.registerDecimalInputSymbol("laser_min_ene",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMin");
+		engine.registerDecimalInputSymbol("laser_min",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+		method = theWorld.getMethod("getLaserMax");
+		engine.registerDecimalInputSymbol("laser_max",
+				new DecimalInputSymbolImpl(new InputFromMethod(method, world),
+						Conversions
+								.getDecimalConversion(method.getReturnType()),
+						new String[]{}, engine, myDebug));
+                        
+		engine.registerBasicBehavior(new DifferentialDrive("differential_drive", myDebug, usarConnection, differentialDriveSpeed, differentialDriveTurningSpeed));
+		engine.registerBasicBehavior(new Wait("wait", myDebug, usarConnection, waitTime));
+    }
 }
+// register values }}}
 
 

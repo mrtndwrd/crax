@@ -10,11 +10,10 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="walk_corridor.maxDistance" value="0.1" measure="" description="maximum distance the robot may have from a wall"/>
-  <constant name="forward_speed" value="0.6" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.3" measure="" description="Speed in which the robot will normally turn"/>
-  <constant name="reverse_speed" value="0.5" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
-  <constant name="maximum_laser_value" value="0.1" measure="" description="Allowed maximum before retreating"/>
+  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>

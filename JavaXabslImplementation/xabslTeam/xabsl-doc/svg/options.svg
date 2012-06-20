@@ -58,11 +58,11 @@
 <path style="fill:none;stroke:#808080;" d="M148,129C137,137 125,145 114,153"/>
 <polygon style="fill:#808080;stroke:#808080;" points="116,154 106,160 113,150 116,154"/>
 </g>
-<g id="edge23" class="edge"><title>option_walk_corridor-&gt;basic_behavior_differential_drive</title>
+<g id="edge21" class="edge"><title>option_walk_corridor-&gt;basic_behavior_differential_drive</title>
 <path style="fill:none;stroke:#808080;" d="M118,129C128,137 140,145 149,153"/>
 <polygon style="fill:#808080;stroke:#808080;" points="149,150 157,158 146,154 149,150"/>
 </g>
-<g id="edge21" class="edge"><title>option_walk_corridor-&gt;basic_behavior_wait</title>
+<g id="edge23" class="edge"><title>option_walk_corridor-&gt;basic_behavior_wait</title>
 <path style="fill:none;stroke:#808080;" d="M85,129C84,133 84,138 84,142"/>
 <polygon style="fill:#808080;stroke:#808080;" points="86,142 82,153 81,142 86,142"/>
 </g>

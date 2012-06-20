@@ -25,11 +25,10 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="walk_corridor.maxDistance" value="0.1" measure="" description="maximum distance the robot may have from a wall"/>
-  <constant name="forward_speed" value="0.6" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.3" measure="" description="Speed in which the robot will normally turn"/>
-  <constant name="reverse_speed" value="0.5" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
-  <constant name="maximum_laser_value" value="0.1" measure="" description="Allowed maximum before retreating"/>
+  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>
@@ -143,11 +142,10 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="walk_corridor.maxDistance" value="0.1" measure="" description="maximum distance the robot may have from a wall"/>
-  <constant name="forward_speed" value="0.6" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.3" measure="" description="Speed in which the robot will normally turn"/>
-  <constant name="reverse_speed" value="0.5" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
-  <constant name="maximum_laser_value" value="0.1" measure="" description="Allowed maximum before retreating"/>
+  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>
@@ -248,11 +246,10 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="walk_corridor.maxDistance" value="0.1" measure="" description="maximum distance the robot may have from a wall"/>
-  <constant name="forward_speed" value="0.6" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.3" measure="" description="Speed in which the robot will normally turn"/>
-  <constant name="reverse_speed" value="0.5" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
-  <constant name="maximum_laser_value" value="0.1" measure="" description="Allowed maximum before retreating"/>
+  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
   <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>
@@ -287,9 +284,17 @@
 </option-definitions>
 
   <state name="decide_movement">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
     <subsequent-basic-behavior ref="wait">
       <set-parameter ref="wait.time">
-        <decimal-value value="10"/>
+        <decimal-value value="2"/>
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
@@ -318,15 +323,15 @@
               <or>
                 <equal-to>
                   <decimal-input-symbol-ref ref="laser_max"/>
-                  <decimal-input-symbol-ref ref="laser_min_nnw"/>
+                  <decimal-input-symbol-ref ref="laser_min_nne"/>
                 </equal-to>
                 <equal-to>
                   <decimal-input-symbol-ref ref="laser_max"/>
-                  <decimal-input-symbol-ref ref="laser_min_nw"/>
+                  <decimal-input-symbol-ref ref="laser_min_ne"/>
                 </equal-to>
                 <equal-to>
                   <decimal-input-symbol-ref ref="laser_max"/>
-                  <decimal-input-symbol-ref ref="laser_min_wnw"/>
+                  <decimal-input-symbol-ref ref="laser_min_ene"/>
                 </equal-to>
               </or>
             </condition>
@@ -338,15 +343,15 @@
                 <or>
                   <equal-to>
                     <decimal-input-symbol-ref ref="laser_max"/>
-                    <decimal-input-symbol-ref ref="laser_min_nne"/>
+                    <decimal-input-symbol-ref ref="laser_min_nnw"/>
                   </equal-to>
                   <equal-to>
                     <decimal-input-symbol-ref ref="laser_max"/>
-                    <decimal-input-symbol-ref ref="laser_min_ne"/>
+                    <decimal-input-symbol-ref ref="laser_min_nw"/>
                   </equal-to>
                   <equal-to>
                     <decimal-input-symbol-ref ref="laser_max"/>
-                    <decimal-input-symbol-ref ref="laser_min_ene"/>
+                    <decimal-input-symbol-ref ref="laser_min_wnw"/>
                   </equal-to>
                 </or>
               </condition>
@@ -363,17 +368,25 @@
   <state name="move_forward">
     <subsequent-basic-behavior ref="differential_drive">
       <set-parameter ref="differential_drive.speed">
-        <minus>
-          <decimal-value value="0"/>
-          <constant-ref ref="forward_speed"/>
-        </minus>
+        <constant-ref ref="forward_speed"/>
       </set-parameter>
       <set-parameter ref="differential_drive.turning_speed">
         <decimal-value value="0"/>
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
-      <transition-to-state ref="move_forward"/>
+      <if>
+        <condition description="">
+          <equal-to>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <decimal-input-symbol-ref ref="laser_min_n"/>
+          </equal-to>
+        </condition>
+        <transition-to-state ref="move_forward"/>
+      </if>
+      <else>
+        <transition-to-state ref="decide_movement"/>
+      </else>
     </decision-tree>
   </state>
   <state name="move_left">
@@ -386,7 +399,32 @@
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
-      <transition-to-state ref="move_left"/>
+      <if>
+        <condition description="go on till threat is over">
+          <or>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_wnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </or>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_left"/>
+      </else>
     </decision-tree>
   </state>
   <state name="move_right">
@@ -402,7 +440,32 @@
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
-      <transition-to-state ref="move_right"/>
+      <if>
+        <condition description="">
+          <or>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_wnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </or>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_right"/>
+      </else>
     </decision-tree>
   </state>
   <state name="move_back">
@@ -418,7 +481,18 @@
       </set-parameter>
     </subsequent-basic-behavior>
     <decision-tree>
-      <transition-to-state ref="move_back"/>
+      <if>
+        <condition description="">
+          <greater-than>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <constant-ref ref="maximum_laser_value"/>
+          </greater-than>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_back"/>
+      </else>
     </decision-tree>
   </state>
 </option>

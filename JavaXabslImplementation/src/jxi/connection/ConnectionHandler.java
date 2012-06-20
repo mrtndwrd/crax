@@ -73,6 +73,7 @@ public class ConnectionHandler extends Thread {
             } catch(SocketException e) {
                 System.out.println("Socket down, exiting");
                 setConnAlive(false);
+                System.exit(-1);
 			} catch (Exception e) {
 				//System.out.println(String
 				//    .format("%s IN ConnectionHandler.run, attempting to read message.",
@@ -92,7 +93,7 @@ public class ConnectionHandler extends Thread {
 	public void sendMessage(String message) {
         if (!message.equals(lastSentMessage))
         {
-            out.println(message);
+            out.println(message + newline);
             /* This was needed for when too many messages are sent. 
              * Let's hope that doesn't happen :( 
             try{

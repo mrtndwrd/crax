@@ -109,16 +109,22 @@ move_back n
 
 decide_movement
 0
-1
+2
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v 0
 a wait
 1
 d wait.time
-v 10
+v 2
 i
 <
 i laser_max
 0
-c 0.1
+c 3
 t move_back
 i
 =
@@ -127,24 +133,6 @@ i laser_max
 i laser_min_n
 0
 t move_forward
-i
-| 3
-=
-i laser_max
-0
-i laser_min_nnw
-0
-=
-i laser_max
-0
-i laser_min_nw
-0
-=
-i laser_max
-0
-i laser_min_wnw
-0
-t move_right
 i
 | 3
 =
@@ -162,6 +150,24 @@ i laser_max
 0
 i laser_min_ene
 0
+t move_right
+i
+| 3
+=
+i laser_max
+0
+i laser_min_nnw
+0
+=
+i laser_max
+0
+i laser_min_nw
+0
+=
+i laser_max
+0
+i laser_min_wnw
+0
 t move_left
 t decide_movement
 0
@@ -169,31 +175,82 @@ t decide_movement
 a differential_drive
 2
 d differential_drive.speed
--
-v 0
-c 0.6
+c 0.2
 d differential_drive.turning_speed
 v 0
+i
+=
+i laser_max
+0
+i laser_min_n
+0
 t move_forward
+t decide_movement
 0
 1
 a differential_drive
 2
 d differential_drive.speed
-c 0.6
+c 0.2
 d differential_drive.turning_speed
-c 0.3
+c 0.1
+i
+| 4
+=
+i laser_max
+0
+i laser_min_nnw
+0
+=
+i laser_max
+0
+i laser_min_nw
+0
+=
+i laser_max
+0
+i laser_min_wnw
+0
+=
+i laser_max
+0
+i laser_min_n
+0
+t decide_movement
 t move_left
 0
 1
 a differential_drive
 2
 d differential_drive.speed
-c 0.6
+c 0.2
 d differential_drive.turning_speed
 -
 v 0
-c 0.3
+c 0.1
+i
+| 4
+=
+i laser_max
+0
+i laser_min_nnw
+0
+=
+i laser_max
+0
+i laser_min_nw
+0
+=
+i laser_max
+0
+i laser_min_wnw
+0
+=
+i laser_max
+0
+i laser_min_n
+0
+t decide_movement
 t move_right
 0
 1
@@ -202,9 +259,15 @@ a differential_drive
 d differential_drive.speed
 -
 v 0
-c 0.5
+c 0.2
 d differential_drive.turning_speed
 v 0
+i
+>
+i laser_max
+0
+c 3
+t decide_movement
 t move_back
 
 
