@@ -25,8 +25,8 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="forward_speed" value="0.4" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.2" measure="" description="Speed in which the robot will normally turn"/>
   <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
   <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
@@ -142,8 +142,8 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="forward_speed" value="0.4" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.2" measure="" description="Speed in which the robot will normally turn"/>
   <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
   <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
@@ -246,8 +246,8 @@
     <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
   </enumeration>
   <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
-  <constant name="forward_speed" value="0.2" measure="" description="Speed in which the robot will normally go forward"/>
-  <constant name="turning_speed" value="0.1" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="forward_speed" value="0.4" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.2" measure="" description="Speed in which the robot will normally turn"/>
   <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
   <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
   <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
@@ -404,15 +404,15 @@
           <or>
             <equal-to>
               <decimal-input-symbol-ref ref="laser_max"/>
-              <decimal-input-symbol-ref ref="laser_min_nnw"/>
+              <decimal-input-symbol-ref ref="laser_min_nne"/>
             </equal-to>
             <equal-to>
               <decimal-input-symbol-ref ref="laser_max"/>
-              <decimal-input-symbol-ref ref="laser_min_nw"/>
+              <decimal-input-symbol-ref ref="laser_min_ne"/>
             </equal-to>
             <equal-to>
               <decimal-input-symbol-ref ref="laser_max"/>
-              <decimal-input-symbol-ref ref="laser_min_wnw"/>
+              <decimal-input-symbol-ref ref="laser_min_ene"/>
             </equal-to>
             <equal-to>
               <decimal-input-symbol-ref ref="laser_max"/>

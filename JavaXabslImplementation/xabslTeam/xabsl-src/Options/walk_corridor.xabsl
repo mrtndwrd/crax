@@ -56,8 +56,8 @@ option walk_corridor{
     decision
     {
       /** go on till threat is over */
-      if(laser_max == laser_min_nnw || laser_max ==laser_min_nw || laser_max ==
-          laser_min_wnw || laser_max == laser_min_n)
+      if(laser_max == laser_min_nne || laser_max ==laser_min_ne || laser_max ==
+          laser_min_ene || laser_max == laser_min_n)
       {
         goto decide_movement;
       }
