@@ -175,7 +175,7 @@ t decide_movement
 a differential_drive
 2
 d differential_drive.speed
-c 0.2
+c 0.4
 d differential_drive.turning_speed
 v 0
 i
@@ -191,25 +191,25 @@ t decide_movement
 a differential_drive
 2
 d differential_drive.speed
-c 0.2
+c 0.4
 d differential_drive.turning_speed
-c 0.1
+c 0.2
 i
 | 4
 =
 i laser_max
 0
-i laser_min_nnw
+i laser_min_nne
 0
 =
 i laser_max
 0
-i laser_min_nw
+i laser_min_ne
 0
 =
 i laser_max
 0
-i laser_min_wnw
+i laser_min_ene
 0
 =
 i laser_max
@@ -223,11 +223,11 @@ t move_left
 a differential_drive
 2
 d differential_drive.speed
-c 0.2
+c 0.4
 d differential_drive.turning_speed
 -
 v 0
-c 0.1
+c 0.2
 i
 | 4
 =

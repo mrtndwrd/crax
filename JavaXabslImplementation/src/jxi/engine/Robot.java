@@ -225,21 +225,27 @@ public class Robot {
     public void processLaserSensor(String[] messageArray)
     {
         String[] parameters = messageArray[1].split(",");
-        world.setLaserMinWNW(Double.parseDouble(parameters[0]));
-        world.setLaserMinNW(Double.parseDouble(parameters[1]));
-        world.setLaserMinNNW(Double.parseDouble(parameters[2]));
-        world.setLaserMinN(Double.parseDouble(parameters[3]));
-        world.setLaserMinNNE(Double.parseDouble(parameters[4]));
-        world.setLaserMinNE(Double.parseDouble(parameters[5]));
-        world.setLaserMinENE(Double.parseDouble(parameters[6]));
+        double[] parametersDouble = new double[parameters.length];
+        for(int i=0;i<parameters.length;i++)
+        {
+            parametersDouble[i] = Double.parseDouble(parameters[i]);
+        }
+        world.setLaserMinWNW(parametersDouble[0]);
+        world.setLaserMinNW(parametersDouble[1]);
+        world.setLaserMinNNW(parametersDouble[2]);
+        world.setLaserMinN(parametersDouble[3]);
+        world.setLaserMinNNE(parametersDouble[4]);
+        world.setLaserMinNE(parametersDouble[5]);
+        world.setLaserMinENE(parametersDouble[6]);
         // Okay, this is tricky, because maybe there will be a reference
         // problem, but I'm still going to try this, else there should be some
         // copy used...
         //double[] sorted = Arrays.sort(parameters);
-        Arrays.sort(parameters);
+        Arrays.sort(parametersDouble);
+        System.out.printf("Parameters: %s, %s, %s, %s, %s, %s, %s\n", parameters[0], parameters[1], parameters[2], parameters[3], parameters[4], parameters[5], parameters[6]);
         // First of sorted array is minimum, last is maximum
-        world.setLaserMax(Double.parseDouble(parameters[parameters.length-1]));
-        world.setLaserMin(Double.parseDouble(parameters[0]));
+        world.setLaserMax(parametersDouble[parametersDouble.length-1]);
+        world.setLaserMin(parametersDouble[0]);
     }
 
 // LaserSensor }}}
