@@ -1,110 +1,115 @@
-\documentclass[a4paper,10pt, twocolumn]{article}
-\usepackage[margin=2.5cm, nohead]{geometry}
-\usepackage{palatino, url, multicol}
-\usepackage{hyperref}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{verbatim}
-\usepackage[all]{xy}
-\usepackage[english]{babel}
-\usepackage{cite}
-\usepackage{color}
-\usepackage[usenames,dvipsnames]{xcolorr}
+\documentclass[a4paper,10pt]{article}
+\usepackage{thesis}
+%\usepackage{a4wide}
 
-\makeatletter
-\renewcommand{\section}{\@startsection
-{section}%                   % the name
-{1}%                         % the level
-{0mm}%                       % the indent
-{-\baselineskip}%            % the before skip
-{0.5\baselineskip}%          % the after skip
-{\normalfont\large\itshape\textcolor{Gray}}} % the style
-\makeatother
+% Fill in the header:
+\lhead{Combining Robocup Rescue and XABSL}
+\rhead{Maarten de Waard}
 
 \begin{document}
 
 \input{title.tex}
 
+\twocolumn[
+\begin{@twocolumnfalse}
 \begin{abstract}
-When done, this will become the abstract
+In this research, a product will be introduced, that combines the Extensible
+Agent Behavior Specification Language (XABSL) with any program, capable of
+having a socket connection. A use of this product is shown, by combining it to
+the rescue project on the University of Amsterdam, using
+\textit{UsarCommander},
+a program designed to control one or more robots, in a virtual rescue operation.
 \end{abstract}
-
+\end{@twocolumnfalse}
+]
 %\begin{multicols}{2}
 \section{Introduction}
 The research will be focussing on combining the \textit{Extensible Agent
-Behavior Specification Language} (XABSL) with the current RoboCup Rescue code, used
-by Arnoud Visser, in the RoboCup Rescue missions. 
+Behavior Specification Language} (XABSL) with any program capable of making a
+socket connection. In particular, the focus will lay on virtual rescue
+operations, otherwise known as the \textit{RoboCup Rescue League}. Using a
+behavior specification language will make it possible to separate specification
+of behaviors from implementation.
 
-There are currenty different solutions on how to control several robots in a
-virtual rescue operation, to find as many victims as possible. Sophisticated
-methods have been constructed to control the robots as efficiently as possible.
-Some of these, make use of several `behaviors', which can be activated by a
-person controlling a robot, or autonomously. For example, a behavior could be a
-module that makes the robot navigate to a specified point on the map.
+Currently, the focus of research in the rescue missions is mainly on creating
+smart implementations of sensors. Most of the actual controlling of robots is
+done by hand, using programs that forward the camera images of the robots to a
+human operator controlling them. Some of these operators use simple behaviors to
+help them, like for example making the robot automatically traverse a path to a
+specified point. This kind of simple task can be called a behavior.
 
-An improvement that can still be made in these behavior controlled robots, is in 
-the specification of which behavior should be selected in a certain situation. This can be done by creating
+An improvement that can be made in these behavior controlled robots, is in 
+the specification of which behavior should be selected in a certain situation.
+and how the behavior is executed. This can be done by creating
 behavior-controlled robots, that can autonomously select the best behavior to
-activate on a certain moment.
+activate on a certain moment, and using their sensors as input, can choose the
+right way to navigate.
 
 This research will make use of XABSL, a behavior specification language, which
 makes it possible to separate the specification of a behavior, from the implementation.
-I will prove high efficiency of this method,
-by comparing the results of missions done by different solutions, with
-mine. 
 
-Results in the RoboCup Rescue missions are counted by how many victims
-are found on the map, so improvement can be shown by finding more victims using
-the results of this research.
+%Results in the RoboCup Rescue missions are counted by how many victims
+%are found on the map, so improvement can be shown by finding more victims using
+%the results of this research.
+%
 
-Currently, not many behavior-controlled exploration algorithms exist. The
-closest to this is finding a path on challenging terrain. 
-\cite{seraji2002behavior} . Eventually, this research will result in a method to
-easily adjust and improve the exploration behavior of the RoboCup Rescue code.
-
-
-\section{RoboCup Rescue}
-\subsection{Description}
-The first of the two projects is the program for RoboCup Rescue, called
-UsarCommander\footnote{Available at
-http://www.jointrescueforces.eu/wiki/tiki-index.php}, originally developed by Bayu Slamet, and extended by Arnoud
-Visser and many others. This program takes care of connecting to UsarSim and
-makes the user able to easily get sensor data from the robots in it. It is also
-possible to control the robots with many types of behavior, or by hand, clicking
-arrows on the interface that comes with it.
-
-Over time, the system has been expanded with many subprojects, for example one
-implementing a SLAM
-(Simultaneous Localisation And Mapping) algorithm, to make an accurate map from
-the sensor data of several robots.\cite{slamet2006manifoldslam} All the information used and produced by
-these subprojects can be accessed by other subprojects, resulting in an ideal
-environment for creating new robot-controlling applications.
-
-\subsection{Motivation to use it}
-The main reason to use this program, in stead of any other, to interface my
-software with USARSim is that it has so many features. The presence of many
-subprojects in the code, makes it possible to make a very efficient autonomous
-exploration algorithm using the data available. Without using UsarCommander all
-the needed software should be taken from somewhere else, or implemented solely
-for this purpose.
-
-Other software for this purpose is available to, but since this is a bachelor
-thesis on the University of Amsterdam, and this is the software used by it in
-the RoboCup, this is the logical choice.
+Currently, not many behavior-controlled exploration algorithms exist.
+An exception is path finding on challenging terrain
+\cite{seraji2002behavior} . This research will result in a method to
+easily adjust and improve the behavior of any robot in any robot commanding
+program, especially focussing on UsarCommander, the program used by the UvA Rescue
+team\footnote{\url{Team description and more at: http://www.jointrescueforces.eu/wiki/tiki-index.php}}.
 
 \section{XABSL}
-`XABSL' is a very simple language to descripbe behaviors for autonomous agents
+\textit{XABSL} is a programming language, created to easily describe behaviors for autonomous agents
 based on hierarchical finite state machines \cite{loetzsch2003xabsl}. It is the
 software that has been used by the German robotic soccer team to specify their
-robots' behavior. The team won in 2008.
+robots' behaviors. The team won in 2008, and the years after that.
 
 \begin{figure}
     \centering
-        \includegraphics[width=.6\columnwidth]{../../files/option_drive_circle.png}
+        \includegraphics[width=.6\columnwidth]{../files/option_drive_circle.png}
     \label{fig:simpleFsm}
-    \caption{An example of a figure generated by a XABSL tool, from XABSL code.}
+    \caption{An example of a figure generated by the XABSL compiler, from XABSL code.}
 \end{figure}
 
+\subsection{Difference with other specification possibilities}
+There are many alternatives to XABSL, when it comes to defining a robot's
+behavior. This section will discuss some of the alternatives, that had to be
+considered before choosing XABSL.
+
+\subsubsection{POSH}
+POSH \cite{brom2006posh} is a very similar alternative implementation of a Behavior Specification
+Language. Posh is defined as a \textit{Behavior Oriented Design}, which is
+created from a combination of \textit{Object Oriented Design} (OOD, used by object oriented
+programming languages like Java and C++) and \textit{Behavior Based Artificial
+Intelligence} (BBAI). The BBAI-part of it is the decomposition of intelligence
+as subtasks called \textit{acts}. Examples of acts are knowing your position and
+planning a route. From OOD, BOD takes building your behavior in an object-hierarchy
+and an agile and iterative development process.
+
+POSH is an abbreviation of Parallel-rooted, Ordered, Slip-stack Hierarchical,
+which, freely interpreted, stands for something that enables a user to specify
+an agent's goals and priorities. This is actually quite similar to XABSL,
+because it makes certain decisions, and then selects an action to be executed by
+an external program. There are some important differences though:
+
+\begin{itemize}
+    \item POSH is designed to be used by non-pro\-gram\-mers. This means the
+    interface is easy, colorful and simple, whereas XABSL prioritizes complex
+    capabilities, making the specification somewhat more complex for
+    non-programmers.
+    \item Where XABSL has a close coupling with the perception stream of the
+    robot, POSH has no variable management, enabling the system to be a lot
+    easier to use, but also maximizing the complexity of the specified behaviors
+    to a lower maximum than XABSL offers.
+\end{itemize}
+
+\subsubsection{The next thing}
+I don't know yet, let's see tomorrow
+%TODO
+
+\subsection{XABSL specification}
 XABSL makes use of four components: Agents, Options, states and Basic behavior.
 The following subsections will explain what these are, and how they can be used.
 
@@ -143,6 +148,39 @@ resulting in better results for autonomous exploration.
 % TODO
 This section will be expanded with the following: 
 
+\section{RoboCup Rescue}
+\subsection{Description}
+The project used in cooperation with the application, is UsarCommander.
+UsarCommander\footnote{Available at
+\url{http://www.jointrescueforces.eu/wiki/tiki-index.php}}, originally developed by Bayu Slamet, and extended by Arnoud
+Visser and many others. This program takes care of connecting to USARSim (the
+simulator used in the Robocup) and
+makes the user able to easily get sensor data from the robots in it. It is also
+possible to control the robots with several types of behavior, like
+corridor-following, obstacle-avoidance, or tele-operation. The last of which
+enables the operator to manually control the robots by hand, using an
+interactive human interface.
+
+Over time, the system has been expanded with many subprojects, for example one
+implementing a SLAM
+(Simultaneous Localisation And Mapping) algorithm, to make an accurate map from
+the sensor data of several robots\cite{slamet2006manifoldslam}. All the information used and produced by
+these subprojects can be accessed by other subprojects, resulting in an ideal
+environment for creating new robot-controlling applications.
+
+\subsection{Motivation to use it}
+The main reason to use this program, instead of any other, to interface my
+software with USARSim is that it has so many features. The presence of many
+subprojects in the code, makes it possible to make a very efficient autonomous
+exploration algorithm interfacing with the subprojects at hand. Without using UsarCommander all
+the needed software should be taken from somewhere else, or implemented solely
+for this purpose.
+
+Other software for this purpose is available too. %TODO: Specify other programs
+
+but since this is a bachelor
+thesis on the University of Amsterdam, and this is the software used by it in
+the RoboCup, this is the logical choice.
 \section{Approach}
 \begin{comment}
 This section will contain my approach
