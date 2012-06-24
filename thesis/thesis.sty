@@ -1,0 +1,59 @@
+\ProvidesPackage{thesis}
+% Needed packages:
+\usepackage[margin=3cm]{geometry}
+\usepackage{palatino, url, multicol}
+\usepackage[colorlinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{verbatim}
+\usepackage[all]{xy}
+\usepackage{cite}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+% Font:
+\usepackage{cmbright}
+\usepackage[T1]{fontenc}
+
+% No ugly url's
+\urlstyle{same}
+
+% Header:
+\usepackage{fancyhdr}
+\usepackage{fix2col}
+\setlength{\columnsep}{1cm}
+\setlength{\headheight}{15pt}
+% Set the width of the header to the actual width of the page (when using a4
+% pages, this is needed)
+\renewcommand{\headwidth}{\textwidth}
+% Set default page style to fancy
+\pagestyle{fancy}
+\fancyfoot[C]{\thepage}
+
+% Section headings
+\newcommand{\sectionColor}{black!60}
+\AtBeginDocument{\addto\captionsenglish{\def\abstractname{\color{\sectionColor}Abstract}}}
+
+\renewcommand{\section}{\@startsection
+{section}%                   % the name
+{1}%                         % the level
+{0mm}%                       % the indent
+{\baselineskip}%            % the before skip
+{0.5\baselineskip}%          % the after skip
+{\noindent\normalfont\large\bfseries\textcolor{\sectionColor}}} % the style
+\renewcommand{\subsection}{\@startsection
+{subsection}%                   % the name
+{2}%                         % the level
+{0mm}%                       % the indent
+{-\baselineskip}%            % the before skip
+{0.5\baselineskip}%          % the after skip
+{\noindent\normalfont\large\itshape\textcolor{\sectionColor}}} % the style
+\renewcommand{\subsubsection}{\@startsection
+{subsubsection}%                   % the name
+{3}%                         % the level
+{0mm}%                       % the indent
+{-\baselineskip}%            % the before skip
+{0.5\baselineskip}%          % the after skip
+{\noindent\normalfont\itshape\textcolor{\sectionColor}}} % the style
+
+
