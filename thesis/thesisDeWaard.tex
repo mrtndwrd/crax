@@ -322,16 +322,25 @@ The actions are always executed by an external program. There are some important
     to a lower maximum than XABSL offers.
 \end{itemize}
 
-\subsection{Petri nets}
+\subsection{Petri Net Plans}
 % First describe petri nets
 Another possible method to represent robot behavior as plans, is by using
-\textit{Petri Net Plans}, a language based on \textit{Petri Nets} 
+\textit{Petri Net Plans}. This is a language based on \textit{Petri Nets} (Also known as
+Place/Transition Nets or P/T Nets), proposed by \cite{ziparo2011petri}. 
 
+Before going into the petri nets, it is useful to know what a Petri Net exactly
+is. 
 
+\subsection{COLBERT}
+\cite{konolige1997colbert}
 
-\subsection{The next thing}
-I don't know yet, let's see tomorrow
-%TODO
+These are the main alternatives. There are others, like using constraint logic,
+with aid of If-then-else statements directly in the main program. One can also
+use machine learning techniques, for example \textit{Reincorcement Learning}
+methods are used by \textit{Sarsa} and \textit{Q-learning}. This is, however a
+complete different way of looking at the problem, with its own set of results,
+which are not comparable to the ones reachable with human-specified behaviors,
+because the current learning techniques are not yet sufficient.
 
 \subsection{XABSL specification}
 XABSL makes use of four components: Agents, Options, states and Basic behavior.
