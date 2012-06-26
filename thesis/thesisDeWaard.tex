@@ -4,6 +4,7 @@
 %\usepackage{a4wide}
 % Small enumerate and itemize
 \usepackage{mdwlist}
+\usepackage{subfig}
 
 % Fill in the header:
 \lhead{Combining Robocup Rescue and XABSL}
@@ -16,7 +17,6 @@
 \tableofcontents
 \setcounter{page}{0}
 \newpage
-
 \begin{abstract}
 In this research, a product will be introduced, that combines the Extensible
 Agent Behavior Specification Language (XABSL) with any program, capable of
@@ -24,15 +24,22 @@ having a socket connection. A use of this product is shown, by combining it to
 the rescue project on the University of Amsterdam, using
 \textit{UsarCommander},
 a program designed to control one or more robots, in a virtual rescue operation.
+\keywords{XABSL, Behavior Based Artificial Intelligence, RoboCup, UsarCommander}
 \end{abstract}
 %\begin{multicols}{2}
 \section{Introduction}
-The research will be focussing on combining the \textit{Extensible Agent
-Behavior Specification Language} (XABSL) with any program capable of making a
+The research will be focussing on combining 
+a specially designed Behavior Specification Language 
+ with any program capable of making a
 socket connection. In particular, the focus will lay on virtual rescue
 operations, otherwise known as the \textit{RoboCup Rescue League}. Using a
 behavior specification language will make it possible to separate specification
 of behaviors from implementation.
+
+At the end of the research, a product will be presented that can be inserted
+into any other program to take over the behavior specification. The method will
+be proven with UsarCommander, which is used by the Rescue team on the University
+of Amsterdam.
 
 Currently, the focus of research in the rescue missions is mainly on creating
 smart implementations of sensors. Much of the actual controlling of robots is
@@ -47,9 +54,6 @@ and how the behavior is executed. This can be done by creating
 behavior-controlled robots, that can autonomously select the best behavior to
 activate on a certain moment, and using their sensors as input, can choose the
 right way to navigate.
-
-This research will make use of XABSL, a behavior specification language, which
-makes it possible to separate the specification of a behavior, from the implementation.
 
 %Results in the RoboCup Rescue missions are counted by how many victims
 %are found on the map, so improvement can be shown by finding more victims using
@@ -479,6 +483,7 @@ act patrol2{int a}
 Figure \ref{fig:colbert} shows a small sample of specification in the COLBERT
 language. 
 
+\subsection{Other alternatives}
 These are the main alternatives. There are others, like using constraint logic,
 with aid of If-then-else statements directly in the main program. One can also
 use machine learning techniques, for example \textit{Reincorcement Learning}
@@ -600,26 +605,178 @@ More about the engine can be read in section \ref{sec:xabsl-engine}
 
 This engine runs on \textit{intermediate code} that is automatically generated
 from several XABSL files, by the XABSL compiler. This intermediate code is a
-sort of 
+file containing all the information from the different files, which is read by
+the engine. The following files are always used by the compiler:
+\begin{figure}
+\centering
+\lstset{language=java,
+  keywordstyle=\bfseries,          % keyword style
+  commentstyle=\color{\sectionColor},       % comment style
+  morekeywords={include, agent}
+}
+\begin{lstlisting}
+include "my-basic-behaviors.xabsl";
+include "my-symbols.xabsl";
+include "Options/drive_circle.xabsl";
+
+/** Start an agent with a name and a specified option. */
+agent robot1("Robot-1", drive_circle);
+\end{lstlisting}
+\caption{A very basic agent file, which includes only the explicitly
+necessary}
+\label{fig:agent}
+\end{figure}
+
+\begin{figure}
+\centering
+\lstset{language=java,
+  keywordstyle=\bfseries,          % keyword style
+  commentstyle=\color{\sectionColor},       % comment style
+  morekeywords={include, agent, option, initial, state, target, action, goto}
+}
+\subfloat[output option of the code]{
+\includegraphics[width=.23\textwidth]{images/option_drive_circle.pdf}
+\label{fig:drive-circle-fig}
+}
+\hspace{2cm}
+\subfloat[code in \texttt{drive\_circle.xabsl}]{
+\parbox{.56\linewidth}{\lstinputlisting{drive-circle.xabsl}}
+\label{list}
+}
+\caption{A simple option (FSA), capable of making a robot turn a circle. In this
+option \texttt{amount\_turned} is an input variable and
+\texttt{differential\_drive} is a basic behavior.}
+\label{fig:drive-circle}
+\end{figure}
 
 
-\subsection{ Traditionally Combining XABSL With Any Existing Program}
+\begin{itemize}
+    \item \dik{Agents:} One of the files, specifies all the agents. This is the
+    root file of the XABSL hierarchy. In this file, all the other files are
+    included (similar to the include in the C programming language). When that
+    is done, agents can be specified by typing \texttt{agent
+    robotName(\"robotIdentifier\",
+    startOption)}. An example agent file is given in figure \ref{fig:agent}
+    \item \dik{my-basic-behaviors} and \dik{my-symbols:} As you can see, the
+    agent file includes not only one option, but also two files with basic
+    behaviors and symbols. The first of these two, contains the names of the
+    basic behaviors. These basic behaviors need to be specified in C++ or Java,
+    depending on which of the engines is used. The file simply names them, for
+    the compiler to be sure that these behaviors exist, and are called in the
+    right manner. 
+
+    The symbols file defines all the variables that are used by XABSL. Three
+    kind of variables exist:
+    \begin{enumerate}
+        \item \emph{Input variables:} variables that are put into the engine,
+        from the external program. For example, the $x$ and $y$ position of the
+        robot.
+        \item \emph{Internal variables:} these are the variables that XABSL
+        keeps track of itself. An internal variable does not have to be
+        implemented by the engine running program, but can be completely
+        modified by the engine itself. Internal variables can also be constants,
+        to enable very simple modification of constants like, for example,
+        driving speed, without having to recompile the main program.
+        \item \emph{Output variables:} If XABSL should be able to change a
+        variable in the main program, this is an output variable.
+    \end{enumerate}
+    These three together, enable complete control of XABSL in the main
+    application, and the other way around. The variables can be monitored at all
+    time, by simply asking the engine for the current value.
+    \item \dik{Option definition files:} Each option defines a finite state
+    machine in its own file. These options are conveniently placed in a separate
+    folder, and included by the agents file. As can be seen, the robot in figure
+    \ref{fig:agent} has option drive\_circle as argument. The definition of this
+    simple option can be seen in figure \ref{fig:drive-circle}. An option always
+    contains one or several states, one of which is the \textit{initial state}.
+    This concept is known in Finite State Automata as the start of the
+    automaton. Optionally, a \textit{target state} can be provided, which means
+    that the option stops there. 
+
+    As can be read on the XABSL website\footnote{www.xabsl.de} and in
+    \cite{loetzsch2004xabsl}, every state has the following layout: 
+    \vspace{-.3cm}
+    \begin{verbatim}
+<state> ::=
+  [initial] [target] state <name> {
+    decision
+    {
+      [ else ] <decision tree>
+    }
+    action
+    {
+      { <action definition> }
+    }
+  }
+    \end{verbatim}
+    \vspace{-.7cm}
+    The decision tree makes decisions based on symbols specified in
+    my-symbols.xabsl. All common boolean operators are supported, and because
+    the trees are built up of merely if and else statements, the tree is very
+    simple to create and understand. 
+
+    An action definition can contain several options or basic behaviors to be
+    called. These will be called in the order in which they are specified, so
+    not all at once.
+
+    An automatically generated documentation web page of an option always shows the code of
+    the decision tree (including comments), a graph of the finite state
+    automaton, graphs of every state and links to the options or behaviors in
+    the action definition.
+\end{itemize}
+
+\subsection{Traditionally Combining XABSL With Any Existing Program}
 \label{sec:xabsl-engine}
+Before the existence of this research, XABSL could only be combined with other
+C++ programs, by using the C++ XABSL engine, or later with Java programs, by
+using the Java engine. Of course the third possibility of parsing the
+intermediate code with an own implementation is present, but that would require
+actually rebuilding the XABSL engine in the programming language of your choice,
+which, to do it without faults, would require a great understanding of XABSL,
+and a \textbf{lot} of time. This section will cover how the engine is used, and
+what it does. The focus will lay on the Java XABSL engine, since that is the one
+used in the rest of the research.
 
+Each robot will get its own reasoning engine. The engine is simply created by
+creating a Java Engine object, which only takes an output stream (for debug
+messages) and a time function as an input. 
 
+Next, all the symbols and basic behaviors present in the \texttt{my-symbols} and
+\texttt{my-basic-behaviors} files have to be registered to the engine. This
+means that for every input variable, a variable of the Java program running the
+engine needs to registered, together with the name it has in XABSL, and the
+getter function you have created for the variable in Java. This enables the
+engine to access the variable whenever it needs to. 
 
+Behaviors are registered almost the same way, but it uses a Java behavior class,
+which extends the basic behavior class provided by the XABSL framework. This
+enables the engine to run the \texttt{execute()} method of that class, which can
+be any type of native Java code. The behavior class of a XABSL using program can
+do anything another Java class can, thus not limiting the possibilities of the
+behavior. 
+
+Once everything is registered, the intermediate code can be read into the XABSL
+engine. This results in the engine linking everything together, after which the
+engine can be used to select the right behavior on the right time. This is done
+by calling the engine's \texttt{execute} method in a loop. This enables users to
+choose when the engine should be executed, making it possible to wait until
+every sensor has been updated, and then execute again.
 
 \section{RoboCup Rescue}
+Before continuing with the research done, one last component has to be
+introduced. The Rescue program used to test the framework on. This program is
+called UsarCommander. The program is written in Visual basic and provides many
+tools to get information from a session in USARSim.
+
 \subsection{Description}
-The project used in cooperation with the application, is UsarCommander.
 UsarCommander\footnote{Available at
-\url{http://www.jointrescueforces.eu/wiki/tiki-index.php}}, originally developed by Bayu Slamet, and extended by Arnoud
-Visser and many others. This program takes care of connecting to USARSim (the
-simulator used in the Robocup) and
-makes the user able to easily get sensor data from the robots in it. It is also
+\url{http://www.jointrescueforces.eu/wiki/tiki-index.php}} was originally developed by Bayu Slamet, and extended by Arnoud
+Visser and many others. The program takes care of connecting to USARSim (the
+simulator used in the RoboCup) and
+makes the user able to easily get sensor data from the simulated robots. It is also
 possible to control the robots with several types of behavior, like
-corridor-following, obstacle-avoidance, or tele-operation. The last of which
-enables the operator to manually control the robots by hand, using an
+corridor-following, obstacle-avoidance, or tele-operation, the last of which
+enables the operator to manually control the robots, using an
 interactive human interface.
 
 Over time, the system has been expanded with many subprojects, for example one
@@ -629,43 +786,158 @@ the sensor data of several robots\cite{slamet2006manifoldslam}. All the informat
 these subprojects can be accessed by other subprojects, resulting in an ideal
 environment for creating new robot-controlling applications.
 
-\subsection{Motivation to use it}
-The main reason to use this program, instead of any other, to interface my
-software with USARSim is that it has so many features. The presence of many
-subprojects in the code, makes it possible to make a very efficient autonomous
-exploration algorithm interfacing with the subprojects at hand. Without using UsarCommander all
-the needed software should be taken from somewhere else, or implemented solely
-for this purpose.
+An example of the UsarCommander interface and its possibilities, is shown in
+figure \ref{fig:usarcommander}.
+%TODO: Make this figure!!!!
 
-Other software for this purpose is available too. %TODO: Specify other programs
+\subsection{Alternative possibilities}
+Since the university of Amsterdam is not the only university that enrolls in the
+Rescue simulation league of the RoboCup, alternatives to UsarCommander are
+available. It is however not a trend over all of the world to create open source
+programs for the RoboCup, which limits the list of possibilities.
 
-but since this is a bachelor
-thesis on the University of Amsterdam, and this is the software used by it in
-the RoboCup, this is the logical choice.
+One alternative that is widely known is Iridium. A program created to provide
+easy access to USARSim for programmers with little experience. This is a nice
+framework to test your programs on, but it lacks the possibilities and features that
+UsarCommander offers. 
+
 \section{Approach}
-\begin{comment}
-This section will contain my approach
-\end{comment}
+There is one problem left to solve: UsarCommander is written in Visual Basic,
+whereas XABSL is written in C++ or Java. The solution is socket programming.
 
-\subsection{Interfacing both programs}
-Since the UsarCommander is written in Visual Basic, and the basic behaviors of
-XABSL are written in C++, a bridge should be made. This is done by creating a
-Dynamic Link Library (DLL). This DLL contains the needed functions of the C++
-program, making them accessible for Visual Basic. The bridge works both ways, so
-Visual Basic can offer output symbols to the XABSL Engine, while the engine can
-offer input symbols to the agent.
+Sockets programming is possible in almost every common programming language, and
+simple means `writing strings to, and reading strings from a network socket'.
+It enables computers to write and read to and from not only their own network
+sockets, but any one that has been opened to \textit{listen}. 
 
-\subsection{Creating a succesful hierarchy}
-This section will tell about the FSM hierarchy I will make for autonomous
-exploration
+This research offers a framework, written in Java, that enables using XABSL on
+any program that has been written in a language supporting Socket programming.
 
+\subsection{Information flow}
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\textwidth]{images/informationFlow.pdf}
+    \caption{The information flow from any robot running program to
+    JavaXabslImplementation (JXI). A world representation is made in JXI,
+    enabling the commander program, as well as JXI to preprocess sensor data to
+    variables in the world representation. For example \texttt{ammount\_turned}
+    can be created in JXI, when executing the option \texttt{drive\_circle},
+    from the information then ins sensor sends. S represents a socket
+    connection.}
+    \label{fig:information-flow}
+\end{figure}
+This section will describe what information is contained in which part of the
+program, and how information is shared between both of them. A representation of
+the information flow of the program can be seen in figure
+\ref{fig:information-flow}. In this figure, an S represents a socket. The
+commanding program is, in this case, UsarCommander, but can be any program. JXI
+stands for \textit{JavaXabslImplementation}, the name of the project this research is
+about.
+
+\subsubsection{Messages}
+The socket connection enable sending messages from one module to the other.
+These messages are always strings, so an encoding of other values has to be made
+when sending, for example, arrays.
+
+Several methods exist for automatically encoding the messages that are sent over
+sockets. The best, widely used example is JavaScript Object Notation (also known
+as JSON)\footnote{Exact description and implementations can be found at
+http://www.json.org/}. It offers very easy encoding of Java objects, when using a Java-like
+language (Java or JavaScript). Several libraries exist to use JSON with other
+languages, but some of them lack the simplicity JSON offers to others and many of
+the JSON libraries are created by third parties, which makes them less
+trustworthy.
+
+For example when using JSON in Visual Basic, a solution is offered by
+MSDN\footnote{The solution is described here: \url{
+http://msdn.microsoft.com/en-us/library/bb299886.aspx}}, but it comes down to
+the programmer  having to do most of the formatting himself. For this particular
+reason, this research uses its own, simpler notation for messages. 
+
+Every message is built up in the following structure: \\\\
+\texttt{<target>:<parameter1>,<parameter2>,...,<parameterN>}\\\\
+When messages are sent from the robot commander unit, the messages mostly
+consist of sensor data. For example, a laser range scanner sensor would send the
+following data:\\\\
+\texttt{LASER:1.14,2.55,3.54,5.54,2.99,1.44}\\\\
+This can then easily be parsed in JXI, by splitting the entire string on the
+colon. The first element of the array that comes out, is the name of the sensor,
+and the second element contains the sensor data, in a string that can be
+split on the commas. Splitting is done by invoking the Java method
+\texttt{split()}, which is a standard String operation. 
+
+When the XABSL engine invokes a Basic Behavior, JXI will send a message
+containing the behavior and its arguments, in the same fashion. For example:
+\\\\
+\texttt{DIFFERENTIALDRIVE:5,1}\\\\
+will invoke the differential drive method in the robot commander. Currently this
+is the only method that has to be implemented in the commander program. The
+first argument resembles the driving speed, the second argument resembles the
+turning speed. A positive turning speed makes the robot turn left, and a
+negative value makes it turn right. Together, these values can invoke every
+movement a simple robot can make. Of course, more behaviors can be added for
+flying robots, or robots with more moving parts.
+
+\subsection{World Class}
+The JXI package contains a world object. This object contains all the input
+variables XABSL requires. In the future, this object can be shared with other
+robots, enabling them to know each others location. 
+
+The world class also provides a simple interface for users of the system to add
+their own, new, variables to the JXI. More information on this class and adding
+variables, can be found in the code documentation. Another document that can be
+downloaded from \url{http://crax.googlecode.com}.
+
+\subsection{Other Added Simplicity}
+The connection is not the only thing JXI adds to the standard XABSL engine. The
+engine tends to require some objects that are always the same, but not included
+in the standard package. An example of
+these objects, is that before being able to register a decimal parameter
+(symbol) to the engine, the interface of \texttt{DecimalParameter} should be
+implemented. This only has to be done once, to have a runnable class in Java,
+but for some reason is not delivered with the XABSL engine. Of course JXI does
+deliver a \texttt{MyDecimalParameter} class that does this.
+
+Also an abstract class of a basic behavior (\texttt{StandardBehavior}) is
+shipped with the JXI package. This is an extension of the \texttt{BasicBehavior}
+class in the XABSL engine, that also handles the socket connection, making every
+basic behavior capable of sending messages to the robot commander unit.
 
 \section{Results}
 This section will contain results, hopefully in the form of explored maps, numbers of victims found, etc.
 
 \section{Conclusion}
+The JXI package offers great possibilities for every one who want to add
+Behavior Based Artificial Intelligence to his project. I would recommend the
+usage of JXI above the ordinary Java Xabsl engine, due to its poor
+documentation. The engine does not provide any documents about how to run it,
+other than their unit test, whereas JXI has a code documentation file, which
+explains how it works and how it is supposed to be ran. 
 
-%\end{multicols}{2}
+Furthermore having a distributed system is often a good option. Especially when
+more robots are supported, one command center should be consulted on what to do
+next. This command center could very well be using JXI to choose the right
+behavior.
+
+As an added note, a socket connected program is easily integrated in any kind of
+system. The only thing needed is a socket connection to JXI, something that
+combines the right variables to a simple message and something that reads the
+incoming messages, and runs the corresponding basic behavior. 
+
+\section{Discussion and future work}
+Of course, before combining this project to every system thinkable, some
+improvements can be made to the JavaXabslImplementation. This section will sum
+up the main inconveniences and the work that should be done to solve them.
+\begin{itemize}
+    \item \dik{Multiple robots:} Currently the program only supports using one
+    XABSL engine with one robot and one connection to a robot commander system.
+    To enable using several connections, the world class should be edited to
+    support several robot information variables. Most of this editing involves
+    creating arrays in stead of single variables, which is not hard to bring
+    into practice, but for which more time was needed.
+\end{itemize}
+
+
 \bibliography{bib}{}
 \bibliographystyle{plain}
 \end{document}

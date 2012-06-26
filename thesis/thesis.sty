@@ -56,6 +56,16 @@
 {-\baselineskip}%            % the before skip
 {0.5\baselineskip}%          % the after skip
 {\noindent\normalfont\itshape\textcolor{\sectionColor}}} % the style
+\renewcommand{\paragraph}{\@startsection
+{paragraph}%                   % the name
+{4}%                         % the level
+{0mm}%                       % the indent
+{-\baselineskip}%            % the before skip
+{0.5\baselineskip}%          % the after skip
+{\noindent\normalfont\itshape\textcolor{\sectionColor}}} % the style
 
 \lstset{frame=shadowbox, rulesepcolor=\color{\sectionColor}, numbers=left}
 \newcommand{\dik}[1]{\textbf{\color{\sectionColor}#1}}
+
+% Keywords command:
+\newcommand{\keywords}[1]{\par\noindent{\small{\em Keywords\/}: #1}}

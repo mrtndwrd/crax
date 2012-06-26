@@ -1,0 +1,20 @@
+/** Drives a circle */
+option drive_circle{
+    initial state turn{   
+        decision{   
+            if(amount_turned < 360){   
+                stay;
+            }   
+            else{   
+                goto done;
+            }   
+        }   
+        action{   
+            differential_drive(speed=0, 
+                turning_speed=-0.3);
+        }   
+    }   
+    target state done{   
+        action {}   
+    }   
+}
