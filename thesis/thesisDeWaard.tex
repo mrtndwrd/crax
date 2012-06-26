@@ -5,6 +5,7 @@
 % Small enumerate and itemize
 \usepackage{mdwlist}
 \usepackage{subfig}
+\usepackage{pdflscape}
 
 % Fill in the header:
 \lhead{Combining Robocup Rescue and XABSL}
@@ -764,6 +765,15 @@ by calling the engine's \texttt{execute} method in a loop. This enables users to
 choose when the engine should be executed, making it possible to wait until
 every sensor has been updated, and then execute again.
 
+\begin{landscape}
+\begin{figure}
+    \centering
+    \includegraphics[width=.8\paperheight]{images/screen.png}
+    \caption{The start screen of UsarCommander, alongside the screen where
+    several options can be selected for a robot, including SLAM method and }
+    \label{fig:usarcommander}
+\end{figure}
+\end{landscape}
 \section{RoboCup Rescue}
 Before continuing with the research done, one last component has to be
 introduced. The Rescue program used to test the framework on. This program is
@@ -787,7 +797,6 @@ implementing a SLAM
 the sensor data of several robots\cite{slamet2006manifoldslam}. All the information used and produced by
 these subprojects can be accessed by other subprojects, resulting in an ideal
 environment for creating new robot-controlling applications.
-
 An example of the UsarCommander interface and its possibilities, is shown in
 figure \ref{fig:usarcommander}.
 %TODO: Make this figure!!!!
@@ -887,8 +896,7 @@ robots, enabling them to know each others location.
 
 The world class also provides a simple interface for users of the system to add
 their own, new, variables to the JXI. More information on this class and adding
-variables, can be found in the code documentation. Another document that can be
-downloaded from \url{http://crax.googlecode.com}.
+variables, can be found in the code documentation.
 
 \subsection{Other Added Simplicity}
 The connection is not the only thing JXI adds to the standard XABSL engine. The
@@ -986,7 +994,7 @@ The JXI package offers great possibilities for every one who want to add
 Behavior Based Artificial Intelligence to his project. I would recommend the
 usage of JXI above the ordinary Java Xabsl engine, due to its poor
 documentation. The engine does not provide any documents about how to run it,
-other than their unit test, whereas JXI has a code documentation file, which
+other than their unit test, whereas JXI has a code documentation online, which
 explains how it works and how it is supposed to be ran. 
 
 Furthermore having a distributed system is often a good option. Especially when
