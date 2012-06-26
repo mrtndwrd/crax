@@ -1,0 +1,12 @@
+/** My common basic behaviors */
+namespace my_basic_behaviors("My Basic Behaviors") {
+
+  
+  behavior pickUp {}
+  behavior leave {}
+  behavior turnLeft {}
+  behavior turnRight {}
+  behavior moveForward {}
+  
+}
+

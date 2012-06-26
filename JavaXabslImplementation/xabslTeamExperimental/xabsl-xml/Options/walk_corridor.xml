@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE symbol-and-basic-behavior-files SYSTEM "../symbol-and-basic-behavior-files.dtd">
+<option xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="walk_corridor" initial-state="decide_movement">
+  &my_symbols;
+  &my_basic_behaviors;
+  &options;
+  <state name="decide_movement">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <subsequent-basic-behavior ref="wait">
+      <set-parameter ref="wait.time">
+        <decimal-value value="2"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <constant-ref ref="maximum_laser_value"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="move_back"/>
+      </if>
+      <else>
+        <if>
+          <condition description="">
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </condition>
+          <transition-to-state ref="move_forward"/>
+        </if>
+        <else>
+          <if>
+            <condition description="">
+              <or>
+                <equal-to>
+                  <decimal-input-symbol-ref ref="laser_max"/>
+                  <decimal-input-symbol-ref ref="laser_min_nne"/>
+                </equal-to>
+                <equal-to>
+                  <decimal-input-symbol-ref ref="laser_max"/>
+                  <decimal-input-symbol-ref ref="laser_min_ne"/>
+                </equal-to>
+                <equal-to>
+                  <decimal-input-symbol-ref ref="laser_max"/>
+                  <decimal-input-symbol-ref ref="laser_min_ene"/>
+                </equal-to>
+              </or>
+            </condition>
+            <transition-to-state ref="move_right"/>
+          </if>
+          <else>
+            <if>
+              <condition description="">
+                <or>
+                  <equal-to>
+                    <decimal-input-symbol-ref ref="laser_max"/>
+                    <decimal-input-symbol-ref ref="laser_min_nnw"/>
+                  </equal-to>
+                  <equal-to>
+                    <decimal-input-symbol-ref ref="laser_max"/>
+                    <decimal-input-symbol-ref ref="laser_min_nw"/>
+                  </equal-to>
+                  <equal-to>
+                    <decimal-input-symbol-ref ref="laser_max"/>
+                    <decimal-input-symbol-ref ref="laser_min_wnw"/>
+                  </equal-to>
+                </or>
+              </condition>
+              <transition-to-state ref="move_left"/>
+            </if>
+            <else>
+              <transition-to-state ref="decide_movement"/>
+            </else>
+          </else>
+        </else>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_forward">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <constant-ref ref="forward_speed"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <equal-to>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <decimal-input-symbol-ref ref="laser_min_n"/>
+          </equal-to>
+        </condition>
+        <transition-to-state ref="move_forward"/>
+      </if>
+      <else>
+        <transition-to-state ref="decide_movement"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_left">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <constant-ref ref="forward_speed"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <constant-ref ref="turning_speed"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="go on till threat is over">
+          <or>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nne"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_ne"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_ene"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </or>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_left"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_right">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <constant-ref ref="forward_speed"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <minus>
+          <decimal-value value="0"/>
+          <constant-ref ref="turning_speed"/>
+        </minus>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <or>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_wnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </or>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_right"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_back">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <minus>
+          <decimal-value value="0"/>
+          <constant-ref ref="reverse_speed"/>
+        </minus>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <greater-than>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <constant-ref ref="maximum_laser_value"/>
+          </greater-than>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_back"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>

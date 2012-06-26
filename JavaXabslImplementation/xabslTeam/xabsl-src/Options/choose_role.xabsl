@@ -1,0 +1,66 @@
+/** Makes the agent be aware of its role, by the enumerated input symbol current_behavior */
+option choose_role
+{
+    initial state get_role
+    {
+        decision
+        {
+            if(current_behavior == DRIVE_CIRCLE)
+            {
+                goto drive_circle_state;
+            }
+            else
+            {
+                if(current_behavior == WALK_CORRIDOR)
+                {
+                    goto walk_corridor_state;
+                }
+                else
+                {
+                    stay;
+                }
+            }
+        }
+        action
+        {
+            wait(time=1);   
+        }
+    }
+    state drive_circle_state
+    {
+        decision
+        {
+            if(current_behavior == DRIVE_CIRCLE)
+            {
+                stay;
+            }
+            else
+            {
+                goto get_role;
+            }
+        }
+        action
+        {
+            drive_circle();
+        }
+    }
+    state walk_corridor_state
+    {
+        decision
+        {
+            if(current_behavior == WALK_CORRIDOR)
+            {
+                stay;
+            }
+            else
+            {
+                goto get_role;
+            }
+        }
+        action
+        {
+            walk_corridor();
+        }
+
+    }
+}

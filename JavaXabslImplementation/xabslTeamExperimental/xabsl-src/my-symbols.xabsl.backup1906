@@ -1,0 +1,57 @@
+/** My most used symbols */
+namespace my_symbols("My Symbols") {
+
+  /** The x position of the player */
+  float input x;
+
+  /** The y position of the player */
+  float input y;
+
+  /** the ammount turned in turn() */
+  float input ammount_turned [1..infty] "deg";
+
+  /** the ammount stayed in turn() */
+  float input stayed [1..infty] "s";
+
+  /** All possible behaviors for choose_role */
+  enum behaviors {
+      DRIVE_CIRCLE,
+      WALK_CORRIDOR,
+      UNEXISTANT_BEHAVIOR
+  };
+  
+  /** Behavior currently activated by the user */
+  enum behaviors input current_behavior;
+
+  /** maximum distance the robot may have from a wall */
+  float const walk_corridor.maxDistance = 0.1;
+  /** Speed in which the robot will normally go forward */
+  float const forward_speed = 0.6;
+  /** Speed in which the robot will normally turn */
+  float const turning_speed = 0.3;
+  /** Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it. */
+  float const reverse_speed = 0.5;
+  /** Allowed maximum before retreating */
+  float const maximum_laser_value = 0.1;
+
+
+  /** Laser sensor information for west-north-west region*/
+  float input laser_min_wnw;
+  /** Laser sensor information for north-west region*/
+  float input laser_min_nw;
+  /** Laser sensor information for north-north-west region */
+  float input laser_min_nnw;
+  /** Laser sensor information for north region */
+  float input laser_min_n;
+  /** Laser sensor information for north-north-east region */
+  float input laser_min_nne;
+  /** Laser sensor information for north-east region */
+  float input laser_min_ne;
+  /** Laser sensor information for east-north-east region */
+  float input laser_min_ene;
+  /** minimum laser value */
+  float input laser_min;
+  /** maximum laser value */
+  float input laser_max;
+}
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<basic-behaviors xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+  <basic-behavior name="differential_drive" description="A basic behavior for the differentialDrive in UsarCommander">
+    <decimal-parameter name="differential_drive.speed" measure="" range="0..100" description=""/>
+    <decimal-parameter name="differential_drive.turning_speed" measure="" range="1..100" description=""/>
+  </basic-behavior>
+  <basic-behavior name="wait" description="A basic behavior to wait">
+    <decimal-parameter name="wait.time" measure="s" range="0..infty" description=""/>
+  </basic-behavior>
+</basic-behaviors>

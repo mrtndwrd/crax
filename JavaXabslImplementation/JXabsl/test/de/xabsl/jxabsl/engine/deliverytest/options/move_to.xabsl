@@ -1,0 +1,58 @@
+
+
+/** Move to a certain location  */
+option move_to {
+ 
+  float @x;
+  float @y;
+ 
+ 
+ initial state adjust_direction {
+  decision {
+   if (directionToPoint(x = @x,
+                    y = @y) == robotDirection) {
+    goto move_forward;
+   } else if (turnWhichWay(to = directionToPoint
+                            (x = getDestinationX(packet=packet),
+                             y = getDestinationY(packet=packet))))
+     {
+      goto turn_right; 
+    
+   } else {
+      goto turn_left;
+   }
+  }
+  
+  action {}
+ }
+ 
+ state turn_left {
+  decision {
+   goto adjust_direction;
+  }
+  
+  action {
+   turn_left();
+  }
+  
+ }
+ 
+ state turn_right {
+  decision {
+   goto adjust_direction;
+  }
+  action {
+   turn_right();
+  }
+ }
+ 
+ state move_forward {
+  decision {
+   goto adjust_direction;
+  }
+  action {
+   move_forward();
+  }
+  
+ }
+}

@@ -1,0 +1,76 @@
+// Intermediate code for the agents of Debug robot
+
+1
+SomeEnumeration 4 SomeEnumeration.value1 SomeEnumeration.value2 SomeEnumeration.value3 SomeEnumeration.value4
+1
+d internalSymbol1
+
+3
+option1 0
+option2 0
+option3 3 d option3.x d option3.y e SomeEnumeration option3.z
+
+3
+state1 n
+state2 n
+state3 n
+
+state1
+0
+1
+d internalSymbol1
+v 23
+t state3
+0
+1
+d internalSymbol1
+v 23
+t state3
+0
+2
+o option3
+3
+d option3.x
+v 2
+d option3.y
+v 4
+e SomeEnumeration option3.z
+v SomeEnumeration.value4 
+o option2
+0
+t state3
+
+
+
+2
+state1 n
+state2 n
+
+state1
+0
+0
+t state1
+1
+0
+t state2
+
+
+
+2
+state1 n
+state2 n
+
+state2
+0
+0
+t state1
+1
+1
+a behavior2
+0
+t state2
+
+
+
+1
+robot option1

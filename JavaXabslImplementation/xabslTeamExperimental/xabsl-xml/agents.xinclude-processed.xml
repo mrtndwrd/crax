@@ -1,0 +1,476 @@
+<?xml version="1.0"?>
+<agent-collection xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2003/XInclude">
+  <title>XABSL tryout</title>
+  <platform>JXI.</platform>
+  <software-environment>RoboRescue environment</software-environment>
+  <agent id="robot1" title="Robot-1" description="Start an agent with a name and a specified option." root-option="choose_role"/>
+  
+<option-definitions>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+  <option-definition name="walk_corridor" description="Uses the data from the laser sensor to walk through a corridor as good as possible, without bumping into the walls"/>
+</option-definitions>
+
+  <options>
+    <option name="choose_role" initial-state="get_role" xml:base="Options/choose_role.xml">
+  
+<symbols id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
+  <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
+  <enumeration name="behaviors" description="All possible behaviors for choose_role">
+    <enum-element name="behaviors.DRIVE_CIRCLE"/>
+    <enum-element name="behaviors.WALK_CORRIDOR"/>
+    <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
+  </enumeration>
+  <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
+  <constant name="forward_speed" value="0.4" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.2" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
+  <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_n" description="Laser sensor information for north region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nne" description="Laser sensor information for north-north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_ne" description="Laser sensor information for north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_ene" description="Laser sensor information for east-north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min" description="minimum laser value" measure="" range=""/>
+  <decimal-input-symbol name="laser_max" description="maximum laser value" measure="" range=""/>
+</symbols>
+
+  
+<basic-behaviors id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+  <basic-behavior name="differential_drive" description="A basic behavior for the differentialDrive in UsarCommander">
+    <decimal-parameter name="differential_drive.speed" measure="" range="0..100" description=""/>
+    <decimal-parameter name="differential_drive.turning_speed" measure="" range="1..100" description=""/>
+  </basic-behavior>
+  <basic-behavior name="wait" description="A basic behavior to wait">
+    <decimal-parameter name="wait.time" measure="s" range="0..infty" description=""/>
+  </basic-behavior>
+</basic-behaviors>
+
+  
+<option-definitions>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+  <option-definition name="walk_corridor" description="Uses the data from the laser sensor to walk through a corridor as good as possible, without bumping into the walls"/>
+</option-definitions>
+
+  <state name="get_role">
+    <subsequent-basic-behavior ref="wait">
+      <set-parameter ref="wait.time">
+        <decimal-value value="1"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.DRIVE_CIRCLE"/>
+          </enumerated-input-symbol-comparison>
+        </condition>
+        <transition-to-state ref="drive_circle_state"/>
+      </if>
+      <else>
+        <if>
+          <condition description="">
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="current_behavior"/>
+              <enum-element-ref ref="behaviors.WALK_CORRIDOR"/>
+            </enumerated-input-symbol-comparison>
+          </condition>
+          <transition-to-state ref="walk_corridor_state"/>
+        </if>
+        <else>
+          <transition-to-state ref="get_role"/>
+        </else>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="drive_circle_state">
+    <subsequent-option ref="drive_circle"/>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.DRIVE_CIRCLE"/>
+          </enumerated-input-symbol-comparison>
+        </condition>
+        <transition-to-state ref="drive_circle_state"/>
+      </if>
+      <else>
+        <transition-to-state ref="get_role"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="walk_corridor_state">
+    <subsequent-option ref="walk_corridor"/>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.WALK_CORRIDOR"/>
+          </enumerated-input-symbol-comparison>
+        </condition>
+        <transition-to-state ref="walk_corridor_state"/>
+      </if>
+      <else>
+        <transition-to-state ref="get_role"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>
+    <option name="drive_circle" initial-state="turn" xml:base="Options/drive_circle.xml">
+  
+<symbols id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
+  <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
+  <enumeration name="behaviors" description="All possible behaviors for choose_role">
+    <enum-element name="behaviors.DRIVE_CIRCLE"/>
+    <enum-element name="behaviors.WALK_CORRIDOR"/>
+    <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
+  </enumeration>
+  <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
+  <constant name="forward_speed" value="0.4" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.2" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
+  <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_n" description="Laser sensor information for north region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nne" description="Laser sensor information for north-north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_ne" description="Laser sensor information for north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_ene" description="Laser sensor information for east-north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min" description="minimum laser value" measure="" range=""/>
+  <decimal-input-symbol name="laser_max" description="maximum laser value" measure="" range=""/>
+</symbols>
+
+  
+<basic-behaviors id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+  <basic-behavior name="differential_drive" description="A basic behavior for the differentialDrive in UsarCommander">
+    <decimal-parameter name="differential_drive.speed" measure="" range="0..100" description=""/>
+    <decimal-parameter name="differential_drive.turning_speed" measure="" range="1..100" description=""/>
+  </basic-behavior>
+  <basic-behavior name="wait" description="A basic behavior to wait">
+    <decimal-parameter name="wait.time" measure="s" range="0..infty" description=""/>
+  </basic-behavior>
+</basic-behaviors>
+
+  
+<option-definitions>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+  <option-definition name="walk_corridor" description="Uses the data from the laser sensor to walk through a corridor as good as possible, without bumping into the walls"/>
+</option-definitions>
+
+  <state name="turn">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="-0.3"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-input-symbol-ref ref="ammount_turned"/>
+            <decimal-value value="360"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="turn"/>
+      </if>
+      <else>
+        <transition-to-state ref="done"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="done">
+    <decision-tree>
+      <transition-to-state ref="done"/>
+    </decision-tree>
+  </state>
+</option>
+    <option name="walk_corridor" initial-state="decide_movement" xml:base="Options/walk_corridor.xml">
+  
+<symbols id="my_symbols" title="My Symbols" description="My most used symbols">
+  <decimal-input-symbol name="x" description="The x position of the player" measure="" range=""/>
+  <decimal-input-symbol name="y" description="The y position of the player" measure="" range=""/>
+  <decimal-input-symbol name="ammount_turned" description="the ammount turned in turn()" measure="deg" range="1..infty"/>
+  <decimal-input-symbol name="stayed" description="the ammount stayed in turn()" measure="s" range="1..infty"/>
+  <enumeration name="behaviors" description="All possible behaviors for choose_role">
+    <enum-element name="behaviors.DRIVE_CIRCLE"/>
+    <enum-element name="behaviors.WALK_CORRIDOR"/>
+    <enum-element name="behaviors.UNEXISTANT_BEHAVIOR"/>
+  </enumeration>
+  <enumerated-input-symbol name="current_behavior" enumeration="behaviors" description="Behavior currently activated by the user"/>
+  <constant name="forward_speed" value="0.4" measure="" description="Speed in which the robot will normally go forward"/>
+  <constant name="turning_speed" value="0.2" measure="" description="Speed in which the robot will normally turn"/>
+  <constant name="reverse_speed" value="0.2" measure="" description="Speed in which the robot will normally reverse. Because Xabsl doesn't allow negative constants it's positive, and everything that uses it, should negate it."/>
+  <constant name="maximum_laser_value" value="3" measure="" description="Allowed maximum before retreating"/>
+  <decimal-input-symbol name="laser_min_wnw" description="Laser sensor information for west-north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nw" description="Laser sensor information for north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nnw" description="Laser sensor information for north-north-west region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_n" description="Laser sensor information for north region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_nne" description="Laser sensor information for north-north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_ne" description="Laser sensor information for north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min_ene" description="Laser sensor information for east-north-east region" measure="" range=""/>
+  <decimal-input-symbol name="laser_min" description="minimum laser value" measure="" range=""/>
+  <decimal-input-symbol name="laser_max" description="maximum laser value" measure="" range=""/>
+</symbols>
+
+  
+<basic-behaviors id="my_basic_behaviors" title="My Basic Behaviors" description="My common basic behaviors">
+  <basic-behavior name="test" description="influences some x and y">
+    <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
+    <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
+  </basic-behavior>
+  <basic-behavior name="differential_drive" description="A basic behavior for the differentialDrive in UsarCommander">
+    <decimal-parameter name="differential_drive.speed" measure="" range="0..100" description=""/>
+    <decimal-parameter name="differential_drive.turning_speed" measure="" range="1..100" description=""/>
+  </basic-behavior>
+  <basic-behavior name="wait" description="A basic behavior to wait">
+    <decimal-parameter name="wait.time" measure="s" range="0..infty" description=""/>
+  </basic-behavior>
+</basic-behaviors>
+
+  
+<option-definitions>
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
+  <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
+  <option-definition name="walk_corridor" description="Uses the data from the laser sensor to walk through a corridor as good as possible, without bumping into the walls"/>
+</option-definitions>
+
+  <state name="decide_movement">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <subsequent-basic-behavior ref="wait">
+      <set-parameter ref="wait.time">
+        <decimal-value value="2"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <less-than>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <constant-ref ref="maximum_laser_value"/>
+          </less-than>
+        </condition>
+        <transition-to-state ref="move_back"/>
+      </if>
+      <else>
+        <if>
+          <condition description="">
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </condition>
+          <transition-to-state ref="move_forward"/>
+        </if>
+        <else>
+          <if>
+            <condition description="">
+              <or>
+                <equal-to>
+                  <decimal-input-symbol-ref ref="laser_max"/>
+                  <decimal-input-symbol-ref ref="laser_min_nne"/>
+                </equal-to>
+                <equal-to>
+                  <decimal-input-symbol-ref ref="laser_max"/>
+                  <decimal-input-symbol-ref ref="laser_min_ne"/>
+                </equal-to>
+                <equal-to>
+                  <decimal-input-symbol-ref ref="laser_max"/>
+                  <decimal-input-symbol-ref ref="laser_min_ene"/>
+                </equal-to>
+              </or>
+            </condition>
+            <transition-to-state ref="move_right"/>
+          </if>
+          <else>
+            <if>
+              <condition description="">
+                <or>
+                  <equal-to>
+                    <decimal-input-symbol-ref ref="laser_max"/>
+                    <decimal-input-symbol-ref ref="laser_min_nnw"/>
+                  </equal-to>
+                  <equal-to>
+                    <decimal-input-symbol-ref ref="laser_max"/>
+                    <decimal-input-symbol-ref ref="laser_min_nw"/>
+                  </equal-to>
+                  <equal-to>
+                    <decimal-input-symbol-ref ref="laser_max"/>
+                    <decimal-input-symbol-ref ref="laser_min_wnw"/>
+                  </equal-to>
+                </or>
+              </condition>
+              <transition-to-state ref="move_left"/>
+            </if>
+            <else>
+              <transition-to-state ref="decide_movement"/>
+            </else>
+          </else>
+        </else>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_forward">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <constant-ref ref="forward_speed"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <equal-to>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <decimal-input-symbol-ref ref="laser_min_n"/>
+          </equal-to>
+        </condition>
+        <transition-to-state ref="move_forward"/>
+      </if>
+      <else>
+        <transition-to-state ref="decide_movement"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_left">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <constant-ref ref="forward_speed"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <constant-ref ref="turning_speed"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="go on till threat is over">
+          <or>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nne"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_ne"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_ene"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </or>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_left"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_right">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <constant-ref ref="forward_speed"/>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <minus>
+          <decimal-value value="0"/>
+          <constant-ref ref="turning_speed"/>
+        </minus>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <or>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_nw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_wnw"/>
+            </equal-to>
+            <equal-to>
+              <decimal-input-symbol-ref ref="laser_max"/>
+              <decimal-input-symbol-ref ref="laser_min_n"/>
+            </equal-to>
+          </or>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_right"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="move_back">
+    <subsequent-basic-behavior ref="differential_drive">
+      <set-parameter ref="differential_drive.speed">
+        <minus>
+          <decimal-value value="0"/>
+          <constant-ref ref="reverse_speed"/>
+        </minus>
+      </set-parameter>
+      <set-parameter ref="differential_drive.turning_speed">
+        <decimal-value value="0"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <greater-than>
+            <decimal-input-symbol-ref ref="laser_max"/>
+            <constant-ref ref="maximum_laser_value"/>
+          </greater-than>
+        </condition>
+        <transition-to-state ref="decide_movement"/>
+      </if>
+      <else>
+        <transition-to-state ref="move_back"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>
+  </options>
+</agent-collection>

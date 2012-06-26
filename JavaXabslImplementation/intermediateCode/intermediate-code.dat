@@ -1,0 +1,276 @@
+// Intermediate code for the agents of XABSL tryout
+
+0
+0
+
+3
+choose_role 0
+drive_circle 0
+walk_corridor 0
+
+3
+get_role n
+drive_circle_state n
+walk_corridor_state n
+
+get_role
+0
+1
+a wait
+1
+d wait.time
+v 1
+i
+c
+i current_behavior
+0
+v behaviors.DRIVE_CIRCLE 
+t drive_circle_state
+i
+c
+i current_behavior
+0
+v behaviors.WALK_CORRIDOR 
+t walk_corridor_state
+t get_role
+0
+1
+o drive_circle
+0
+i
+c
+i current_behavior
+0
+v behaviors.DRIVE_CIRCLE 
+t drive_circle_state
+t get_role
+0
+1
+o walk_corridor
+0
+i
+c
+i current_behavior
+0
+v behaviors.WALK_CORRIDOR 
+t walk_corridor_state
+t get_role
+
+
+
+2
+turn n
+done n
+
+turn
+0
+1
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v -0.3
+i
+<
+i ammount_turned
+0
+v 360
+t turn
+t done
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v 0
+a wait
+1
+d wait.time
+v 1
+i
+<
+i stayed
+0
+v 10
+t done
+t turn
+
+
+
+5
+decide_movement n
+move_forward n
+move_left n
+move_right n
+move_back n
+
+decide_movement
+0
+2
+a differential_drive
+2
+d differential_drive.speed
+v 0
+d differential_drive.turning_speed
+v 0
+a wait
+1
+d wait.time
+v 2
+i
+<
+i laser_max
+0
+c 3
+t move_back
+i
+=
+i laser_max
+0
+i laser_min_n
+0
+t move_forward
+i
+| 3
+=
+i laser_max
+0
+i laser_min_nne
+0
+=
+i laser_max
+0
+i laser_min_ne
+0
+=
+i laser_max
+0
+i laser_min_ene
+0
+t move_right
+i
+| 3
+=
+i laser_max
+0
+i laser_min_nnw
+0
+=
+i laser_max
+0
+i laser_min_nw
+0
+=
+i laser_max
+0
+i laser_min_wnw
+0
+t move_left
+t decide_movement
+0
+1
+a differential_drive
+2
+d differential_drive.speed
+c 0.4
+d differential_drive.turning_speed
+v 0
+i
+=
+i laser_max
+0
+i laser_min_n
+0
+t move_forward
+t decide_movement
+0
+1
+a differential_drive
+2
+d differential_drive.speed
+c 0.4
+d differential_drive.turning_speed
+c 0.2
+i
+| 4
+=
+i laser_max
+0
+i laser_min_nne
+0
+=
+i laser_max
+0
+i laser_min_ne
+0
+=
+i laser_max
+0
+i laser_min_ene
+0
+=
+i laser_max
+0
+i laser_min_n
+0
+t decide_movement
+t move_left
+0
+1
+a differential_drive
+2
+d differential_drive.speed
+c 0.4
+d differential_drive.turning_speed
+-
+v 0
+c 0.2
+i
+| 4
+=
+i laser_max
+0
+i laser_min_nnw
+0
+=
+i laser_max
+0
+i laser_min_nw
+0
+=
+i laser_max
+0
+i laser_min_wnw
+0
+=
+i laser_max
+0
+i laser_min_n
+0
+t decide_movement
+t move_right
+0
+1
+a differential_drive
+2
+d differential_drive.speed
+-
+v 0
+c 0.2
+d differential_drive.turning_speed
+v 0
+i
+>
+i laser_max
+0
+c 3
+t decide_movement
+t move_back
+
+
+
+1
+robot1 choose_role

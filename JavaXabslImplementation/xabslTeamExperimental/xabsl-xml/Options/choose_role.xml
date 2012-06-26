@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE symbol-and-basic-behavior-files SYSTEM "../symbol-and-basic-behavior-files.dtd">
+<option xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="choose_role" initial-state="get_role">
+  &my_symbols;
+  &my_basic_behaviors;
+  &options;
+  <state name="get_role">
+    <subsequent-basic-behavior ref="wait">
+      <set-parameter ref="wait.time">
+        <decimal-value value="1"/>
+      </set-parameter>
+    </subsequent-basic-behavior>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.DRIVE_CIRCLE"/>
+          </enumerated-input-symbol-comparison>
+        </condition>
+        <transition-to-state ref="drive_circle_state"/>
+      </if>
+      <else>
+        <if>
+          <condition description="">
+            <enumerated-input-symbol-comparison>
+              <enumerated-input-symbol-ref ref="current_behavior"/>
+              <enum-element-ref ref="behaviors.WALK_CORRIDOR"/>
+            </enumerated-input-symbol-comparison>
+          </condition>
+          <transition-to-state ref="walk_corridor_state"/>
+        </if>
+        <else>
+          <transition-to-state ref="get_role"/>
+        </else>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="drive_circle_state">
+    <subsequent-option ref="drive_circle"/>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.DRIVE_CIRCLE"/>
+          </enumerated-input-symbol-comparison>
+        </condition>
+        <transition-to-state ref="drive_circle_state"/>
+      </if>
+      <else>
+        <transition-to-state ref="get_role"/>
+      </else>
+    </decision-tree>
+  </state>
+  <state name="walk_corridor_state">
+    <subsequent-option ref="walk_corridor"/>
+    <decision-tree>
+      <if>
+        <condition description="">
+          <enumerated-input-symbol-comparison>
+            <enumerated-input-symbol-ref ref="current_behavior"/>
+            <enum-element-ref ref="behaviors.WALK_CORRIDOR"/>
+          </enumerated-input-symbol-comparison>
+        </condition>
+        <transition-to-state ref="walk_corridor_state"/>
+      </if>
+      <else>
+        <transition-to-state ref="get_role"/>
+      </else>
+    </decision-tree>
+  </state>
+</option>

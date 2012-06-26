@@ -1,0 +1,38 @@
+\begin{thebibliography}{1}
+
+\bibitem{balch1998behavior}
+T.~Balch and R.C. Arkin.
+\newblock Behavior-based formation control for multirobot teams.
+\newblock {\em Robotics and Automation, IEEE Transactions on}, 14(6):926--939,
+  1998.
+
+\bibitem{dehoog2011role}
+J.~de~Hoog.
+\newblock Role-based multi-robot exploration.
+\newblock never published, 2011.
+
+\bibitem{loetzsch2006xabsl}
+M.~Loetzsch, M.~Risler, and M.~Jungel.
+\newblock Xabsl - a pragmatic approach to behavior engineering.
+\newblock In {\em Intelligent Robots and Systems, 2006 IEEE/RSJ International
+  Conference on}, pages 5124--5129. IEEE, 2006.
+
+\bibitem{lotzsch2004designing}
+M.~L{\"o}tzsch, J.~Bach, H.D. Burkhard, and M.~J{\"u}ngel.
+\newblock Designing agent behavior with the extensible agent behavior
+  specification language xabsl.
+\newblock {\em RoboCup 2003: Robot Soccer World Cup VII}, pages 114--124, 2004.
+
+\bibitem{seraji2002behavior}
+H.~Seraji and A.~Howard.
+\newblock Behavior-based robot navigation on challenging terrain: A fuzzy logic
+  approach.
+\newblock {\em Robotics and Automation, IEEE Transactions on}, 18(3):308--321,
+  2002.
+
+\bibitem{visser2008beyond}
+A.~Visser, M.~Van~Ittersum, L.~Gonz{\'a}lez~Jaime, and L.~Stancu.
+\newblock Beyond frontier exploration.
+\newblock {\em RoboCup 2007: Robot Soccer World Cup XI}, pages 113--123, 2008.
+
+\end{thebibliography}
