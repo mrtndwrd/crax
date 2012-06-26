@@ -19,11 +19,12 @@
 \newpage
 \begin{abstract}
 In this research, a product will be introduced, that combines the Extensible
-Agent Behavior Specification Language (XABSL) with any program, capable of
+Agent Behavior Specification Language (XABSL) with any program capable of
 having a socket connection. A use of this product is shown, by combining it to
 the rescue project on the University of Amsterdam, using
 \textit{UsarCommander},
-a program designed to control one or more robots, in a virtual rescue operation.
+a program designed to control one or more robots, in a virtual rescue operation
+in the simulator USARSim.
 \keywords{XABSL, Behavior Based Artificial Intelligence, RoboCup, UsarCommander}
 \end{abstract}
 %\begin{multicols}{2}
@@ -597,6 +598,7 @@ nets in stead of the FSA-hierarchy XABSL provides, has the following advantages:
 \end{itemize*}
 
 \subsection{Creating an XABSL-specification}
+\label{sec:xabsl-hierarchy}
 When using XABSL in coherence with any application, the \textit{XABSL engine} is
 used to control the behavior. This engine uses a user specified XABSL graph and
 the internal variables of the program it is running in in coherence, to make
@@ -904,9 +906,82 @@ class in the XABSL engine, that also handles the socket connection, making every
 basic behavior capable of sending messages to the robot commander unit.
 
 \section{Results}
-This section will contain results, hopefully in the form of explored maps, numbers of victims found, etc.
+This section contains the results of the experiments that have been done with
+the system. 
+\subsection{UsarCommander}
+A few simple adjustments had to be done to be able to run JXI alongside with
+UsarCommander. This mainly involved receiving and sending messages over a socket
+connection, and creating a new behavior in the choice menu, to be able to start
+a connection to XABSL when starting an USARSim session. 
+
+When these adjustments were done, both programs were capable of connecting to
+each other, and the first XABSL hierarchy could run. 
+
+\subsubsection{Driving a circle}
+The first XABSL hierarchy used, was one capable of driving a circle. The code
+and option graph can be seen in figure \ref{fig:drive-circle}, which was
+explained in section \ref{sec:xabsl-hierarchy}. The agent directly started in
+this option, so no other files were needed. 
+
+This resulted in the robot turning slightly more than 360 degrees, which is
+Okay, because the XABSL engine waits until it's over 360 degrees, and then sends
+back a message for the robot to stop spinning. 
+
+Of course, driving a circle is not the only possible behavior we would want our
+robot to do. In fact, it is no desired behavior at all, we could make it drive
+circles all day, but it would never reach any victims that way. 
+
+\subsubsection{Walking a corridor}
+\begin{figure}
+\centering
+\includegraphics[width=.8\textwidth]{images/option_walk_corridor.pdf}\\
+\caption{The graph for autonomously traversing through a corridor. The
+principle is simple: the robot always turns to the place where the longest laser
+ray comes from.}
+\label{fig:walk-corridor-fig}
+\end{figure}
+\begin{figure}
+\centering
+\lstset{language=java,
+  keywordstyle=\bfseries,          % keyword style
+  commentstyle=\color{\sectionColor},       % comment style
+  morekeywords={include, agent, option, initial, state, target, action, goto}
+}
+\parbox{1.1\linewidth}{
+\lstinputlisting[tabsize=2]{walk_corridor.xabsl}}
+\caption{The XABSL code for autonomously traversing through a corridor. Only one
+of the movement states is shown, since the principle is simple.}
+\label{fig:walk-corridor-code}
+\end{figure}
+
+That's why the next step is to make the robot walk a corridor. The algorithm for
+walking a corridor was already placed inside the code of UsarCommander, so
+would not have to be reinvented. 
+
+The original walk-corridor relied on laser range scanner data. To minimize data
+traffic between the two units, the laser range scanner data had to be pre
+processed. This is done by taking the minimum value of 7 regions of the scanner:
+from the `western' end of the robot to the `eastern' end. The resulting option
+and code can be seen in figures \ref{fig:walk-corridor-fig} and
+\ref{fig:walk-corridor-code}. The code only shows one
+of the movement states, since the principle is the same for all of them. 
+
+The corridor traversing had a bit of problems. The XABSL engine reacted good on
+everything, just as expected, but the UsarCommander was not reacting fast enough
+to send all the sensor data in time. This meant that after running the program
+for a minute, the sensor data of 30 seconds in was only just coming in! Since
+the (distributed) system was running on 2 different systems (UsarCommander and
+UDK on one, JXI on the other), the problem could not be in JXI, because it
+handled every piece of information as soon as it came in. The problem thus had
+to be in UsarCommander, but couldn't be solved in time anymore.
 
 \section{Conclusion}
+In its current state, JXI is a proof of concept. The framework works, as far as
+it has been used. There is not yet any information of how the framework reacts
+in case of enormous agent specifications, or with a big amount of variables.
+Still, everything that has been tested worked great on the JXI-side, and XABSL
+has proven itself as capable of running a soccer league with 6 robots. 
+
 The JXI package offers great possibilities for every one who want to add
 Behavior Based Artificial Intelligence to his project. I would recommend the
 usage of JXI above the ordinary Java Xabsl engine, due to its poor
@@ -935,6 +1010,16 @@ up the main inconveniences and the work that should be done to solve them.
     support several robot information variables. Most of this editing involves
     creating arrays in stead of single variables, which is not hard to bring
     into practice, but for which more time was needed.
+    \item \dik{Messages:} Right now, the messages are plain and simple, but
+    limited to simple data types. JSON offers an improvement over this limited
+    complexity, but adds poor support for some languages. When complex variables
+    are being used, including JSON should be considered. For now, the simplicity
+    of the used messages outweighs the complexity of JSON.
+    \item \dik{Testing:} The JXI framework has not yet been fully tested. The
+    fact that UsarCommander seemed to be too slow in sending sensor information,
+    made the testing state a hard one. When the bug in UsarCommander is fixed,
+    more testing can be done. An alternative is to test the framework on other
+    systems, like Iridium or a new framework.
 \end{itemize}
 
 
