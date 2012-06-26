@@ -203,7 +203,7 @@
       </else>
     </decision-tree>
   </state>
-  <state name="done">
+  <state name="done" is-target-state="true">
     <decision-tree>
       <transition-to-state ref="done"/>
     </decision-tree>
