@@ -4,10 +4,11 @@
     <decimal-parameter name="test.x" measure="px" range="1..78" description=""/>
     <decimal-parameter name="test.y" measure="px" range="1..78" description=""/>
   </basic-behavior>
-  <basic-behavior name="drive_forward" description="Drives forward for &lt;distance&gt; meters">
-    <decimal-parameter name="drive_forward.distance" measure="m" range="1..100" description="The number of meters to drive forward"/>
+  <basic-behavior name="differential_drive" description="A basic behavior for the differentialDrive in UsarCommander">
+    <decimal-parameter name="differential_drive.speed" measure="" range="0..100" description=""/>
+    <decimal-parameter name="differential_drive.turning_speed" measure="" range="1..100" description=""/>
   </basic-behavior>
-  <basic-behavior name="turn" description="Turns the robot a couple of degrees">
-    <decimal-parameter name="turn.degrees" measure="deg" range="1..360" description="Number of degrees to turn the robot"/>
+  <basic-behavior name="wait" description="A basic behavior to wait">
+    <decimal-parameter name="wait.time" measure="s" range="0..infty" description=""/>
   </basic-behavior>
 </basic-behaviors>

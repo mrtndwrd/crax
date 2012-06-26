@@ -68,46 +68,31 @@
                 <span class="bold"> &gt; </span>
               </td>
               <td colspan="4">
-								The  basic behavior <a href="basic-behaviors.my_basic_behaviors.html#turn" title="Turns the robot a couple of degrees">turn</a> is executed. Parameters:</td>
+								The  basic behavior <a href="basic-behaviors.my_basic_behaviors.html#differential_drive" title="A basic behavior for the differentialDrive in UsarCommander">differential_drive</a> is executed. Parameters:</td>
             </tr>
             <tr>
               <td> </td>
               <td> </td>
               <td class="pseudo-code-cell">
-                <a href="basic-behaviors.my_basic_behaviors.html#turn" title="">turn.degrees</a>
+                <a href="basic-behaviors.my_basic_behaviors.html#differential_drive" title="">differential_drive.speed</a>
               </td>
               <td nowrap class="pseudo-code-cell"> = </td>
               <td class="pseudo-code-cell">
-        10
+        0
       ;
 							</td>
             </tr>
             <tr>
-              <td nowrap>
-                <span class="bold"> &gt; </span>
-              </td>
-              <td colspan="4">This decimal output symbol is set:</td>
-            </tr>
-            <tr>
-              <td nowrap> </td>
-              <td nowrap> </td>
+              <td> </td>
+              <td> </td>
               <td class="pseudo-code-cell">
-                <a href="symbols.my_symbols.html#symbols.ammount_turned" title="The ammount my robot has turned">ammount_turned</a>
+                <a href="basic-behaviors.my_basic_behaviors.html#differential_drive" title="">differential_drive.turning_speed</a>
               </td>
               <td nowrap class="pseudo-code-cell"> = </td>
-              <td>
-                <table class="pseudo-code-frame">
-                  <tr>
-                    <td>
-                      <table cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td class="pseudo-code-cell">(<a href="symbols.my_symbols.html#ammount_turned" title="The ammount my robot has turned">ammount_turned</a><span class="nowrap"> + 1)</span></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
+              <td class="pseudo-code-cell">
+        -0.3
+      ;
+							</td>
             </tr>
             <tr>
               <td colspan="5"> </td>
@@ -135,7 +120,8 @@
                     <td>
                       <table cellpadding="0" cellspacing="0">
       <tr><td><table cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0"><tr id="state_turn_pseudo-code_0"><td colspan="4" class="pseudo-code-cell"><span class="italic">/**  */</span></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-left-bracket" nowrap><span class="bold">if</span> (
-									</td><td class="pseudo-code-cell"><a href="symbols.my_symbols.html#ammount_turned" title="The ammount my robot has turned">ammount_turned</a><span class="nowrap"> &lt; 360</span></td><td class="pseudo-code-right-bracket">)</td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">{</td></tr></table></td></tr><tr><td colspan="4"><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-cell" nowrap>  </td><td><table cellpadding="0" cellspacing="0">
+									</td><td class="pseudo-code-cell"><a href="symbols.my_symbols.html#ammount_turned" title="the ammount turned in turn()">ammount_turned</a>()
+	<span class="nowrap"> &lt; 360</span></td><td class="pseudo-code-right-bracket">)</td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">{</td></tr></table></td></tr><tr><td colspan="4"><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-cell" nowrap>  </td><td><table cellpadding="0" cellspacing="0">
         
         <tr><td class="pseudo-code-cell">stay;</td></tr>
       </table></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">}</td></tr></table></td></tr></table></td></tr>
@@ -154,33 +140,6 @@
           <table cellpadding="0" cellspacing="5">
             <tr>
               <td colspan="5">If that state is active, </td>
-            </tr>
-            <tr>
-              <td nowrap>
-                <span class="bold"> &gt; </span>
-              </td>
-              <td colspan="4">This decimal output symbol is set:</td>
-            </tr>
-            <tr>
-              <td nowrap> </td>
-              <td nowrap> </td>
-              <td class="pseudo-code-cell">
-                <a href="symbols.my_symbols.html#symbols.stayed" title="A counter">stayed</a>
-              </td>
-              <td nowrap class="pseudo-code-cell"> = </td>
-              <td>
-                <table class="pseudo-code-frame">
-                  <tr>
-                    <td>
-                      <table cellpadding="0" cellspacing="0">
-                        <tr>
-                          <td class="pseudo-code-cell">(<a href="symbols.my_symbols.html#stayed" title="A counter">stayed</a><span class="nowrap"> + 1)</span></td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
             </tr>
             <tr>
               <td colspan="5"> </td>
@@ -207,16 +166,14 @@
                   <tr>
                     <td>
                       <table cellpadding="0" cellspacing="0">
-      <tr><td><table cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0"><tr id="state_done_pseudo-code_0"><td colspan="4" class="pseudo-code-cell"><span class="italic">/**  */</span></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-left-bracket" nowrap><span class="bold">if</span> (
-									</td><td class="pseudo-code-cell"><a href="symbols.my_symbols.html#stayed" title="A counter">stayed</a><span class="nowrap"> &lt; 1000</span></td><td class="pseudo-code-right-bracket">)</td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">{</td></tr></table></td></tr><tr><td colspan="4"><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-cell" nowrap>  </td><td><table cellpadding="0" cellspacing="0">
-        
-        <tr><td class="pseudo-code-cell">stay;</td></tr>
-      </table></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">}</td></tr></table></td></tr></table></td></tr>
-      <tr><td><table cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell"><span class="bold">else</span></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">{</td></tr></table></td></tr><tr><td colspan="4"><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-cell" nowrap>  </td><td><table cellpadding="0" cellspacing="0">
-        <tr><td class="pseudo-code-cell">goto <a href="#state_turn">turn</a>;
-					</td></tr>
-      </table></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">}</td></tr></table></td></tr></table></td></tr>
-    </table>
+                        <tr>
+                          <td class="pseudo-code-cell">
+                            <tr>
+                              <td class="pseudo-code-cell">stay;</td>
+                            </tr>
+                          </td>
+                        </tr>
+                      </table>
                     </td>
                   </tr>
                 </table>

@@ -1,14 +1,16 @@
-/**
+/***
   Title: XABSL tryout
-  Platform: RoboRescue.
+  Platform: JXI.
   Software-Environment: RoboRescue environment
 */
 
 include "my-basic-behaviors.xabsl";
 include "my-symbols.xabsl";
-include "Options/testOption.xabsl";
+include "Options/choose_role.xabsl";
 include "Options/drive_circle.xabsl";
+include "Options/walk_corridor.xabsl";
 
 /** Start an agent with a name and a specified option. */
-agent drive_circle("DriveCircle", drive_circle);
-agent corridorWalk("CorridorWalk", walk_corridor);
+agent robot1("Robot-1", choose_role);
+
+

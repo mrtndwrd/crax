@@ -142,56 +142,6 @@
               <td colspan="5">If that state is active, </td>
             </tr>
             <tr>
-              <td nowrap>
-                <span class="bold"> &gt; </span>
-              </td>
-              <td colspan="4">
-								The  basic behavior <a href="basic-behaviors.my_basic_behaviors.html#differential_drive" title="A basic behavior for the differentialDrive in UsarCommander">differential_drive</a> is executed. Parameters:</td>
-            </tr>
-            <tr>
-              <td> </td>
-              <td> </td>
-              <td class="pseudo-code-cell">
-                <a href="basic-behaviors.my_basic_behaviors.html#differential_drive" title="">differential_drive.speed</a>
-              </td>
-              <td nowrap class="pseudo-code-cell"> = </td>
-              <td class="pseudo-code-cell">
-        0
-      ;
-							</td>
-            </tr>
-            <tr>
-              <td> </td>
-              <td> </td>
-              <td class="pseudo-code-cell">
-                <a href="basic-behaviors.my_basic_behaviors.html#differential_drive" title="">differential_drive.turning_speed</a>
-              </td>
-              <td nowrap class="pseudo-code-cell"> = </td>
-              <td class="pseudo-code-cell">
-        0
-      ;
-							</td>
-            </tr>
-            <tr>
-              <td nowrap>
-                <span class="bold"> &gt; </span>
-              </td>
-              <td colspan="4">
-								The  basic behavior <a href="basic-behaviors.my_basic_behaviors.html#wait" title="A basic behavior to wait">wait</a> is executed. Parameters:</td>
-            </tr>
-            <tr>
-              <td> </td>
-              <td> </td>
-              <td class="pseudo-code-cell">
-                <a href="basic-behaviors.my_basic_behaviors.html#wait" title="">wait.time</a>
-              </td>
-              <td nowrap class="pseudo-code-cell"> = </td>
-              <td class="pseudo-code-cell">
-        1
-      ;
-							</td>
-            </tr>
-            <tr>
               <td colspan="5"> </td>
             </tr>
             <tr>
@@ -216,17 +166,14 @@
                   <tr>
                     <td>
                       <table cellpadding="0" cellspacing="0">
-      <tr><td><table cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0"><tr id="state_done_pseudo-code_0"><td colspan="4" class="pseudo-code-cell"><span class="italic">/** If we have waited 10 seconds, start over. */</span></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-left-bracket" nowrap><span class="bold">if</span> (
-									</td><td class="pseudo-code-cell"><a href="symbols.my_symbols.html#stayed" title="the ammount stayed in turn()">stayed</a>()
-	<span class="nowrap"> &lt; 10</span></td><td class="pseudo-code-right-bracket">)</td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">{</td></tr></table></td></tr><tr><td colspan="4"><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-cell" nowrap>  </td><td><table cellpadding="0" cellspacing="0">
-        
-        <tr><td class="pseudo-code-cell">stay;</td></tr>
-      </table></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">}</td></tr></table></td></tr></table></td></tr>
-      <tr><td><table cellpadding="0" cellspacing="0"><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell"><span class="bold">else</span></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">{</td></tr></table></td></tr><tr><td colspan="4"><table cellpadding="0" cellspacing="0"><tr><td class="pseudo-code-cell" nowrap>  </td><td><table cellpadding="0" cellspacing="0">
-        <tr><td class="pseudo-code-cell">goto <a href="#state_turn">turn</a>;
-					</td></tr>
-      </table></td></tr></table></td></tr><tr><td><table cellpadding="0" cellspacing="0"><tr><td colspan="4" class="pseudo-code-cell">}</td></tr></table></td></tr></table></td></tr>
-    </table>
+                        <tr>
+                          <td class="pseudo-code-cell">
+                            <tr>
+                              <td class="pseudo-code-cell">stay;</td>
+                            </tr>
+                          </td>
+                        </tr>
+                      </table>
                     </td>
                   </tr>
                 </table>

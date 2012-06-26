@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <option-definitions xmlns="http://www.xabsl.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <option-definition name="choose_role" description="Makes the agent be aware of its role, by the enumerated input symbol current_behavior"/>
   <option-definition name="drive_circle" description="Drives a circle a couple of times"/>
-  <option-definition name="testOption" description=""/>
+  <option-definition name="walk_corridor" description="Uses the data from the laser sensor to walk through a corridor as good as possible, without bumping into the walls"/>
 </option-definitions>

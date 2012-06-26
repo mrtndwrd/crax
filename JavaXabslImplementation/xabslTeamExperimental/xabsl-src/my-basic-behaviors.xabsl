@@ -7,18 +7,15 @@ namespace my_basic_behaviors("My Basic Behaviors") {
     float y [1..78] "px"; 
   }
 
-  /** Drives forward for <distance> meters */
-  behavior drive_forward
-  {
-      /** The number of meters to drive forward */
-      float distance [1..100] "m";
+  /** A basic behavior for the differentialDrive in UsarCommander */
+  behavior differential_drive {
+    float speed [0..100] "";
+    float turning_speed [1..100] "";
   }
 
-  /** Turns the robot a couple of degrees */
-  behavior turn
-  {
-      /** Number of degrees to turn the robot */
-      float degrees [1..360] "deg";
+  /** A basic behavior to wait */
+  behavior wait {
+    float time [0..infty] "s";
   }
 }
 

@@ -16,26 +16,13 @@ option drive_circle
         }
         action
         {
-            turn(degrees=10);
-            ammount_turned = ammount_turned + 1;
+            differential_drive(speed=0, turning_speed=-0.3);
         }
     }
     state done
     {
-        decision
-        {
-            if(stayed < 1000)
-            {
-                stay;
-            }
-            else
-            {
-                goto turn;
-            }
-        }
         action 
         {
-            stayed = stayed +1;
         }
     }
 }
