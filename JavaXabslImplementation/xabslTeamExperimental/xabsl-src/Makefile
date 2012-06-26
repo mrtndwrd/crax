@@ -1,5 +1,3 @@
-
-
 XABSL_DIR = ../../Xabsl
 
 XSLT = ../../util/LibXML/xsltproc.exe --xinclude
@@ -8,7 +6,7 @@ DOTML_DIR = ../../util/dotml-1.2
 XABSL_COMPILER_DIR = $(XABSL_DIR)/compiler
 XABSL_XSL_DIR = $(XABSL_DIR)/xsl
 
-XABSL_OUTPUT_DIR = ../../intermediateCode
+XABSL_OUTPUT_DIR = .
 INTERMEDIATE_CODE = intermediate-code.dat
 DEBUG_SYMBOLS = debug-symbols.dat
 DOC_OUTPUT_DIR = ../xabsl-doc

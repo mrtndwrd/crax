@@ -12,6 +12,10 @@
 \begin{document}
 
 \input{title.tex}
+\thispagestyle{empty}
+\tableofcontents
+\setcounter{page}{0}
+\newpage
 
 \begin{abstract}
 In this research, a product will be introduced, that combines the Extensible
@@ -241,7 +245,7 @@ By using basic behaviors, that can be written in C++ or Java, XABSL also
 enables distribution of the system: Each basic behavior can run its own module.
 This way basic behavior can be a module that simply makes a robot move, but also a
 module that finds a ball in a soccer field, using libraries like OpenCV. This
-makes a XABSL application capable of the same things as any native C++ or Java
+makes an XABSL application capable of the same things as any native C++ or Java
 application, which is almost everything one or more computers can do.
 
 Section \ref{sec:xabsl-focus} will explain more clearly the advantages of XABSL,
@@ -580,17 +584,27 @@ nets in stead of the FSA-hierarchy XABSL provides, has the following advantages:
     \item Multiple robots in one plan: PNP offers a possibility of using one
     plan with multiple robots, at the same time. Of course, when using XABSL two
     robots can use the same option tree, but when using PNP, the robots actually
-    share the Petri Net Plan, enabling the system to work more efficiencly. A
+    share the Petri Net Plan, enabling the system to work more efficiently. A
     part of this problem is solved by creating a shared world-representation in
     the program that is used in coherence with XABSL, but some functions, like
     for example the h\_sync in figure \ref{fig:petri}, are difficult, if not
     impossible, to recreate using XABSL.
 \end{itemize*}
 
+\subsection{Creating an XABSL-specification}
+When using XABSL in coherence with any application, the \textit{XABSL engine} is
+used to control the behavior. This engine uses a user specified XABSL graph and
+the internal variables of the program it is running in in coherence, to make
+decisions about what \textit{basic behavior}, or \textit{option} to run next.
+More about the engine can be read in section \ref{sec:xabsl-engine}
 
-\subsection{Creating a XABSL-specification}
+This engine runs on \textit{intermediate code} that is automatically generated
+from several XABSL files, by the XABSL compiler. This intermediate code is a
+sort of 
+
 
 \subsection{ Traditionally Combining XABSL With Any Existing Program}
+\label{sec:xabsl-engine}
 
 
 
