@@ -19,7 +19,7 @@ option drive_circle
             differential_drive(speed=0, turning_speed=-0.3);
         }
     }
-    state done
+    final state done
     {
         action 
         {

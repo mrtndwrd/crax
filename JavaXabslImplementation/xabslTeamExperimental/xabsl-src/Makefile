@@ -1,5 +1,3 @@
-
-
 XABSL_DIR = ../../Xabsl
 
 XSLT = xsltproc --xinclude
