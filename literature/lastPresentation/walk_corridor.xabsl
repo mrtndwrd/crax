@@ -1,0 +1,53 @@
+/** Uses the data from the laser sensor to walk through a 
+ * corridor as good as possible, without bumping into the walls */
+option walk_corridor{
+	initial state decide_movement{
+		decision{
+			if(laser_max < maximum_laser_value){
+				goto move_back;
+			}
+			else{
+				if(laser_max == laser_min_n){
+					goto move_forward;
+				}
+				else{
+					if(laser_max == laser_min_nne || laser_max ==laser_min_ne 
+                        || laser_max == laser_min_ene)
+					{
+						goto move_right;
+					}
+					else{
+						if(laser_max == laser_min_nnw || laser_max ==laser_min_nw 
+                            || laser_max == laser_min_wnw)
+						{
+							goto move_left;
+						}
+						else{
+							stay;
+						}
+					}
+				}
+			}
+		}
+		action{
+			differential_drive(speed=0, turning_speed=0);
+			wait(time=2);
+		}
+	}
+
+	state move_left{
+		decision{
+			/** go on till threat is over */
+			if(laser_max == laser_min_nne || laser_max ==laser_min_ne 
+                || laser_max == laser_min_ene || laser_max == laser_min_n){
+				goto decide_movement;
+			}
+			else{
+				stay;
+			}
+		}
+		action{
+			differential_drive(speed=forward_speed, turning_speed=turning_speed);
+		}
+	}
+}

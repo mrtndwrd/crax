@@ -1,0 +1,30 @@
+	state move_left{
+		decision{
+			/** go on till threat is over */
+			if(laser_max == laser_min_nne || laser_max ==laser_min_ne 
+                || laser_max == laser_min_ene || laser_max == laser_min_n){
+				goto decide_movement;
+			}
+			else{
+				stay;
+			}
+		}
+		action{
+			differential_drive(speed=forward_speed, turning_speed=turning_speed);
+		}
+	}
+
+  state move_back{
+    decision{
+      if(laser_max > maximum_laser_value){
+          goto decide_movement;
+      }
+      else{
+          stay;
+      }
+    }
+    action{
+      differential_drive(speed=-reverse_speed, turning_speed=0);
+    }
+  }
+}
